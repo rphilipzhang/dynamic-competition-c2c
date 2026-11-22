@@ -12,6 +12,8 @@ paper/*.blg
 paper/*.fls
 paper/*.fdb_latexmk
 paper/*-eps-converted-to.pdf
+paper/*.synctex.gz
+paper/*.xdv
 paper/informs1.cls
 paper/ormsv080.bst
 

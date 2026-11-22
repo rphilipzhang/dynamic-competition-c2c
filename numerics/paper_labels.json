@@ -34,7 +34,7 @@
     },
     "lem:modeln": {
       "number": "3",
-      "page": "12"
+      "page": "13"
     },
     "lem:models": {
       "number": "2",
@@ -46,7 +46,7 @@
     },
     "model:equil": {
       "number": "4.1",
-      "page": "11"
+      "page": "12"
     },
     "model:framework": {
       "number": "3",
@@ -78,11 +78,11 @@
     },
     "prop:pftb": {
       "number": "6",
-      "page": "20"
+      "page": "21"
     },
     "prop:price": {
       "number": "9",
-      "page": "25"
+      "page": "26"
     },
     "prop:tsales": {
       "number": "4",
@@ -118,7 +118,7 @@
     },
     "sec:pricing": {
       "number": "5",
-      "page": "22"
+      "page": "23"
     },
     "sec:pricing-compare-pft": {
       "number": "5.3",
@@ -130,7 +130,7 @@
     },
     "sne": {
       "number": "2",
-      "page": "8"
+      "page": "9"
     },
     "sub@fig:comparepfta-1": {
       "number": "a",
