@@ -2,6 +2,8 @@
 
 Zheyu Jiang, Xin Geng, Nan Yang, Renyu Zhang
 
+Paper on SSRN: <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4074212>
+
 Two retailers compete in price and inventory over two periods. Customer-to-customer (C2C) interactions turn each period's sales into extra demand in the next period, either for the retailer that made the sale (within-brand) or for the market as a whole (cross-brand). This repository holds the paper, its technical statements with their proofs, and code that checks them numerically. It is organised so that an AI agent, or a reader, can verify every lemma and proposition.
 
 | Path | Content |
@@ -46,7 +48,7 @@ Start an agent in the repository root and ask it to follow `AGENTS.md`. It first
 
 ## Citation
 
-Jiang Z, Geng X, Yang N, Zhang R. Dynamic competition in online retailing: Implications of customer-to-customer interactions. *Manufacturing & Service Operations Management*, forthcoming. See [`CITATION.cff`](CITATION.cff).
+Jiang Z, Geng X, Yang N, Zhang R. Dynamic competition in online retailing: Implications of customer-to-customer interactions. *Manufacturing & Service Operations Management*, forthcoming. Available on [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4074212). See [`CITATION.cff`](CITATION.cff).
 
 ## License
 
