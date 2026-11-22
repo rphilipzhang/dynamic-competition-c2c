@@ -1,0 +1,46 @@
+run_id: 2026-11-22_gpt-6
+model: gpt-6
+date: '2026-11-22'
+repo_version: none
+scope: full
+prior_exposure: Earlier discussion in this chat and the session introduction disclosed earlier audit outcomes and history,
+  including P2(c), N6 and N7. No previous verification directory or external research material was opened for this run.
+  See each proof record for reviewer context.
+judgement:
+  theoretical_results: verified
+  numerical_results: verified_with_qualifications
+  consistency:
+    theory_md: consistent
+    numerics: consistent
+results:
+  verdict:
+    sound: 16
+    sound_with_gaps: 0
+    error_suspected: 0
+    not_verifiable: 0
+  paper_statement:
+    holds_as_printed: 16
+    holds_with_listed_differences: 0
+    fails: 0
+    not_verifiable: 0
+numerical_statements:
+  "yes": 7
+  "partly": 1
+  "no": 0
+findings:
+  critical: 0
+  major: 0
+  minor: 0
+  editorial: 0
+checks:
+  passed: 93
+  total: 93
+corrections: []
+summary: The theoretical results are verified. The numerical results are verified with qualifications because both figures
+  and N1–N5 reproduce and N6 has only partial evidence under nonuniform demand. All 16 results are sound, and all 16
+  printed statements hold under the assumptions in force. No technical manuscript correction was identified. The theory
+  transcription is consistent and the numerical implementation is consistent. All 93 distinct checks passed. P2(c)'s
+  positive stationary point follows for every fixed theta<1. LB1 inherits its price condition from Section 4. The P5(c2)
+  and P6(c2) bounds cover all theta within each qualifying market. N6 leaves P2(c), the two cost cutoffs and endogenous
+  pricing under other laws untested. N7 is excluded because the mixed endogenous-price solver and the authors' output
+  are unavailable. This single-model audit covers technical claims only.

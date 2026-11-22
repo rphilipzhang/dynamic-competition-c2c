@@ -1,0 +1,9 @@
+........                                                                 [100%]
+8 passed, 85 deselected in 18.37s
+
+Results of theory.md
+  LA1 direct      –   supporting    3/3
+  LA2 direct    5/5   supporting    3/3
+  P8  direct      –   supporting    3/3
+  P9  direct      –   supporting    3/3
+wrote verification/2026-11-22_claude-opus-5-5/logs/report_LA2.md

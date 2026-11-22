@@ -1,0 +1,67 @@
+{
+  "F1a": {
+    "gap_signs": [
+      -1,
+      1
+    ],
+    "roots": [
+      0.7697356970906047
+    ]
+  },
+  "F1b": {
+    "gap_signs": [
+      1,
+      1
+    ],
+    "roots": []
+  },
+  "F1c": {
+    "gap_signs": [
+      -1,
+      1
+    ],
+    "roots": [
+      0.5799982575093658
+    ]
+  },
+  "F1d": {
+    "gap_signs": [
+      1,
+      1
+    ],
+    "roots": []
+  },
+  "FB1a": {
+    "gap_signs": [
+      1,
+      -1
+    ],
+    "roots": [
+      0.5318370520118084
+    ]
+  },
+  "FB1b": "GN strictly decreasing, benchmark constant",
+  "FB1c": {
+    "gap_signs": [
+      1,
+      -1
+    ],
+    "roots": [
+      0.8883411042042543
+    ]
+  },
+  "FB1d": {
+    "gap_signs": [
+      1,
+      -1
+    ],
+    "roots": [
+      0.15650616703647652
+    ]
+  },
+  "matlab_max_abs_diff": 4.973799150320701e-14,
+  "ordinates_by_figure": {
+    "1": 88,
+    "B.1": 99
+  }
+}

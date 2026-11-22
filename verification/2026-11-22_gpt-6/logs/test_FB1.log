@@ -1,0 +1,15 @@
+.........                                                                [100%]
+9 passed, 84 deselected in 1.82s
+
+Results of theory.md
+  LB1 direct      –   supporting    1/1
+Numerical statements
+  F1  direct      –   supporting    2/2
+  FB1 direct    5/5   supporting    4/4
+  N1  direct      –   supporting    1/1
+  N2  direct      –   supporting    1/1
+  N3  direct      –   supporting    1/1
+  N4  direct      –   supporting    1/1
+  N5  direct      –   supporting    3/3
+  N6  direct      –   supporting    1/1
+wrote verification/2026-11-22_gpt-6/logs/report_FB1.md

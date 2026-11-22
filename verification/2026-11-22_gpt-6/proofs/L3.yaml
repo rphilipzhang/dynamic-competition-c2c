@@ -1,0 +1,113 @@
+id: L3
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: "2026-11-22"
+  prior_exposure: "New verifier for these five records. Received the coordinator’s task notes (including the LB1 interpretation) and system-provided project context. Read no other verification run or external file."
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  For every admissible fixed-price market, θ∈[0,1], γ>0 and A3 seed law, let K_i=ρα_i,2 γ(p_i,2−c_i), H_i=p_i,1+K_i, t_A=c_A/H_A, t_B=(c_B−θK_B t_A)/(H_B−θK_B), and z_i=F⁻¹(1−t_i). The unique cross-brand feedback equilibrium has y_B,1=b z_B, y_A,1=(a+θb)z_A−θb z_B, with period-1 shares a=α_A,1 and b=α_B,1. At every first-period sales state the period-2 order is y_i,2⁰+α_i,2 γ(R_A,1+R_B,1). The stated leftover and sales formulas give each retailer’s expected profit in the appendix. Main-text orders take ρ=1 and the appendix’s result holds for every ρ∈(0,1].
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on: ["L1 proof, (A.1) for the piecewise CDF of effective demand.","L2 proof, translated second-period best responses (A.5), (A.7), and its affine continuation-value identity.","L2’s Scenario S effective critical ratio for the last strict comparison of A’s quantiles."]
+steps:
+  - id: 1
+    locator: "Second-period subgame, preceding (A.12)"
+    claim: "Conditional on past total sales, each second-period problem is a translated benchmark."
+    status: verified
+    method: re-derivation
+    note: "Write Z_i=α_i,2 γR_1. Then min(y_i,D_i)=Z_i+min(y_i−Z_i,a_i X_2+θ(a_j X_2−(y_j−Z_j))⁺). The term in the objective independent of the translated decision is (p_i,2−c_i)Z_i. A3 gives the same conditional law for X_2. As in L2, negative translated orders have strictly positive marginal payoff."
+  - id: 2
+    locator: "By combining two retailers’ best responses"
+    claim: "The state-contingent continuation order and value are unique."
+    status: verified
+    method: re-derivation
+    note: "The benchmark cost/price ordering at t=2 is exactly L1’s. Its unique Nash pair in translated orders yields y_i,2=y_i,2⁰+Z_i and V_i=π_i,2⁰+(p_i,2−c_i)Z_i, including zero-sales states. For fixed prior orders R_1 is determined by X_1."
+  - id: 3
+    locator: "(A.12) and its derivative"
+    claim: "A’s period-1 objective and its derivative contain the effect on B’s sales."
+    status: verified
+    method: re-derivation
+    note: "Discounting V_i and adding current profits gives H_i E R_i+K_i E R_j−c_i y_i+ρπ_i,2⁰. Use R_k=y_k−L_k. Differentiation gives H_i P(D_i>y_i)−c_i−K_i ∂E L_j/∂y_i; each sample’s dependence on own order is Lipschitz and threshold events have zero probability."
+  - id: 4
+    locator: "Rival-leftover integral below (A.12)"
+    claim: "The rival leftover derivative is zero in the high-inventory region and θ times a difference of CDFs in the low region."
+    status: verified
+    method: re-derivation
+    note: "Let u_i=y_i/a_i and v_i=(y_i+θy_j)/(a_i+θa_j), using period-1 shares. Splitting at X=u_i reproduces the integral. An extra unit of y_i removes θ of rival sales precisely when u_i<X<v_j. Thus ∂E L_j/∂y_i=θ[F(v_j)−F(u_i)]⁺. For u_i≥u_j the interval is empty; for u_i<u_j it gives the manuscript’s second expression. All thresholds are convex combinations of u_i and u_j where used."
+  - id: 5
+    locator: "High-inventory first and second derivatives"
+    claim: "In the region u_i≥u_j the derivative decreases in own order."
+    status: verified
+    method: re-derivation
+    note: "L1’s CDF is F(v_i); rival sales are locally unchanged. The marginal profit is H_i[1−F(v_i)]−c_i. Differentiating yields −H_i f(v_i)/(a_i+θa_j) wherever the density derivative representation applies. Monotonicity of F proves concavity for every A3 law."
+  - id: 6
+    locator: "Low-inventory derivatives and join"
+    claim: "In the region u_i<u_j, the marginal is nonincreasing and meets the preceding marginal at equality."
+    status: verified
+    method: re-derivation
+    note: "With T_i=θK_i, the derivative is (H_i−T_i)[1−F(u_i)]+T_i[1−F(v_j)]−c_i. Differentiation gives −(H_i−T_i)f(u_i)/a_i−K_i θ² f(v_j)/(a_j+θa_i) almost everywhere. Both coefficients are nonnegative and H_i−T_i≥p_i,1>c_i. At u_i=u_j the two CDF arguments coincide, so monotonicity across the join gives global concavity even if the density has a corner."
+  - id: 7
+    locator: "(A.13), branch threshold and limiting best response"
+    claim: "A’s response is explicit on the high branch and is a uniquely defined decreasing function on the low branch."
+    status: verified
+    method: re-derivation
+    note: "At the joining order the slope is H_i[1−F(u_j)]−c_i. Its sign selects the appropriate side of F⁻¹(1−c_i/H_i). In the high region the unique zero has v_i equal to this quantile. In the low region the derivative just computed is zero. My derivation of uniqueness of that root: F(u_i) is between 1−c_i/(H_i−T_i) and 1−c_i/H_i, both interior, because F(u_i)≤F(v_j)≤1. Thus its own positive-weight term is strictly monotone through the root. Raising y_j increases v_j for fixed y_i, so the root weakly decreases. As y_j→∞, v_j→∞ with y_i bounded, giving u_i→F⁻¹(1−c_i/(H_i−T_i))."
+  - id: 8
+    locator: "(A.14)–(A.15)"
+    claim: "Retailer B’s first-period problem, both response branches, and its limiting response follow with B’s continuation weight."
+    status: verified
+    method: re-derivation
+    note: "Use H_B=p_B,1+K_B, K_B=ρ α_B,2 γ(p_B,2−c_B). Its revenue weights are H_B on own sales and K_B on A’s sales. Above the normalized inventory of A the zero satisfies F(v_B)=1−c_B/H_B; below it the zero satisfies (H_B−θK_B)F(u_B)+θK_B F(v_A)=H_B−c_B. At equality both formulas coincide. The ratio bounds and limiting argument in the previous step apply after exchanging a and b."
+  - id: 9
+    locator: "Critical-ratio ordering preceding (A.16)"
+    claim: "The seed-demand critical probability 1−c_A/H_A is at least 1−c_B/H_B."
+    status: verified
+    method: re-derivation
+    note: "For each t, p_A,t/c_A≥p_B,t/c_B. Also α_A,2≥α_B,2 from fixed p_A,2≤p_B,2. Thus α_A,2(p_A,2/c_A−1)≥α_B,2(p_B,2/c_B−1), using strict positive margins. Add the period-1 price/cost inequality multiplied as appropriate to obtain H_A/c_A≥H_B/c_B. In Scenario N the second-period term is strict: if the shares differ, positivity suffices; if they coincide, the prices coincide and c_A<c_B."
+  - id: 10
+    locator: "(A.16), exclusion of u_A<u_B"
+    claim: "The reverse-order pair cannot satisfy both first-order conditions."
+    status: verified
+    method: re-derivation
+    note: "All best responses are interior: even the smallest possible low-branch marginal at zero is H_i−T_i−c_i>0, and sufficiently high orders have negative marginal. Suppose u_A<u_B. The B equation gives F(v_B)=1−c_B/H_B∈(0,1), hence v_B is in the interior of the interval support. Since u_A<v_B, A3 implies F(u_A)<F(v_B) even if u_A is below support. A’s equation is a weighted average of F(u_A) and F(v_B) with strictly positive weight H_A−T_A on the former, so 1−c_A/H_A<F(v_B). This contradicts the preceding ordering."
+  - id: 11
+    locator: "(A.17), solution in the remaining region"
+    claim: "The two equations determine both quantiles and both orders without a second fixed point."
+    status: verified
+    method: re-derivation
+    note: "First F(v_A)=1−t_A. Then (H_B−T_B)[1−F(u_B)]=c_B−T_B t_A. Set t_B to this ratio. For the asserted admissibility, my derivation is t_B−t_A=(c_B−H_B t_A)/(H_B−T_B)≥0 and t_B≤c_B/(H_B−T_B)≤c_B/p_B,1<1; t_A>0. Thus z_A≥z_B and both inverse arguments are strictly interior. Inverting gives u_B=z_B, v_A=z_A, hence y_B=b z_B and y_A=(a+θb)z_A−θb z_B. Their normalized difference is (a+θb)(z_A−z_B)/a≥0, and global concavity makes the FOCs sufficient. The reverse-region argument covers every other order pair."
+  - id: 12
+    locator: "Uniqueness with weak response monotonicity"
+    claim: "The equilibrium remains unique at θ=0 or 1, and for equal shares or a binding lower A11 inequality."
+    status: verified
+    method: re-derivation
+    note: "No inverse involves 1−θ. Even at θ=1 the remaining denominator is p_B,1>c_B. At θ=0 the independent critical ratios are recovered; γ↓0 recovers the benchmark. If randomization is admitted, responses to fixed rival orders are continuous and nonincreasing, and bounded above by the finite best response to zero. The marginal payoff versus a mixed rival is the average of the pure marginals. Consequently every maximizer lies between the responses to the rival support endpoints. Starting from the compact rectangle of undominated orders, repeatedly replace each interval by [BR_i(upper_j),BR_i(lower_j)]. The intervals nest, and by continuity the limiting corners (lower_A,upper_B) and (upper_A,lower_B) are pure equilibria. Their proven uniqueness collapses both intervals to the displayed pair."
+  - id: 13
+    locator: "Moreover z_A^N < z_A^S"
+    claim: "A’s cross-brand critical quantity is strictly below its within-brand counterpart."
+    status: verified
+    method: re-derivation
+    note: "The comparison invokes Scenario S’s definition A5 solely for this auxiliary observation. Since 0<α_A,2<1 and ργ(p_A,2−c_A)>0, H_A in N is strictly less than p_A,1+ργ(p_A,2−c_A) in S. Positive c_A and the strictly increasing quantile give the strict inequality."
+  - id: 14
+    locator: "Final substitution into (A.12) and (A.14)"
+    claim: "The two profits, realized sales and conditional period-2 orders agree with the appendix."
+    status: verified
+    method: re-derivation
+    note: "For either retailer insert L_i=[y_i−a_i X_1−θ(a_j X_1−y_j)⁺]⁺ at the solved orders, R_i=y_i−L_i, R_1=R_A+R_B. Total expected profit equals (H_i−c_i)y_i−H_i E L_i+K_i(y_j−E L_j)+ρπ_i,2⁰. This reproduces both signs of every cross term in the displayed profits, and the continuation order is as above."
+findings: []
+numerical:
+  command: "python numerics/run.py -k L3 --report verification/2026-11-22_gpt-6/logs/report_L3.md"
+  direct: "8/8 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    The direct checks verify numerical best responses and both retailers’ conditional continuation values (109 markets each, four seed laws), seek one fixed-point bracket at 28 markets in each period, compare the N branch condition and the TeX transcription, and independently integrate sales and profits across 500 uniform markets plus 400 price/state continuation cases. Exact port checks use 25 rational points. Supporting tests check uniform leftovers, agreement with mixed-model endpoints and closed-form orders. The tolerance-based finite grid can hide multiple roots in a bracket. The numerical program sets ρ=1.
+  own_checks:
+    - script: scripts/shared_inventory_marginals.py
+      result: "The shared marginal-payoff probe passes all 1,260 Scenario N cases, including ρ=1/11 and 1, small and large γ, θ endpoints, strictly positive densities on bounded uniform and unbounded shifted Lomax support, binding A11 and equal period shares. At each candidate both primitive marginal gains vanish exactly and have the correct strict signs on either side."
+not_checked:
+  - "The finite counterexample searches use specific distributions. For general F the argument uses the continuous CDF directly; density-based second derivatives are interpreted wherever they exist."

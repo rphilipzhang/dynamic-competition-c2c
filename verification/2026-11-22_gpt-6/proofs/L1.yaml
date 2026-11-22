@@ -1,0 +1,83 @@
+id: L1
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: "2026-11-22"
+  prior_exposure: "New verifier for these five records. Received the coordinator’s task notes (including the LB1 interpretation) and system-provided project context. Read no other verification run or external file."
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  For every nonnegative i.i.d. seed-demand law with interval support and positive density in its interior, every admissible fixed pair of price paths and costs, every θ in [0,1], and each t=1,2, define z_i=F⁻¹(1−c_i/p_i,t). Without C2C the unique equilibrium orders in period t are y_B=b z_B and y_A=a z_A+θ b(z_A−z_B), where a=α_A,t and b=α_B,t. The result holds for every ρ in (0,1].
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A7, A8, A9, A11, I1, I2]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: "Opening maximization for retailer A"
+    claim: "The two games separate, and A maximizes a one-period newsvendor profit."
+    status: verified
+    method: re-derivation
+    note: "With zero salvage, no carryover and Z=0, the future game is independent of current decisions. min(y,D)=y−(y−D)⁺, and D_i=a_i X+θ(a_j X−y_j)⁺ is independent of i’s order. Nonnegative demand is intrinsic to the model."
+  - id: 2
+    locator: "Retailer A’s profit is concave"
+    claim: "The marginal profit is p_i[1−P(D_i≤y_i)]−c_i."
+    status: verified
+    method: re-derivation
+    note: "D_i(x) is continuous, strictly increasing and piecewise linear with slopes a_i and a_i+θa_j, both positive. Its distribution is atomless, so differentiating the capped sale gives P(D_i>y_i). The marginal profit is nonincreasing, crosses zero at the unique interior demand quantile and changes sign through it, even on bounded support."
+  - id: 3
+    locator: "(A.1)"
+    claim: "Partitioning at the rival’s seed-demand stockout gives the two integrals."
+    status: verified
+    method: re-derivation
+    note: "Below x=y_j/a_j effective demand is a_i x. Above it, demand is (a_i+θa_j)x−θy_j. These disjoint intervals give the printed indicators, with an immaterial single boundary."
+  - id: 4
+    locator: "Two cases below (A.1)"
+    claim: "The event D_i≤y_i has probability F(v_i) if u_i≥u_j and F(u_i) otherwise."
+    status: verified
+    method: re-derivation
+    note: "Here u_k=y_k/a_k and v_i=(y_i+θy_j)/(a_i+θa_j). It is a weighted average of u_i and u_j, with positive weight on u_i. Inverting the demand curve at its two slopes gives min(u_i,v_i), including θ=0 and equal ratios."
+  - id: 5
+    locator: "(A.2)"
+    claim: "A’s best response is the stated two-branch rule."
+    status: verified
+    method: re-derivation
+    note: "Its order is D_A(z_A)=a z_A+θ(b z_A−y_B)⁺. Both pieces meet at b z_A. The price and cost inequalities imply 0<1−c_A/p_A<1, hence no support endpoint creates a second optimizer."
+  - id: 6
+    locator: "Retailer B’s objective and (A.3)"
+    claim: "B’s corresponding response has the other retailer’s shares and order inside the positive part."
+    status: verified
+    method: re-derivation
+    note: "Substituting D_B(x)=b x+θ(a x−y_A)⁺ into p_BE[min(y_B,D_B)]−c_B y_B gives the same derivative with indices exchanged. Its unique zero is y_B=b z_B+θ(a z_B−y_A)⁺."
+  - id: 7
+    locator: "Since p_B,t c_A/c_B ≤ p_A,t"
+    claim: "A’s seed-demand quantile weakly exceeds B’s."
+    status: verified
+    method: re-derivation
+    note: "A11 directly yields c_A/p_A≤c_B/p_B. F is strictly increasing on the support by A3. Binding A11 produces equal quantiles."
+  - id: 8
+    locator: "Combining (A.2) and (A.3)"
+    claim: "The responses cross once, including at θ=1 and equal quantiles."
+    status: verified
+    method: re-derivation
+    note: "My derivation of the asserted uniqueness is that every A response is at least a z_A≥a z_B. At any intersection B must therefore play b z_B. Substituting that order into A’s response gives the displayed pair, which in turn satisfies B’s response. The same bound applies to any best response against a randomized rival because every smaller A order has a strictly positive marginal payoff for all rival orders; B then has the same unique optimum against that support. The two-period feedback game repeats this state-independent solution."
+  - id: 9
+    locator: "Last, by substituting ... equilibrium profits"
+    claim: "The stated leftovers, sales and benchmark values follow for both retailers."
+    status: verified
+    method: re-derivation
+    note: "In each displayed leftover, insert the orders from the intersection into [y_i−a_i X−θ(a_j X−y_j)⁺]⁺, using the opposite retailer’s share and order in the inner positive part. Then R_i=y_i−L_i and π_i=(p_i−c_i)y_i−p_i E L_i. This also supplies the period-2 constant used in L2 and L3."
+findings: []
+numerical:
+  command: "python numerics/run.py -k L1 --report verification/2026-11-22_gpt-6/logs/report_L1.md"
+  direct: "3/3 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    The 109-market benchmark check tests the ordered interior solution at first-period prices and additionally at second-period prices for uniform demand (199 games, four demand laws). It compares both best-response distances and feasible unilateral gains using a bounded search. The two 28-market scans look for a single bracket around B’s order at first- and second-period prices, respectively. The three supporting checks compare uniform leftovers symbolically, benchmark profits at 25 rational points, and independent order formulas on 500 uniform points including the reverse branch outside A11. A scan could miss two intersections between adjacent grid nodes. Binding A11 and θ endpoints are admissible.
+  own_checks:
+    - script: scripts/shared_inventory_marginals.py
+      result: "The exact benchmark part of the shared 5,040-case probe challenged the first-order conditions at the claimed orders and to either side, varying relative prices, costs, θ, and uniform versus shifted Lomax demand (unbounded support). Across all scenarios the CDF fractiles ranged from 9.999999999e-11 to 0.999999999523."
+not_checked:
+  - "Numerical comparisons sample parameter values and demand laws. The quantile argument establishes uniqueness for the entire A3 class, including distributions with unbounded support."

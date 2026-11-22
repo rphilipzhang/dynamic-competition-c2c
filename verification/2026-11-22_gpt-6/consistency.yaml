@@ -1,0 +1,269 @@
+- item: theory.md Model
+  compared_with: Manuscript.tex, Section 3 including the closing distribution paragraph
+  method: script
+  result: consistent
+  note: Normalized 2785 text/math tokens against the source after document-specific reference resolution.
+  findings: []
+- item: theory.md Notation
+  compared_with: Manuscript.tex Sections 3–5 and OnlineAppendix.tex A.1, A.2, B
+  method: reading
+  result: consistent
+  note: Matched i,t indices, split, demands, sales, objectives, prices, two discount conventions, the four scenarios,
+    the limit prices, nu and the domain of derivative bounds to their definitions.
+  findings: []
+- item: theory.md Assumptions A1–A15
+  compared_with: Manuscript.tex Sections 3–5 and OnlineAppendix.tex A.1, A.2, B
+  method: script
+  result: consistent
+  note: All 18 assumption quotations occur in the sources. A3's general-law condition is stated at the end of Section
+    3, while A10 sets rho=1 in the printed first-period formulas. A11 orders the exogenous price ratios and is inherited
+    in B. A12–A14 enter the endogenous analysis, with no large-gamma condition on P7. A15 is the mixed model.
+  findings: []
+- item: theory.md Implicit conditions I1–I3
+  compared_with: Interior fractiles and shares in Sections 3–5, Appendix A.1 and B
+  method: reading
+  result: consistent
+  note: 'I1 gives positive costs and margins. I2 keeps both exogenous shares interior, implied in Section 5 by A12.
+    I3 follows from A11 and I1–I2: writing qA=cA/(pA1+ownA) for the high retailer, B''s tail is (cB-crossB*theta*qA)/(pB1+ownB-crossB*theta);
+    cost-ratio ordering gives qB>=qA>0, and pB1>cB gives qB<1. These are recorded context conditions; see the respective
+    result for additional dependencies.'
+  findings: []
+- item: theory.md Setup Section 4
+  compared_with: Manuscript.tex, opening of Section 4
+  method: script
+  result: consistent
+  note: Normalized 329 text/math tokens against the source after document-specific reference resolution.
+  findings: []
+- item: theory.md Setup Section 5
+  compared_with: Manuscript.tex, opening of Section 5
+  method: script
+  result: consistent
+  note: Normalized 724 text/math tokens against the source after document-specific reference resolution.
+  findings: []
+- item: theory.md Setup Appendix A.2
+  compared_with: OnlineAppendix.tex, notation and setup before the joint proof
+  method: script
+  result: consistent
+  note: Normalized 485 text/math tokens against the source after document-specific reference resolution.
+  findings: []
+- item: theory.md Setup Appendix B
+  compared_with: OnlineAppendix.tex, opening of B
+  method: script
+  result: consistent
+  note: Normalized 507 text/math tokens against the source after document-specific reference resolution.
+  findings: []
+- item: theory.md L1
+  compared_with: Manuscript.tex label lem:model0; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 152 text/math tokens against the source after document-specific reference resolution. Normalized
+    1982 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md L2
+  compared_with: Manuscript.tex label lem:models; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 276 text/math tokens against the source after document-specific reference resolution. Normalized
+    3732 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md L3
+  compared_with: Manuscript.tex label lem:modeln; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 427 text/math tokens against the source after document-specific reference resolution. Normalized
+    7367 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md L4
+  compared_with: Manuscript.tex label lem:oneside; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 171 text/math tokens against the source after document-specific reference resolution. Normalized
+    515 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md P1
+  compared_with: Manuscript.tex label prop:yacompare; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 160 text/math tokens against the source after document-specific reference resolution. Normalized
+    1448 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md P2
+  compared_with: Manuscript.tex label prop:ybcompare; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 151 text/math tokens against the source after document-specific reference resolution. Normalized
+    1220 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md P3
+  compared_with: Manuscript.tex label prop:indsales; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 285 text/math tokens against the source after document-specific reference resolution. Normalized
+    868 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md P4
+  compared_with: Manuscript.tex label prop:tsales; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 68 text/math tokens against the source after document-specific reference resolution. Normalized
+    577 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md P5
+  compared_with: Manuscript.tex label prop:pfta; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 273 text/math tokens against the source after document-specific reference resolution. Normalized
+    2056 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. The printed c2 text and proof are preserved. Market-specific gamma is common
+    across theta; the substitution cutoff may depend on the market and gamma.
+  findings: []
+- item: theory.md P6
+  compared_with: Manuscript.tex label prop:pftb; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 284 text/math tokens against the source after document-specific reference resolution. Normalized
+    1654 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. The printed c2 text and proof are preserved. Market-specific gamma is common
+    across theta; the substitution cutoff may depend on the market and gamma.
+  findings: []
+- item: theory.md LA1
+  compared_with: OnlineAppendix.tex label lem:modelS-g; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 315 text/math tokens against the source after document-specific reference resolution. Normalized
+    4280 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md LA2
+  compared_with: OnlineAppendix.tex label lem:modelN-g; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 392 text/math tokens against the source after document-specific reference resolution. The Markdown
+    points to the verbatim joint proof in LA1. No textual departure detected.
+  findings: []
+- item: theory.md P7
+  compared_with: Manuscript.tex label prop:orderprice2; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 152 text/math tokens against the source after document-specific reference resolution. Normalized
+    1331 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md P8
+  compared_with: Manuscript.tex label prop:orderprice1; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 339 text/math tokens against the source after document-specific reference resolution. Normalized
+    1583 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md P9
+  compared_with: Manuscript.tex label prop:price; OnlineAppendix.tex proof
+  method: script
+  result: consistent
+  note: Normalized 242 text/math tokens against the source after document-specific reference resolution. Normalized
+    804 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. No textual departure detected.
+  findings: []
+- item: theory.md LB1
+  compared_with: OnlineAppendix.tex label lem:modelg; OnlineAppendix.tex proof
+  method: script
+  result: consistent_with_listed_differences
+  note: Normalized 506 text/math tokens against the source after document-specific reference resolution. Normalized
+    1655 text/math tokens against the source after document-specific reference resolution. All numbered displays
+    retain their Appendix numbering. The sole insertion makes Section 4's existing price condition explicit. It
+    is needed when read alone; in its Appendix B setting the published statement holds as printed.
+  findings: []
+- item: numerics paper_labels.json
+  compared_with: Fresh document-local AUX files and both reference PDFs
+  method: script
+  result: consistent
+  note: All 37 manuscript and 47 appendix label numbers and pages match. Checked 47 theorem, display and figure
+    numbers on their printed pages. The 33 and 16 pages have the same extracted layout text as the fresh PDFs. See
+    logs/transcription.json.
+  findings: []
+- item: numerics c2c/primitives.py
+  compared_with: Section 3, demand, sales, C2C and timing equations; section4.Game and Section 5 payoff assembly
+  method: reading
+  result: consistent
+  note: The split is 1/2+beta(pj-pi), effective demand is own pre-stockout demand plus theta times the other shortage;
+    sales are its minimum with inventory. S uses own prior sales, N splits total prior sales, and G is their convex
+    combination. Uniform integration splits at all possible kinks; quadrature handles the other bounded laws. The
+    primitive module imports no result. Payoff callers charge costs on orders and credit revenues on sales, using
+    the verified affine continuation in the undiscounted two-period sum.
+  findings: []
+- item: numerics c2c/section4.py claimed_*
+  compared_with: L1, L2, L3, LB1 and Appendix A.1/B
+  method: reading
+  result: consistent
+  note: Matched the high/low critical-ratio branches, price-ratio boundary, own/cross effects and both order thresholds.
+    The benchmark swaps roles under the opposite ratio. The general formula specializes to S, N and mixtures; the
+    first-period denominator and cross adjustment use different own/cross coefficients where appropriate.
+  findings: []
+- item: numerics c2c/section5.py claimed_* and signs
+  compared_with: Appendix A.2; LA1, LA2, P8 and P9
+  method: reading
+  result: consistent
+  note: Matched both limit prices, margin/share nu, price-bound solutions for S, leading orders and O(gamma^-2)
+    residual for N, the four types of price-derivative signs, A.22, A.23 and both strict price paths. The code distinguishes
+    bounded gamma(1-theta) from a fixed theta<1; the first-period limiting price is labeled proof evidence.
+  findings: []
+- item: numerics c2c/closed_form.py
+  compared_with: Eight scalar MATLAB files in numerics/matlab and A.1/B uniform-demand profit and stock formulas
+  method: script
+  result: consistent
+  note: Line-by-line scalar MATLAB expression evaluation was compared with the corresponding Python port. All 4,200
+    outputs agreed across 300 markets, both fractile orderings, ties, theta endpoints and both continuations. Benchmarks,
+    the two leftover integrals and own/cross continuation margins give the printed profit expressions. See scripts/part1_matlab.py.
+  findings: []
+- item: numerics c2c/pricing.py
+  compared_with: Figure1_MATLAB/pricing_equilibrium.m and Section 5.3
+  method: reading
+  result: consistent
+  note: Compared guards, affine endpoint deviation gains, feasible intervals (separate S sales vs common N sales),
+    common/possible equilibrium filters, tolerance, column-major ordering and first-period payoff enumeration. The
+    menu game is solved backward. Exact rational checks at the three sales-triangle vertices certify each Figure
+    1 continuation over the entire triangle and every theta.
+  findings: []
+- item: numerics c2c/figures.py
+  compared_with: Figure1_reproduce.m, Num_pricing1.m, Exoprice2_Figure2.m; Sections 5.3/B and captions
+  method: reading
+  result: consistent
+  note: Matched menu {2,4} or fixed price 2, beta .1, U[5,15], cB=1, cost/gamma by retailer, panel outputs, weights
+    .8/.2 and reverse, both 11-node grids and root search on model profits. Figure B.1 uses profit/order outputs
+    indexed in the MATLAB order. scripts/shared_figures.py checks full-interval signs.
+  findings: []
+- item: numerics quotations and numerical-statement inventory
+  compared_with: Both TeX sources, in particular Section 3, Section 5.3 and Appendix B
+  method: script
+  result: consistent
+  note: All 34 technical quotation occurrences and all nine numerical-statement/figure quotations match their source,
+    including resolved references. Reviewed context, captions and descriptions against the technical inventory.
+    N6 concerns the nonuniform experiments; N7 has the weights and menu but no mixed endogenous solver or original
+    output. Interpretation and discussion are outside scope.
+  findings: []
+- item: numerics figure extraction and reference tables
+  compared_with: Eight EPS panels, Figure2_reference.csv and the plots in the two published PDFs
+  method: script
+  result: consistent
+  note: Fresh extraction agrees byte-for-byte with the stored CSV and calibration. Independent comparison checked
+    88 Figure 1 and 99 Figure B.1 ordinates within EPS calibration, including four-decimal plotting in Figure 1.
+    The mixed-figure MATLAB reference differs from the port by at most 4.98e-14.
+  findings: []
+- item: numerics check predicates
+  compared_with: Result statements in both TeX files, numerical_statements.yaml and tests
+  method: reading
+  result: consistent
+  note: Matched claim tags, periods, firms, strict inequalities, non-strict comparative statics, branch guards,
+    parameter endpoints and threshold quantifiers. The numerical assessments and limits for each named check are
+    in proofs/ and numerical_statements.yaml. Finite probes support the analytical derivations; the N6 predicates
+    are explicitly weaker than the full robustness sentence.
+  findings: []

@@ -1,0 +1,143 @@
+id: P6
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: The supplied context included a brief historical summary of an earlier verification, including
+    a P2 reference. No earlier verification folder or external file was opened. I used the parent’s current-run
+    reports and scripts.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: For each fixed admissible market there exists a θ-independent γB>0 such that for all γ≥γB, retailer
+  B's S profit is constant in θ, its N profit is nondecreasing, and both exceed the benchmark strictly for every
+  θ∈[0,1]. If its share differs across periods, S−N has the strict sign of αB1−αB2. With equal shares, choose
+  a sufficient small positive ΔB. For each fixed qualifying market with 0<Δc≤ΔB, including equality at the upper
+  endpoint, the growth bound may depend on its costs. At each γ≥γB there exists θB∈[0,1] depending on that γ and
+  market, with S−N>0 on [0,θB) and S−N≤0 on [θB,1].
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A5
+- A6
+- A7
+- A8
+- A9
+- A10
+- A11
+- I1
+- I2
+unstated_hypotheses: []
+relies_on:
+- L2–L3, translated conditional period-two profits and first-period inventories.
+- P5(b,c1) proof, bounded first-period profits and the θ-uniform expansion E RN,total=μ+O(1/γ).
+steps:
+- id: 1
+  locator: (a), leftover integral and ΠB,S
+  claim: B’s total S profit is constant in θ.
+  status: verified
+  method: re-derivation
+  note: Use a,b for period-one shares, x,z for period two, u,v for first prices, and m=pA2−cA,n=pB2−cB. B has
+    the lower fractile and does not receive effective spillover before stocking out. The S tail sB=cB/(v+γn) determines
+    both E RB=b(μ−σsB²) and yB=b(μ+σ−2σsB); neither depends on θ. The same holds for period-two B benchmark profit
+    when its seed tail is cB/pB2. The continuation increment γn E RB is likewise constant.
+- id: 2
+  locator: ∂ΠB,N/∂θ and h_B^N
+  claim: The N profit has positive θ slope for all γ>0.
+  status: verified
+  method: symbolic
+  note: My symbolic derivation uses q=cA/(u+γxm), r=γzn, D=v+r(1−θ), H=cB−(v+r)q>0 and w=q+H/D. Substitute E RB=b(μ−σw²),
+    yB=b(μ+σ−2σw), E RN,total=μ−σ[(a+θb)q²+(1−θ)bw²] into v E RB−cB yB+r E RN,total. Its derivative simplifies
+    to σbr[cB²−((v+r)q)²]/D²>0. With K=u+γxm, the printed h_B^N is (cB K)²−cA²(v+r)², positive because cB K−cA(v+r)=cB
+    u−cA v+γ(cB x m−cA z n)>0. Equal A11 price ratios or equal shares cannot make the last γ coefficient vanish,
+    as in P1. This also gives the one-sided endpoint slopes.
+- id: 3
+  locator: (b), same asymptotic argument
+  claim: Both B profit gains eventually strictly exceed zero uniformly in θ.
+  status: verified
+  method: re-derivation
+  note: S has increment γn E RB,S where E RB,S=b(μ−σsB²)→bμ>0. N has increment γzn E RN,total with E RN,total→μ>0
+    uniformly by the P5(c1) shortage bound. All first-period changes are bounded uniformly because X1, the equilibrium
+    stocks and sales are bounded on the fixed market. The lemma hypotheses and the uniform law are identical here.
+- id: 4
+  locator: h_B denominator, linear θ dependence
+  claim: The sign of S−N is the sign of an affine numerator.
+  status: verified
+  method: re-derivation
+  note: The printed denominator (v+γn)(u+γxm)²D is strictly positive; γn>0. The N slope is a θ-independent positive
+    constant divided by D², while S is constant. Since (1/D)′=r/D², ΠS−ΠN is a constant plus a constant divided
+    by D. Multiplying by the positive denominator gives an affine h_B. Exact coefficient checks independently
+    recover this degree.
+- id: 5
+  locator: (c1), endpoint leading derivatives and common growth bound
+  claim: For unequal shares the sign is uniform over the entire substitution interval.
+  status: verified
+  method: re-derivation
+  note: 'By the sales limits in (b), (ΠS−ΠN)/γ tends uniformly to μn(b−z), with O(1/γ) remainder. Multiplication
+    by the displayed denominator divided by n shows leading coefficient μ(b−z) z x² (1−θ)m²n² at θ<1 and μ(b−z)
+    v x²m²n at θ=1, giving the printed fourth and third derivatives after multiplying by 24 and 6; clearing the
+    rational tails leaves polynomials of degrees at most four and three. Independently the endpoint leading coefficients
+    have the same strict sign, so take the larger of the two endpoint thresholds: affine interpolation of h_B
+    gives one bound for every θ, including points approaching 1 with γ. The bound may depend on the nonzero share
+    difference.'
+- id: 6
+  locator: Equal shares, h_B(0) quadratic coefficient
+  claim: A positive endpoint sign results from a sufficiently small positive cost difference.
+  status: verified
+  method: re-derivation
+  note: At θ=0, with a=x,b=z, independent first-period optima give ΠS−ΠN=σγabn[cA²/(u+γam)²−cB²/((v+γn)(v+γbn))].
+    Thus h_B=σab[cA²(v+γn)(v+γbn)−cB²(u+γam)²], whose second derivative is 2σab[b cA²n²−a²cB²m²]. The bracket
+    decreases strictly in a when the other quantities are held fixed, with derivative −cA²n²−2a cB²m². This checks
+    the printed coefficient and monotonicity.
+- id: 7
+  locator: Upper bound on αA2, choice of ΔB
+  claim: A positive sufficient cutoff includes equality at its upper endpoint.
+  status: verified
+  method: re-derivation
+  note: A11 implies a≤1/2+β(1−cA/cB)pB2. As cA increases toward cB the bound tends to 1/2. At equal costs along
+    admissible markets A11 forces equal prices in period two, hence m=n>0 and the bracket is cB²n²/4>0. Alternatively
+    holding a lower pA2 fixed while evaluating the bound only increases the limiting bracket because m≤n at equal
+    cost. Continuity gives a positive closed one-sided interval inside the strict-sign region. Choose ΔB within
+    it and fix each qualifying admissible market before taking γ large. This also covers scarce shares or binding
+    A11 whenever they satisfy the cost condition.
+- id: 8
+  locator: At θ=1, h_B(1) second derivative
+  claim: The opposite endpoint is eventually strictly negative.
+  status: verified
+  method: symbolic
+  note: At θ=1 q→0 and w→W=(cB−b n cA/(a m))/v>0. At equal shares the continuation-sales gap is O(1/γ) in profit
+    there. The current-period gap has limit σb(vW²−2cB W)=−σb[cB²−(b n cA/(a m))²]/v<0. Substituting in the denominator
+    gives h_B’s second derivative 2σb[(b cA n)²−(a cB m)²], since the cleared endpoint polynomial has degree at
+    most two. This is strictly negative by cB a m>cA b n, including A11 boundaries.
+- id: 9
+  locator: By part (a), the θB cutoff and final γB choices
+  claim: A single market growth bound gives the strict/weak intervals.
+  status: verified
+  method: re-derivation
+  note: Choose the maximum of the applicable bounds from (b), unequal-share (c1), or both equal-share endpoints,
+    enlarged past any strict γ bound. For each qualifying γ, the continuous S−N difference is positive at 0 and
+    negative at 1 and strictly decreasing by (a). Its unique root is interior, has equality there, and gives the
+    claimed > on [0,θB) and ≤ on [θB,1]. The market-specific growth interpretation in theory.md agrees with the
+    printed proposition.
+findings: []
+numerical:
+  command: python numerics/run.py -k P6
+  direct: 4/4 passed
+  supporting: 6/6 passed
+  assessment: The four exact predicates test the constant S/increasing N curves, strict gains over the benchmark,
+    each unequal-share sign, and endpoint signs and one sampled +− run for eligible equal-share markets. Across
+    210 markets the 12-rung γ ladder starts at .05 and reaches 10^60; θ meshes include 0 and 1. There are 90 further
+    equal-share, positive-coefficient markets for the cutoff check. The top two growth levels probe the asymptotic
+    claims. Six supports validate both accounting formulas, inventories and admissibility. A finite grid brackets
+    any crossing; the exact derivative and continuity establish equality at the unique root.
+  own_checks:
+  - 'scripts/shared_exogenous_sales.py, logs/exogenous_sales.log: symbolic strictly positive N profit slope.'
+  - 'scripts/shared_profit_endpoints.py, logs/profit_endpoints.log: fixed-market limiting signs.'
+  - 'scripts/shared_profit_polynomials.py, logs/profit_polynomials.log: affine numerator and both equal-share
+    endpoint derivatives in 32 exact markets.'
+not_checked:
+- Numerical checks vary finitely many parameter values. The analytic argument supplies the continuum conclusions.

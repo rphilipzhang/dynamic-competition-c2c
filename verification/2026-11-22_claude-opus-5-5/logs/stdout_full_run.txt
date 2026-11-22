@@ -1,0 +1,31 @@
+........................................................................ [ 77%]
+.....................                                                    [100%]
+93 passed in 217.58s (0:03:37)
+
+Results of theory.md
+  L1  direct    3/3   supporting    3/3
+  L2  direct    8/8   supporting    3/3
+  L3  direct    8/8   supporting    3/3
+  L4  direct    2/2   supporting    4/4
+  P1  direct    2/2   supporting    4/4
+  P2  direct    3/3   supporting    4/4
+  P3  direct    2/2   supporting    5/5
+  P4  direct    1/1   supporting    3/3
+  P5  direct    4/4   supporting    7/7
+  P6  direct    4/4   supporting    6/6
+  LA1 direct    4/4   supporting    3/3
+  LA2 direct    5/5   supporting    3/3
+  P7  direct    2/2   supporting    1/1
+  P8  direct    3/3   supporting    3/3
+  P9  direct    2/2   supporting    3/3
+  LB1 direct    6/6   supporting    2/2
+Numerical statements
+  F1  direct    9/9   supporting    8/8
+  FB1 direct    5/5   supporting    4/4
+  N1  direct    1/1   supporting    1/1
+  N2  direct    1/1   supporting    1/1
+  N3  direct    1/1   supporting    1/1
+  N4  direct    1/1   supporting    1/1
+  N5  direct    1/1   supporting    3/3
+  N6  direct    2/2   supporting    1/1
+wrote verification/2026-11-22_claude-opus-5-5/numerical_checks.md

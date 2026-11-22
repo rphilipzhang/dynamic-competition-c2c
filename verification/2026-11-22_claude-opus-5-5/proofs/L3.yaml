@@ -1,0 +1,188 @@
+id: L3
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Fix any admissible point of Section 4 (A1, A11, I1, I2, theta in [0, 1]), any gamma > 0, rho = 1 in the
+  displayed formula (the proof holds for rho in (0, 1], with rho and gamma entering only through rho gamma), and
+  any F of the A3 class. Under cross-brand C2C (Z_{i,2} = alpha_{i,2} gamma R_1 with R_1 = R_{A,1} + R_{B,1}) and
+  feedback play: (second) for every first-period sales state the second-period game has exactly one equilibrium,
+  y^N_{i,2} = y^0_{i,2} + alpha_{i,2} gamma R_1; (first) given that continuation, the first-period game has exactly
+  one equilibrium, y^N_{A,1} = (alpha_{A,1} + theta alpha_{B,1}) zeta^N_{A,1} - theta alpha_{B,1} zeta^N_{B,1},
+  y^N_{B,1} = alpha_{B,1} zeta^N_{B,1}, with zeta^N_{A,1} = F^{-1}(1 - c_A/(p_{A,1} + alpha_{A,2} gamma m_A)) and
+  zeta^N_{B,1} = F^{-1}(1 - [c_B - alpha_{B,2} gamma theta m_B c_A/(p_{A,1} + alpha_{A,2} gamma m_A)]/[p_{B,1} +
+  alpha_{B,2} gamma (1 - theta) m_B]), m_i = p_{i,2} - c_i, and both arguments of F^{-1} lie in (0, 1); (unique) the
+  two-period feedback equilibrium is unique; (profits) Pi^N_i, L^N_{i,1}, R^N_{i,1} are those displayed at the end
+  of the proof.
+differences_checked: []
+hypotheses_used: [A2, A3, A4, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on:
+  - "L1 proof: (A.1) and the region analysis of Prob(D_A <= y_A)"
+  - "L2 proof: the shift argument and second-period best responses (A.5), (A.7), and the second-period profit pi^0_{i,2} + (p_{i,2} - c_i) Z_{i,2}"
+steps:
+  - id: 1
+    locator: 'Let $\overline{\overline{y}}_{A,2} := y_{A,2} - \alpha_{A,2} \gamma R_{1}$'
+    claim: Second period - shifted best responses of the form (A.5), (A.7), unique equilibrium y^0 + alpha_{i,2} gamma R_1, and profit pi^0_{i,2} + (p_{i,2} - c_i) alpha_{i,2} gamma E[R_1 | X_1].
+    status: verified
+    method: symbolic
+    note: As steps 1 to 5 of L2 with Z_{i,2} = alpha_{i,2} gamma R_1; pathwise value identity C9 of shared_exact_identities.py (exact).
+  - id: 2
+    locator: '(A.12)'
+    claim: A's two-period objective in the first period, including the term rho m_A alpha_{A,2} gamma (y_{B,1} - E[y_{B,1} - D_{B,1}]^+).
+    status: verified
+    method: re-derivation
+    note: Substituting the continuation of step 1 (affine in R_{A,1} + R_{B,1}) and min(D, y) = y - (y - D)^+.
+  - id: 3
+    locator: 'The first-order derivative of the profit function in (A.12) w.r.t. $y_{A,1}$ is'
+    claim: The derivative has the extra term - rho m_A alpha_{A,2} gamma d E[y_B - D_B]^+ / d y_A.
+    status: verified
+    method: re-derivation
+    note: Direct differentiation; D_{B,1} depends on y_{A,1} through the spillover.
+  - id: 4
+    locator: '\mathbb{E}\left(y_{B,1} -D_{B,1} \right)^+ = \int_{0}^{y_{A,1}/\alpha_{A,1}}'
+    claim: The two-integral expression of B's expected leftover.
+    status: verified
+    method: re-derivation
+    note: For X <= y_A/alpha_A, D_B = alpha_B X; above, D_B = (alpha_B + theta alpha_A) X - theta y_A.
+  - id: 5
+    locator: 'Thus, $\mathbf{Prob} \left(D_{A,1} \leq y_{A,1} \right) = F\left(\frac{y_{A,1}+\theta y_{B,1}}{\alpha_{A,1}+\theta \alpha_{B,1}} \right)$ and'
+    claim: In y_A/alpha_A >= y_B/alpha_B, Prob(D_A <= y_A) = F(u) and the leftover derivative is 0.
+    status: verified
+    method: re-derivation
+    note: For X > a >= b the second integrand (y_B - alpha_B X) + theta (y_A - alpha_A X) is negative, and the first integral equals int_0^b (y_B - alpha_B z) f, independent of y_A. Derivation mine.
+  - id: 6
+    locator: '= \theta \left [F \left(\frac{y_{B,1}+\theta y_{A,1}}{\alpha_{B,1}+\theta \alpha_{A,1}} \right) - F\left(\frac{y_{A,1}}{\alpha_{A,1}} \right) \right]'
+    claim: In y_A/alpha_A < y_B/alpha_B, Prob(D_A <= y_A) = F(a) and the leftover derivative is theta [F(w) - F(a)].
+    status: verified
+    method: re-derivation
+    note: Leibniz rule; the boundary terms at z = a cancel because y_B + theta y_A - (alpha_B + theta alpha_A) a = y_B - alpha_B a, and the integrand vanishes at z = w. Derivation mine; also checked numerically in step 7.
+  - id: 7
+    locator: 'Therefore, if $y_{A,1}/\alpha_{A,1} \geq y_{B,1}/\alpha_{B,1}$, the first-order derivative'
+    claim: The first- and second-order derivatives on the two pieces.
+    status: verified
+    method: numerical
+    note: >-
+      Re-derived by hand; the first-order derivatives match central differences of the model payoff (Game,
+      scenario N) in both regions (D1 of shared_derivatives_best_responses.py, 718 comparisons over S, N and G,
+      max error 2.0e-11 relative). The second-order expressions are the derivatives of the first-order ones where
+      f exists.
+  - id: 8
+    locator: 'has two concave pieces for $y_{A,1} \geq y_{B,1} \alpha_{A,1}/\alpha_{B,1}$'
+    claim: Concavity of A's payoff on y_A >= 0.
+    status: verified
+    method: re-derivation
+    note: Each piece has a nonincreasing derivative (coefficients p_{A,1} + rho m_A alpha_{A,2} gamma (1 - theta) > 0 under I1); at the boundary both derivatives equal p - c + K - (p + K) F(y_B/alpha_B), so the derivative is continuous and nonincreasing throughout.
+  - id: 9
+    locator: '(A.13)'
+    claim: A's best response - first branch for y_B <= alpha_B zeta^N_A, otherwise the root of (A.13); decreasing in y_B with the stated limit.
+    status: verified
+    method: numerical
+    note: >-
+      Derivation mine: the derivative at y_A = 0+ is at least p_{A,1} - c_A > 0 and tends to -c_A, so the best
+      response is interior and unique (at a root at least one of F(a), F(w) lies in (0, 1)); the payoff derivative
+      decreases in y_B, so the best response is nonincreasing; F(w) -> 1 gives the limit. Numerically (D2): best
+      response equals the first branch within 2.4e-8 mu, is nonincreasing up to the best-response precision, and
+      reaches the stated limit within 2.7e-8 mu.
+  - id: 10
+    locator: '(A.14)'
+    claim: B's objective and best response, with (A.15) and its limit.
+    status: verified
+    method: numerical
+    note: Mirror of steps 2 to 9 (D1 and D2 for retailer B).
+  - id: 11
+    locator: 'Since $\frac{c_{A}}{c_{B}} p_{B,t} \leq p_{A,t}$ and $\alpha_{B,t} \leq \alpha_{A,t}$, we have'
+    claim: c_A/(p_{A,1} + rho alpha_{A,2} gamma m_A) <= c_B/(p_{B,1} + rho alpha_{B,2} gamma m_B).
+    status: verified
+    method: symbolic
+    note: Uses both parts of A11 (alpha_{B,2} <= alpha_{A,2} comes from p_{A,2} <= p_{B,2}) and m_A >= (c_A/c_B) m_B. Exact check C2 (4000 points) shows the inequality is in fact strict under A1 and gamma > 0.
+  - id: 12
+    locator: 'Thus, it must satisfy the following system'
+    claim: An equilibrium in y_A/alpha_A < y_B/alpha_B satisfies (A.16).
+    status: verified
+    method: re-derivation
+    note: Both best responses are interior (step 9), so both first-order conditions hold with equality, in their region-2 form for A and region-1 (mirror) form for B. Derivation mine.
+  - id: 13
+    locator: 'Thus, $F \left(\frac{y_{B,1}+\theta y_{A,1}}{\alpha_{B,1} + \theta \alpha_{A,1}} \right ) > F \left( \frac{y_{A,1}}{\alpha_{A,1}} \right)$ for $\theta \in [0,1]$'
+    claim: F(w) > F(a).
+    status: verified
+    method: re-derivation
+    note: >-
+      w > a holds since w averages b > a and a with weight alpha_B > 0 on b. Strictness of F also needs w in the
+      interior of the support (for a bounded support with a, w both above its upper end F(w) = F(a) = 1). At a
+      point satisfying (A.16) this holds: the second equation gives F(w) = 1 - c_B/(p_{B,1} + K_B) in (0, 1). The
+      text asserts the inequality before invoking that equation; under the same hypotheses the claim holds
+      (derivation mine).
+  - id: 14
+    locator: 'which leads to a contradiction'
+    claim: The first equation of (A.16) with F(a) < F(w) gives 1 - c_A/(p_{A,1} + K_A) < F(w) = 1 - c_B/(p_{B,1} + K_B), contradicting step 11.
+    status: verified
+    method: symbolic
+    note: The right side of the first equation is below (p_{A,1} + K_A) F(w) because p_{A,1} + K_A (1 - theta) > 0; checked as an exact identity on the coefficients (C10, 4000 points). The comparison can be made on critical ratios, so no property of F^{-1} beyond monotonicity is needed.
+  - id: 15
+    locator: '(A.17)'
+    claim: The first-order conditions in y_A/alpha_A >= y_B/alpha_B.
+    status: verified
+    method: re-derivation
+    note: Region-1 form for A (step 5) and the mirror of step 6 for B.
+  - id: 16
+    locator: 'Solving the first equation for $(y_{A,1}+\theta y_{B,1})/(\alpha_{A,1}+\theta\alpha_{B,1})$'
+    claim: The solution is the stated closed form.
+    status: verified
+    method: symbolic
+    note: F(u) = q^N_A, then F(b) = 1 - (c_B - K_B theta own_A)/(p_{B,1} + K_B (1 - theta)) with own_A = c_A/(p_{A,1} + K_A). Exact check C4 (4000 points) - both equations of (A.17) hold at the closed form.
+  - id: 17
+    locator: 'imply that both fractiles lie in $(0,1)$ and $\zeta^N_{A,1}\geq\zeta^N_{B,1}$'
+    claim: q^N_A, q^N_B in (0, 1) and q^N_A >= q^N_B.
+    status: verified
+    method: symbolic
+    note: >-
+      Numerator of q^N_B positive since K_B theta own_A <= theta c_B K_B/(p_{B,1} + K_B) < c_B; below the
+      denominator since c_B < p_{B,1}; q^N_A >= q^N_B is equivalent to own_A (p_{B,1} + K_B) <= c_B, which is step
+      11. Uses I1 for both retailers (p_{A,1} > c_A > 0 as well as p_{B,1} > c_B > 0). Exact check C3 (4000 points,
+      0 failures; the equivalence also at 4000 points without A11, 1179 with B higher).
+  - id: 18
+    locator: 'Thus the orders satisfy the required ordering'
+    claim: y^N_{A,1}/alpha_{A,1} >= y^N_{B,1}/alpha_{B,1}.
+    status: verified
+    method: symbolic
+    note: The difference is (alpha_{A,1} + theta alpha_{B,1})(zeta_A - zeta_B)/alpha_{A,1} (C8).
+  - id: 19
+    locator: 'this solution is the unique equilibrium'
+    claim: Existence and uniqueness of the first-period equilibrium.
+    status: verified
+    method: re-derivation
+    note: Every equilibrium satisfies the first-order conditions (step 12); none lies in region 2 (step 14); in region 1 the system has the single solution u = F^{-1}(q_A), b = F^{-1}(q_B), unique because F is strictly increasing at levels in (0, 1) under A3; by concavity it is a mutual best response.
+  - id: 20
+    locator: 'Moreover, by the definition, we have $\zeta^N_{A,1} < \zeta^S_{A,1}$'
+    claim: zeta^N_{A,1} < zeta^S_{A,1}.
+    status: verified
+    method: symbolic
+    note: Needs alpha_{A,2} < 1 (I2), gamma > 0, m_A > 0. Exact check C5 (4000 points). Not part of the statement.
+  - id: 21
+    locator: 'Last, by substituting $y^N_{A,1}$ and $y^N_{B,1}$ into (A.12) and (A.14)'
+    claim: Pi^N_i, L^N_{i,1}, R^N_{i,1}, R^N_1 and the second-period orders.
+    status: verified
+    method: re-derivation
+    note: Term by term from (A.12), (A.14); the closed-form sales and profits equal the model's under the uniform law (test_closed_form_sales_and_profits_equal_the_model[N], 500 points).
+findings: []
+numerical:
+  command: python numerics/run.py -k L3
+  direct: "8/8 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    As for L2, with scenario N: the primitives-based existence checks (first and second period, 109 points each,
+    four A3-class distributions, edge points) and the uniqueness scans test the right predicates; the profit links
+    test L3.profits against the model. test_branch_conditions_in_the_code_are_the_fractile_orderings and
+    test_scenario_n_code_matches_lemma_3 are counted as direct checks of L3.first but check the port, not the
+    equilibrium property. The checks never place an equilibrium candidate in region 2, which the proof excludes;
+    the uniqueness scans cover that region only through T(y_B) on the whole strategy interval.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_exact_identities.py: C2, C3, C4, C5, C9, C10 (exact, 0 failures)"
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_derivatives_best_responses.py: D1 (derivative in both regions, max 2.0e-11) and D2 (A.13)/(A.15) branches, monotonicity and limits (within 2.7e-8 mu)"
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_boundary_equilibria.py: scenario N at hand-built edge points, first and second period, max relative gain 5.8e-16 and 1.9e-15"
+not_checked:
+  - rho < 1 was not probed numerically; the formulas depend on rho and gamma only through rho gamma.
+  - Distributions with unbounded support were not probed numerically (the quadrature of numerics/ needs a bounded support); the derivation covers them.

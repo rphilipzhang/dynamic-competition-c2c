@@ -1,0 +1,97 @@
+id: P1
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: The supplied context included a brief historical summary of an earlier verification, including
+    a P2 reference. No earlier verification folder or external file was opened. I used the parent’s current-run
+    reports and scripts.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: For each admissible exogenous-price market and each growth rate γ>0, each of A's benchmark, S and
+  N equilibrium orders in period 1 is nondecreasing in θ on [0,1]. For every such market there is a sufficiently
+  large growth level independent of θ. For each γ above it there is a cutoff in [0,1] with yS≥yN below and including
+  the cutoff and yS≤yN above and including it.
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A5
+- A6
+- A7
+- A8
+- A9
+- A10
+- A11
+- I1
+- I2
+unstated_hypotheses: []
+relies_on:
+- L1–L3, first-period tail and order formulas on the A-high branch, as selected by L4.
+steps:
+- id: 1
+  locator: Lemmas 1 and 2, first paragraph
+  claim: The benchmark and S orders are affine and weakly increasing in θ.
+  status: verified
+  method: re-derivation
+  note: Write a,b for the period-one A,B shares, x,z for their period-two shares, u,v for pA1,pB1, m,n for pA2−cA,pB2−cB
+    and U=μ+σ. With tails sA,sB the A order is a(U−2σsA)+2σbθ(sB−sA). In the benchmark tails are cA/u,cB/v. In
+    S they are cA/(u+γm),cB/(v+γn). In each case sB−sA≥0 by A11. In the benchmark equality occurs exactly when
+    A11 binds in period 1, and in S when it binds in both periods. These flats satisfy the statement.
+- id: 2
+  locator: (A.18) and (A.19)
+  claim: The N critical point of B decreases in θ.
+  status: verified
+  method: re-derivation
+  note: My derivation sets q=cA/(u+γxm), r=γzn, D=v+r(1−θ), and H=cB−(v+r)q. The L3 B tail is w=q+H/D. Write J=cB*x*m−cA*z*n>0.
+    Indeed cB*m≥cA*n by A11, and x≥z. Simultaneous equality would require equal second-period prices and equal
+    cost-to-price ratios despite cA<cB. Hence H=[cB*u−cA*v+γJ]/(u+γxm)>0, even at A11 equality. Differentiation
+    gives w′=Hr/D²>0 and ζB′=−2σw′, including one-sided endpoint values. All tails lie in (0,1) for finite γ since
+    w lies between cB/(v+r) and (cB−rq)/v<cB/v.
+- id: 3
+  locator: Thus the N order is increasing
+  claim: A orders more in N as substitution increases.
+  status: verified
+  method: re-derivation
+  note: Substituting the tails yields yA=a(U−2σq)+2σbθH/D. Its first derivative is 2σbH(v+r)/D²>0, for all γ>0.
+- id: 4
+  locator: At θ=0
+  claim: A orders less in N than in S at zero substitution.
+  status: verified
+  method: re-derivation
+  note: With θ=0 the N-minus-S difference is 2σa[cA/(u+γm)−cA/(u+γxm)], which factors to the printed strictly
+    negative fraction since 0<x<1.
+- id: 5
+  locator: At θ=1, the quadratic g_A
+  claim: A orders strictly more in N for all sufficiently large γ at full substitution.
+  status: verified
+  method: symbolic
+  note: At θ=1 multiply (yN−yS)/(2σγ) by v(u+γm)(v+γn)(u+γxm). Substituting the four tails gives a quadratic with
+    second derivative 2bmnJ; expansion of J gives the printed expression. Equivalently, S tails and q vanish,
+    while w→J/(xmv)>0. Therefore yN−yS→2σbJ/(xmv)>0. Only fixed market parameters enter this endpoint bound.
+- id: 6
+  locator: Direct differentiation and the cutoff
+  claim: Convexity yields the claimed ordered intervals and equality at the cutoff.
+  status: verified
+  method: re-derivation
+  note: My differentiation gives yN″=4σbHr(v+r)/D³>0. For each sufficiently large γ, yN−yS is strictly convex,
+    continuous, negative at 0 and positive at 1. Its closed nonpositive sublevel set is [0,t*], t*∈(0,1); equality
+    at its boundary follows by continuity. No underlying formula becomes singular at θ=0 or 1.
+findings: []
+numerical:
+  command: python numerics/run.py -k P1
+  direct: 2/2 passed
+  supporting: 4/4 passed
+  assessment: The exact predicates in test_propositions_exogenous.py compare all three first-period A orders across
+    θ, enforcing the demonstrated flat benchmark/S cases at binding A11. Across 120 regular and 90 edge markets
+    they test 12 γ rungs from .05 to 10^60, including θ=0,1, with both signs required at the top two rungs. The
+    all-γ sign-run check also allows no crossing. The four supports check admissibility and agreement of the analytical
+    order formulas. Grid tests can bracket a root; its equality and no extra root follow from convexity.
+  own_checks:
+  - 'scripts/shared_order_sales_shapes.py, logs/order_sales_shapes.log: symbolic curvature and endpoint coefficient.'
+not_checked:
+- Numerical checks vary finitely many parameter values. The analytic argument supplies the continuum conclusions.

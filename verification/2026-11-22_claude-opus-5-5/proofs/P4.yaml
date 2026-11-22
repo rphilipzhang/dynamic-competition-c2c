@@ -1,0 +1,58 @@
+id: P4
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Under A1 to A4, A6 to A11, I1 and I2, for every admissible market there is gamma^R > 0 (depending on prices, costs
+  and alpha_{A,2}, not on theta, mu or sigma) such that for every gamma > gamma^R there is theta_0 in (0, 1) with
+  E[R^N_1] strictly decreasing on [0, theta_0] and strictly increasing on [theta_0, 1].
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A6, A7, A8, A9, A10, A11, I1, I2]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: 'By Lemma 3, we have the closed form of \mathbb{E} [R^{N}_{1}].'
+    claim: Closed form of total expected first-period sales.
+    status: verified
+    method: symbolic
+    note: mu - E[R^N_1] = sigma (alpha_{A,1} + theta alpha_{B,1}) r_A^2 + sigma (1 - theta) alpha_{B,1} r_B^2 (SymPy, from the sales formulas checked by integration).
+  - id: 2
+    locator: '\frac{\partial }{\partial \theta}\mathbb{E} [R^{N}_{1}] = \frac{- \alpha_{B,1} [c_{A} (p_{B,1}-(\alpha_{A,2}-1) \gamma p_{B,2})-c_{B} (...)] \sigma}{(...)^2 (...)^3} g^{N}_R(\theta)'
+    claim: The theta-derivative is a positive factor times g_R^N, linear in theta.
+    status: verified
+    method: symbolic
+    note: Dividing the derivative by the printed prefactor leaves a polynomial of degree 1 in theta (and 2 in gamma). The printed bracket equals -(X1 + gamma W) < 0 (symbolic), so the prefactor is positive and g_R^N has the sign of the derivative.
+  - id: 3
+    locator: 'g^{N}_R(0) is a quadratic function of \gamma with \frac{\partial^2 g^{N}_R(0)}{\partial \gamma^2} <0'
+    claim: g_R^N(0) is negative for gamma above its largest positive root gamma^R.
+    status: verified
+    method: symbolic
+    note: My derivation - the gamma^2 coefficient of g_R^N(0) is -alpha_{B,2} m_B W < 0; the constant term c_A p_{B,1}^2 + c_B p_{A,1} p_{B,1} is positive, so gamma^R is the unique positive root and g_R^N(0) > 0 below it. g_R^N(0) contains alpha_{A,2}, prices and costs only.
+  - id: 4
+    locator: 'g^{N}_R(1) = p_{B,1} (c_{A} p_{B,1}+c_{B} p_{A,1})+\gamma p_{B,1} (...) > 0'
+    claim: Value at theta = 1, positive for all gamma > 0.
+    status: verified
+    method: symbolic
+    note: Equal to the printed expression, which equals p_{B,1}(c_A p_{B,1} + c_B p_{A,1}) + gamma p_{B,1} W > 0.
+  - id: 5
+    locator: 'Thus, if \gamma > \gamma^R, ... first negative then positive'
+    claim: A linear function negative at 0 and positive at 1 has one root in (0,1); the sales fall then rise.
+    status: verified
+    method: re-derivation
+    note: Direct; the root theta_0 = g(0)/(g(0) - g(1)) lies in (0, 1).
+findings: []
+numerical:
+  command: python numerics/run.py -k P4
+  direct: "1/1 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    The check computes E[R^N_{A,1}] + E[R^N_{B,1}] exactly on a theta grid that includes delta and 1 - delta and the
+    layer 1 - t/gamma, and requires at gamma = 1e50 and 1e60 a negative first increment, a positive last increment and
+    the pattern "-+". This is the printed predicate for gamma above a threshold; the threshold itself is only probed.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/P4_symbolic_checks.py: all identities True; gamma^R = 10.36 (regular), 12.21 (A11 binding both periods), 9.10 (equal prices), 4287 (c_A/c_B = 0.999); at gamma = 1e4 the minimiser theta_0 is about 0.9997, inside the layer 1 - O(1/gamma)."
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_sec4_counterexample_search.py: at gamma = 1e12 the increment pattern along theta is '-+' at all 160 exact random admissible markets."
+not_checked: []

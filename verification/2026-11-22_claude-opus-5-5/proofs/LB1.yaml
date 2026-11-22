@@ -1,0 +1,110 @@
+id: LB1
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Fix any admissible point of the Exogenous Price Model with the price condition A11 in both periods (and A1,
+  I1, I2, theta in [0, 1]), any gamma > 0, any weights lambda^S in [0, 1], lambda^N = 1 - lambda^S, rho = 1, and
+  any F of the A3 class. With Z^G_{i,2} = gamma_{i,2} R_{i,1} + gamma^C_{i,2} R_{j,1}, gamma_{i,2} = (lambda^S +
+  lambda^N alpha_{i,2}) gamma, gamma^C_{i,2} = lambda^N gamma alpha_{i,2}, and feedback play: (second) for every
+  first-period sales state the second-period game has exactly one equilibrium, y^G_{i,2} = y^0_{i,2} + Z^G_{i,2};
+  (first) given that continuation the first-period game has exactly one equilibrium, y^G_{A,1} = (alpha_{A,1} +
+  theta alpha_{B,1}) zeta^G_{A,1} - theta alpha_{B,1} zeta^G_{B,1}, y^G_{B,1} = alpha_{B,1} zeta^G_{B,1}, with
+  zeta^G_{A,1} = F^{-1}(1 - c_A/(p_{A,1} + gamma_{A,2} m_A)) and zeta^G_{B,1} = F^{-1}(1 - [c_B - gamma^C_{B,2}
+  theta m_B c_A/(p_{A,1} + gamma_{A,2} m_A)]/[p_{B,1} + (gamma_{B,2} - gamma^C_{B,2} theta) m_B]), whose arguments lie
+  in (0, 1); (unique) the two-period feedback equilibrium is unique.
+differences_checked:
+  - difference: 1
+    needed: true
+    note: >-
+      Case 2 of the definition of needed: the paper imposes A11 by context. Online Appendix B studies, in the words
+      of Manuscript.tex line 214, "the equilibrium for the Exogenous Price Model with both types of interactions
+      present", and the opening paragraph of Section 4 imposes A11 for that model; Figure B.1 uses equal prices,
+      which satisfy it; the proof argues "by analogous arguments" to Lemma 3, whose ordering step uses A11. Read
+      alone, without A11, the printed statement is false at some admissible prices, so making the condition
+      explicit is needed, and it does not correct the printed statement. The listed reasons were checked. (i) A11
+      makes c_A/(p_{A,1} + gamma_{A,2} m_A) <= c_B/(p_{B,1} + gamma_{B,2} m_B) for every lambda^S in [0, 1]: it gives
+      (c_A/c_B) p_{B,t} <= p_{A,t} and alpha_{A,2} >= alpha_{B,2}, hence gamma_{A,2} >= gamma_{B,2}; exact check C6 at
+      4000 points times 5 weights including 0 and 1, 0 failures. (ii) A11 in period 2 gives the A-higher form of
+      y^0_{i,2}. (iii) The claim "Without it the stated closed form is in general not an equilibrium" holds in the
+      model: LB1_without_a11_probe.py, 60 points of draw_without_a11; at all 7 points where the ordering of (i)
+      reverses, the stated closed form is defined but not an equilibrium (relative deviation gain 2.6e-5 to
+      1.5e-2), while the mirror form is (gain 9e-16); in period 2, the A-higher Lemma 1 form plus Z fails at 14 of
+      15 points with c_A/p_{A,2} > c_B/p_{B,2} (the 15th has gain 3.3e-7, near-equal fractiles). A11 is sufficient,
+      not necessary - at the 46 points that violate A11 but keep the ordering of (i), the stated first-period
+      form is still an equilibrium (gain at most 2.1e-15) - which is consistent with "in general". The added rho = 1
+      in the Hypotheses line matches the proof, whose displays carry no rho.
+hypotheses_used: [A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A15, I1, I2, I3]
+unstated_hypotheses: []
+relies_on:
+  - "L3 proof: the whole argument, invoked as 'by analogous arguments' (second-period shift, the piecewise derivatives of the first-period payoff, concavity, the region-2 contradiction and the solution of the first-order conditions)"
+  - "L2 proof: second-period profit pi^0_{i,2} + (p_{i,2} - c_i) Z_{i,2}, needed for the first-period payoff and not written in this proof"
+steps:
+  - id: 1
+    locator: 'by analogous arguments in the proof of Lemma 3, we have the equilibrium order quantity $\overline{\overline{y}}_{A,2}^G = y^0_{A,2}$'
+    claim: Second period - shifting by Z^G_{i,2} gives the benchmark game, unique equilibrium y^0 + Z^G.
+    status: verified
+    method: symbolic
+    note: As in L2 steps 1 to 4 with the state-dependent shift Z^G_{i,2}; Lemma 1 applies at the second-period prices because A11 holds there. The value pi^0_{i,2} + (p_{i,2} - c_i) Z^G_{i,2}, which the first period needs, holds pathwise (C9, exact).
+  - id: 2
+    locator: 'In the first period, by analogous arguments, retailer A''s best response is'
+    claim: A's first-period payoff (not displayed) and its best response, first branch for y_B <= alpha_B zeta^G_A, otherwise the root of the displayed equation.
+    status: verified
+    method: numerical
+    note: >-
+      Derivation mine: payoff [p_{A,1} - c_A + m_A gamma_A] y_A - [p_{A,1} + m_A gamma_A] E[y_A - D_A]^+ + m_A
+      gamma^C_A (y_B - E[y_B - D_B]^+) + pi^0_{A,2}; with steps 5 and 6 of L3 its derivative in region 2 is the
+      displayed equation with coefficients p_{A,1} + m_A (gamma_A - gamma^C_A theta) > 0 (since gamma_A >= gamma^C_A)
+      and m_A gamma^C_A theta. Central-difference check of both regions, scenario G (D1, max error 2.0e-11).
+  - id: 3
+    locator: 'Retailer B''s best response is: If $y_{A,1} < \alpha_{A,1} F^{-1}\left( 1- \frac{c_B}{p_{B,1} + \gamma_{B,2} (p_{B,2} -c_B)} \right)$'
+    claim: B's best response and its displayed equation.
+    status: verified
+    method: numerical
+    note: Mirror of step 2 with gamma_B, gamma^C_B; D1 covers retailer B in scenario G.
+  - id: 4
+    locator: 'By analogous arguments, the first-period order quantities satisfy $\frac{y^G_{A,1}}{\alpha_{A,1}} \geq \frac{y^G_{B,1}}{\alpha_{B,1}}$'
+    claim: No equilibrium in y_A/alpha_A < y_B/alpha_B.
+    status: verified
+    method: symbolic
+    note: >-
+      The analogue of L3 steps 11 to 14 needs c_A/(p_{A,1} + gamma_{A,2} m_A) <= c_B/(p_{B,1} + gamma_{B,2} m_B),
+      which the proof does not state; it follows from A11 for every weight (difference 1, (i); C6). The
+      contradiction then runs as in L3 with the positive coefficient p_{A,1} + m_A (gamma_A - gamma^C_A theta).
+      Derivation mine.
+  - id: 5
+    locator: 'and are the solution to the system'
+    claim: The first-period orders solve the displayed system, whose solution is the closed form of the statement.
+    status: verified
+    method: symbolic
+    note: The proof stops at the system; solving it as in L3 step 16 gives zeta^G. Exact check C6 - both equations hold at the closed form for lambda^S in {0, 1/3, 1/2, 1, random}, 20000 cases, 0 failures; F^{-1} is unique at levels in (0, 1), so the solution is unique.
+  - id: 6
+    locator: 'Thus, we have proved Lemma B.1'
+    claim: The arguments of F^{-1} lie in (0, 1), zeta^G_A >= zeta^G_B, and the equilibrium is unique.
+    status: verified
+    method: symbolic
+    note: >-
+      Not written in the proof. Numerator of q^G_B is positive since gamma^C_B <= gamma_B; q^G_A >= q^G_B is
+      equivalent to the ordering of step 4. C6 checks both exactly. Uniqueness as in L3 step 19. At lambda^S = 1 and
+      0 the closed forms reduce exactly to those of Lemmas 2 and 3 (C6).
+findings: []
+numerical:
+  command: python numerics/run.py -k LB1
+  direct: "6/6 passed"
+  supporting: "2/2 passed"
+  assessment: >-
+    test_first_period_equilibrium[G], test_second_period_equilibrium_and_continuation_value[G] and the two
+    uniqueness scans for G test the right predicates from the primitives, at points that satisfy A11 (regular and
+    edge, lambda^S random and at 0 and 1, four A3-class distributions). test_mixed_scenario_code_matches_lemma_b1
+    and test_mixed_scenario_reduces_to_scenarios_s_and_n are counted as direct checks of LB1.first but compare the
+    port with a transcription of Lemma B.1 and with the S and N code; they do not test the equilibrium property.
+    No check tests the claim of difference 1 that the closed form fails without A11; LB1_without_a11_probe.py does.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/LB1_without_a11_probe.py: stated form not an equilibrium at 7/7 reversed-ordering points (gain 2.6e-5 to 1.5e-2), equilibrium at 46 points violating A11 with the ordering kept (gain <= 2.1e-15); period 2 fails at 14/15"
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_exact_identities.py: C6 (ordering for every weight, range of the fractiles, system at the closed form, reduction to L2 and L3; 20000 exact cases, 0 failures), C9"
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_derivatives_best_responses.py: D1 for scenario G, both retailers and regions"
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_boundary_equilibria.py: scenario G with lambda^S in {0, 0.3, 1} at hand-built edge points, max relative gain 5.8e-16 (first period) and 1.9e-15 (second)"
+not_checked:
+  - Figure B.1 and the robustness statements after the proof (FB1) are outside this record.

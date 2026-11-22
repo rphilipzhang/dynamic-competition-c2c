@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# LaTeX build products, if the paper is compiled in place
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*-eps-converted-to.pdf
+paper/informs1.cls
+paper/ormsv080.bst
+
+# Working files of verification runs. A run's build/ copies paper/ and its logs record
+# local paths. tmp/ and pytest-of-*/ hold temporary files.
+verification/*/build/
+verification/*/tmp/
+pytest-of-*/

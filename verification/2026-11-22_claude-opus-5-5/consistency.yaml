@@ -1,0 +1,334 @@
+# Part 1 of AGENTS.md: theory.md and numerics/ against the paper.
+# Run 2026-11-22_claude-opus-5-5. Paths are relative to the repository root.
+# Printed numbers: paper/ was copied to verification/2026-11-22_claude-opus-5-5/build/ and built with
+# `latexmk -pdf Manuscript.tex OnlineAppendix.tex`; the labels of the two .aux files were compared with
+# numerics/paper_labels.json (item "numerics paper_labels.json" below).
+
+- item: theory.md Model
+  compared_with: Section 3 of paper/Manuscript.tex (lines 83-172)
+  method: script
+  result: consistent
+  note: >-
+    verification/2026-11-22_claude-opus-5-5/scripts/part1_text_compare.py --tex paper/Manuscript.tex:83:172 --md
+    theory.md:119:218 finds 11 differing token blocks out of 1878 tokens. All are editorial: the section title
+    ("Model (Section 3 of the paper)" for "General Model Framework"), the inserted subsection numbers 3.1 to 3.3, and
+    the two \ref resolved as 4 and 5. Every sentence, display and citation key is the paper's. Equation tags (1)-(3)
+    match the build.
+  findings: []
+
+- item: theory.md Assumptions
+  compared_with: Sections 3, 4 and 5 of paper/Manuscript.tex and Online Appendix B
+  method: script
+  result: consistent
+  note: >-
+    verification/2026-11-22_claude-opus-5-5/scripts/part1_assumption_quotes.py finds all 19 quotations of A1 to A15
+    verbatim (as token sequences) in the TeX, 18 in Manuscript.tex and A15 in OnlineAppendix.tex; 0 missing. Scopes
+    checked against the paper by reading: A3 follows the AGENTS.md reading (i.i.d. density for the model; interval
+    support and interior-positive density for L1-L3 and LB1); A10 from Section 3's closing paragraph; A11 is imposed
+    "in this section" (Section 4) and carries to Online Appendix B, which Section 4.2 introduces as "the equilibrium
+    for the Exogenous Price Model with both types of interactions present"; A12-A13 are stated in Section 5's opening;
+    A14 is the large-gamma focus of Section 5 (P7 holds for every gamma, its proof uses only the second-period inventory
+    subgame); A15 is Appendix B. The use of A13 in LA1's Hypotheses line is recorded under LA1.
+  findings: []
+
+- item: theory.md Implicit conditions
+  compared_with: the proofs of Lemmas 1-3, A.1-A.2 and B.1, and Sections 4-5 of paper/Manuscript.tex
+  method: reading
+  result: consistent
+  note: >-
+    I1 (0 < c_i < p_{i,t}) is used where listed: the proof of Lemma 2 invokes p_{i,t} > c_i, the A.2 joint proof uses
+    c_A > 0, and in Section 5 it follows from A12 (p_lo > c_B > c_A). I2 follows in Section 5 from beta < 1/[2(p_hi - p_lo)].
+    I3 is implied in Section 4 by A11, I1 and I2: the critical ratios of Lemmas 1-3 and B.1 lie in (0, 1) (derived in
+    proofs/L3.yaml and proofs/LB1.yaml, and checked in proofs/P1.yaml-P6.yaml). The text is marked as not paper text.
+    No result was found to need a condition outside its Hypotheses line (see the records).
+  findings: []
+
+- item: theory.md Setup of the Exogenous Price Model
+  compared_with: opening paragraph of Section 4 in paper/Manuscript.tex (line 175)
+  method: script
+  result: consistent
+  note: One differing token, the inserted marker "[Footnote:" before the footnote text, which is a Markdown rendering of \footnote. Otherwise identical.
+  findings: []
+
+- item: theory.md Setup of the Endogenous Price Model
+  compared_with: opening paragraphs of Section 5 in paper/Manuscript.tex (lines 351-357)
+  method: script
+  result: consistent
+  note: Three differing token blocks, all editorial - \S\ref{model:framework} and \S\ref{sec:form} printed as §3 and §3.3, and the footnote marker. Otherwise identical.
+  findings: []
+
+- item: theory.md Notation used in the proofs for Section 5
+  compared_with: opening paragraph of Online Appendix A.2 in paper/OnlineAppendix.tex (lines 327-334)
+  method: script
+  result: consistent
+  note: Two differing token blocks, \ref{lem:modelS-g} and \ref{lem:modelN-g} printed as A.1 and A.2 (the build gives A.1 and A.2). Otherwise identical.
+  findings: []
+
+- item: theory.md Definition of the mixed scenario
+  compared_with: opening paragraph of Online Appendix B in paper/OnlineAppendix.tex (line 480)
+  method: script
+  result: consistent
+  note: Identical token sequence (270 tokens, similarity 1.0).
+  findings: []
+
+- item: theory.md L1
+  compared_with: Lemma 1 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Statement and proof match the TeX symbol for symbol (token and operator-level comparison, scripts/part1_text_compare.py and scripts/part1_symbol_compare.py). No differences are listed and none were found.
+  findings: []
+
+- item: theory.md L2
+  compared_with: Lemma 2 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Identical to the TeX up to markup and resolved equation numbers (A.4)-(A.11). No differences listed or found.
+  findings: []
+
+- item: theory.md L3
+  compared_with: Lemma 3 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Identical to the TeX up to markup and resolved equation numbers (A.12)-(A.17). No differences listed or found.
+  findings: []
+
+- item: theory.md L4
+  compared_with: Lemma 4 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Differs from the TeX only in the item markers of (a) and (b).
+  findings: []
+
+- item: theory.md P1
+  compared_with: Proposition 1 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Only markup tokens and \ref printed as (A.18), (A.19). The Interpretation paragraph is an editorial note and is
+    correct (equality cases of the theta-slopes). The paper's two symbols for the threshold are reproduced as printed
+    (see P1/F1, scope proof).
+  findings: []
+
+- item: theory.md P2
+  compared_with: Proposition 2 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Only markup tokens and \ref printed as (A.18)-(A.20). No differences listed or found.
+  findings: []
+
+- item: theory.md P3
+  compared_with: Proposition 3 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Only markup tokens. No differences listed or found.
+  findings: []
+
+- item: theory.md P4
+  compared_with: Proposition 4 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Only markup tokens. The Hypotheses line rightly omits A5 (Scenario N only).
+  findings: []
+
+- item: theory.md P5
+  compared_with: Proposition 5 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Only markup tokens. The Interpretation paragraph states the fixed-market reading of (c2) prescribed by AGENTS.md and is correct about the proof's choice of Delta^A.
+  findings: []
+
+- item: theory.md P6
+  compared_with: Proposition 6 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Only markup tokens. The Interpretation paragraph is correct about the proof's choice of Delta^B.
+  findings: []
+
+- item: theory.md LA1
+  compared_with: Lemma A.1, Lemma A.2 and their joint proof in paper/OnlineAppendix.tex (Section A.2)
+  method: script
+  result: consistent
+  note: Token- and symbol-level diffs show only markup and resolved references (A.21). The Hypotheses line lists A13, which the Scenario S argument does not use.
+  findings:
+    - see: LA1/F1
+
+- item: theory.md LA2
+  compared_with: Lemma A.2 in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Statement identical up to markup; the proof is the joint proof under LA1.
+  findings: []
+
+- item: theory.md P7
+  compared_with: Proposition 7 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Only markup tokens. No differences listed or found.
+  findings: []
+
+- item: theory.md P8
+  compared_with: Proposition 8 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Only markup tokens and resolved numbers (A.22)-(A.26). The statement's "(A.22) in Appendix A.2" is typed by hand in
+    Manuscript.tex; the build gives eq:prop8b2 = (A.22), so the reference points to the intended display.
+  findings: []
+
+- item: theory.md P9
+  compared_with: Proposition 9 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: Only markup tokens. The paper's first display of the Scenario N part is unnumbered (eqnarray*); its label eq:p1FOC is spurious and unreferenced, and theory.md correctly gives it no tag.
+  findings: []
+
+- item: theory.md LB1
+  compared_with: Lemma B.1 and its proof in paper/OnlineAppendix.tex (Online Appendix B)
+  method: script
+  result: consistent_with_listed_differences
+  note: >-
+    The only change from the paper is the inserted A11 clause of listed difference 1, which is needed (case 2,
+    a hypothesis imposed by context; see proofs/LB1.yaml); it is the only change at its place. The opening paragraph
+    of Appendix B is identical.
+  findings: []
+
+- item: numerics paper_labels.json
+  compared_with: the .aux files of a fresh build of paper/ in verification/2026-11-22_claude-opus-5-5/build/, and the PDFs in paper/
+  method: script
+  result: consistent
+  note: >-
+    verification/2026-11-22_claude-opus-5-5/scripts/part1_label_map.py - Manuscript 37 labels and OnlineAppendix 47
+    labels, number and page identical to the map, no label missing on either side; every \ref and \eqref of each TeX file
+    has a label in its own document. The text of the built PDFs (pdftotext) is identical to that of paper/Manuscript.pdf
+    and paper/OnlineAppendix.pdf, so the printed references in paper/ are those of the build. theory.md's tags
+    (A.1)-(A.26) are the printed numbers. Five labels sit in starred environments (model0:A, modeln:zazb, leftB,
+    ineq:sbnbounds, eq:p1FOC) and carry spurious numbers in the .aux and the map; none is referenced.
+  findings: []
+
+- item: numerics c2c/primitives.py
+  compared_with: Section 3 of paper/Manuscript.tex; also the Game class of numerics/c2c/section4.py
+  method: reading
+  result: consistent
+  note: >-
+    Demand split, C2C-induced demand of Scenarios 0, S, N and the mixed scenario G, stockout-based substitution, sales
+    min{D, y}, period profits and the undiscounted two-period sum, and the feedback timing match Section 3 and Online
+    Appendix B. Uniform.expected_sales integrates the piecewise-linear sales exactly on the complete list of kinks.
+    primitives.py uses no result of the paper. Game (section4.py) takes one thing from the paper - the second-period
+    equilibrium y^0_{i,2} + Z_{i,2}, with y^0 from claimed_benchmark - and with it the affine continuation
+    pi^0 + (p_{i,2} - c_i) Z_{i,2}, where pi^0 is computed from primitives; the check
+    test_second_period_equilibrium_and_continuation_value and the second-period uniqueness scans confirm this from the
+    primitives (subagent check C9 in scripts/shared_exact_identities.py proves the value identity path by path).
+  findings: []
+
+- item: numerics claimed_* of c2c/section4.py
+  compared_with: Lemmas 1, 2, 3 and B.1 (paper/Manuscript.tex, paper/OnlineAppendix.tex)
+  method: reading
+  result: consistent
+  note: >-
+    claimed_benchmark and claimed_first_period transcribe the closed forms of Lemmas 1-3 and B.1 with rho = 1 through
+    the scenario weights (gamma_i, gamma^C_i); the branch condition c_A/(p_{A,1} + g_A m_A) <= c_B/(p_{B,1} + g_B m_B) is
+    the ordering the proofs use. The mirror branch (B with the higher fractile) is an extension outside the lemmas,
+    used only where A11 is dropped.
+  findings: []
+
+- item: numerics claimed_* of c2c/section5.py
+  compared_with: Lemmas A.1 and A.2, Propositions 8 and 9 and the definitions of Online Appendix A.2 (paper/OnlineAppendix.tex)
+  method: reading
+  result: consistent
+  note: >-
+    claimed_limit_prices, claimed_nu, claimed_second/first_period_prices_s, claimed_orders_s/n, claimed_condition_a22,
+    claimed_bound_a23, claimed_price_path_s/n and CLAIMED_SLOPE_SIGNS match the printed objects. claimed_bound_a23
+    returns only the square-root term of (A.23); its callers apply min{p_hi, .} themselves.
+  findings: []
+
+- item: numerics c2c/closed_form.py
+  compared_with: numerics/matlab/Figure1_MATLAB/*.m and numerics/matlab/Figure2_MATLAB/*.m, and the closed forms of Lemmas 1-3 and B.1 and the profit formulas in their proofs
+  method: script
+  result: consistent
+  note: >-
+    Line-by-line comparison with every .m file found no arithmetic difference. The MATLAB branch tests are the paper's
+    fractile orderings; the B-higher branches are the exact A/B mirror of Lemmas 2 and 3 (40 exact points, 0
+    failures) and are needed for Section 5.3. pftaT2Case1/pftbT2Case1 equal pi^0 of the proof of Lemma 1 by full
+    symbolic simplification. FindGeneral_exo matches zeta^G of Lemma B.1. Port-only changes (share written as
+    (1 + 2 beta d)/2, shared bodies, optional branch arguments) are value-preserving (bit-identical on 200,000 random
+    cases). scripts/part1_port_identities.py.
+  findings: []
+
+- item: numerics c2c/pricing.py
+  compared_with: numerics/matlab/Figure1_MATLAB/pricing_equilibrium.m and Num_pricing1.m, and Section 5.3 of paper/Manuscript.tex
+  method: script
+  result: consistent
+  note: >-
+    Tolerances, the column-major order of MATLAB find, best-response intervals, errors and warnings match. The
+    finite menu {2, 4} is used; period 2 requires exactly one price pair that is a pure equilibrium at every feasible
+    sales state, period 1 returns all pure equilibria and the figure driver requires exactly one, so no selection rule
+    is used. At the 44 plotted points there are no warnings, the equilibria are unique and strict (every deviation loses
+    at least 0.84), and all 352 first-period inventory equilibria hold in the model (largest deviation gain 2.8e-14;
+    scripts/F1_inventory_equilibria_all_points.py, scripts/F1_price_game_details.py).
+  findings: []
+
+- item: numerics c2c/figures.py
+  compared_with: captions and parameter notes of Figure 1 (paper/Manuscript.tex, Section 5.3) and Figure B.1 (paper/OnlineAppendix.tex, Appendix B), the text of Section 5.3, and the MATLAB drivers
+  method: script
+  result: consistent
+  note: >-
+    Figure 1: menu {2, 4}, c_B = 1, beta = 0.1, X ~ U[5, 15], panels (a) A, c_A = 0.1, gamma = 0.7; (b) A, 0.1, 2;
+    (c) B, 0.95, 0.7; (d) B, 0.95, 2; theta grid {0.01, 0.1, ..., 0.9, 0.99} as in the published vertices. Figure B.1:
+    p = 2, GS (gamma 2, lambda 0.8/0.2), GN (gamma 2, lambda 0.2/0.8), benchmark gamma = 0, c_A = 0.5, 0.5, 0.1, 0.92
+    for panels (a)-(d), as the caption states. brentq replaces fzero with the same root. Figure2_reference.csv equals
+    the port at 99 of 99 values (largest difference 5e-14). The menu {2, 4} violates A13 (p_hi = 4 is below its bound),
+    which Section 5.3, a finite-menu study, does not invoke.
+  findings: []
+
+- item: numerics quotations
+  compared_with: numerics/numerical_statements.yaml and the LaTeX quotations in numerics/tests/test_port_matches_paper.py, against paper/Manuscript.tex and paper/OnlineAppendix.tex in context
+  method: script
+  result: consistent
+  note: >-
+    All nine quotes of numerical_statements.yaml occur verbatim (references resolved with numerics/paper_labels.json)
+    and read correctly in context; the 13 LaTeX strings quoted in test_port_matches_paper.py match the lemmas and
+    equations they transcribe; test_figures.py and test_other_distributions.py contain paraphrases only. The reason for
+    excluding N7 is true: Appendix B adopts the finite-menu setting of Section 5.3 for the mixed scenarios, and
+    pricing.py, section5.py, find_general_exo and the Figure2_MATLAB code cover only S and N with prices, or exogenous
+    prices; the paper gives no gamma for "large enough". The Introduction's and Conclusion's sentences on numerical
+    findings, and the lead sentences of Section 5.3 and of Appendix B's robustness paragraph, restate N2-N5 and need no
+    entry. One sentence of the discussion after Proposition 5 is not listed (finding C1).
+  findings:
+    - id: C1
+      severity: editorial
+      scope: numerics
+      locator: "numerics/numerical_statements.yaml, header ('Every numerical statement of the paper has an entry'); paper/Manuscript.tex line 310"
+      description: >-
+        The file omits the sentence "However, when strong cross-brand C2C is present, we find that $\Pi^N_{A}$ may
+        decrease in $\theta$ when $\theta$ takes intermediate values." No proposition or figure states it, so it is a
+        finding about the model that the repository neither lists nor checks. It sits in the discussion around
+        Proposition 5, which AGENTS.md places out of scope, and it holds.
+      suggested_fix: Add an entry for the sentence (with a check, for example the probe below), or mark it with a field excluded that says it is discussion text.
+      evidence: >-
+        scripts/part1_omitted_statement_probe.py: at 286 of 1800 admissible Section 4 points (gamma in {5, 20, 100}),
+        Pi^N_A from the closed form strictly decreases on an interior theta interval; at the printed example the model
+        (section4.Game, exact uniform integration) gives Pi^N_A = 7581.732395 at theta = 0.16 and 7579.185261 at 0.99.
+
+- item: numerics predicates of the checks
+  compared_with: the statements of the 16 results and of F1, FB1, N1-N6, check by check (numerics/tests/)
+  method: reading
+  result: consistent
+  note: >-
+    Each result record assesses the predicates of its checks (proofs/<ID>.yaml, numerical.assessment): strictness,
+    quantifiers, retailer, scenario and period match, and where a check is stronger than the statement (strict
+    monotonicity outside the equality cases, interior crossings, extra pattern conditions in the N2 and N5 checks) the
+    stronger property is true and the check passes. Threshold parts are probed at very large gamma only, as the
+    docstrings say. One labelling slip (finding C2).
+  findings:
+    - id: C2
+      severity: editorial
+      scope: numerics
+      locator: "numerics/tests/test_port_matches_paper.py: test_branch_conditions_in_the_code_are_the_fractile_orderings, test_scenario_s_code_matches_lemma_2, test_scenario_n_code_matches_lemma_3, test_mixed_scenario_code_matches_lemma_b1, test_mixed_scenario_reduces_to_scenarios_s_and_n"
+      description: >-
+        Five checks are marked claims("L2.first"), claims("L3.first") or claims("LB1.first"), that is, as direct tests
+        that the stated orders are an equilibrium. They compare the port with a transcription of the lemma or with other
+        code and do not test the equilibrium property, so they are supporting checks. The direct counts of L2 and L3
+        (8 each) and of LB1 (6) each include two such checks. The equilibrium property itself is tested directly by
+        test_first_period_equilibrium[S|N|G] and the fixed-point scans, which pass, so no conclusion changes.
+      suggested_fix: Mark the five checks with pytest.mark.supports instead of pytest.mark.claims.
+      evidence: The docstrings and bodies of the five checks (criterion - equality of code outputs with the transcription, or of two code paths, at 25 rational points).

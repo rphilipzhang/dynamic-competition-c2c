@@ -1,0 +1,43 @@
+{
+  "judgement": {
+    "theoretical_results": "verified",
+    "numerical_results": "verified_with_qualifications",
+    "consistency": {
+      "theory_md": "consistent",
+      "numerics": "consistent"
+    }
+  },
+  "results": {
+    "verdict": {
+      "sound": 16,
+      "sound_with_gaps": 0,
+      "error_suspected": 0,
+      "not_verifiable": 0
+    },
+    "paper_statement": {
+      "holds_as_printed": 16,
+      "holds_with_listed_differences": 0,
+      "fails": 0,
+      "not_verifiable": 0
+    }
+  },
+  "checks": {
+    "passed": 93,
+    "total": 93
+  },
+  "findings": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0,
+    "editorial": 0
+  },
+  "numerical_statements": {
+    "yes": 7,
+    "partly": 1,
+    "no": 0
+  },
+  "corrections": [],
+  "distinct_filtered_ids": 24,
+  "protected_input_files": 74,
+  "summary_words": 129
+}

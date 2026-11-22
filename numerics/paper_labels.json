@@ -1,0 +1,314 @@
+{
+  "Manuscript": {
+    "exo:main": {
+      "number": "4.2",
+      "page": "13"
+    },
+    "fig:compare": {
+      "number": "1",
+      "page": "28"
+    },
+    "fig:comparepfta-1": {
+      "number": "1a",
+      "page": "28"
+    },
+    "fig:comparepfta-2": {
+      "number": "1b",
+      "page": "28"
+    },
+    "fig:comparepftb-1": {
+      "number": "1c",
+      "page": "28"
+    },
+    "fig:comparepftb-2": {
+      "number": "1d",
+      "page": "28"
+    },
+    "general": {
+      "number": "1",
+      "page": "8"
+    },
+    "lem:model0": {
+      "number": "1",
+      "page": "12"
+    },
+    "lem:modeln": {
+      "number": "3",
+      "page": "12"
+    },
+    "lem:models": {
+      "number": "2",
+      "page": "12"
+    },
+    "lem:oneside": {
+      "number": "4",
+      "page": "14"
+    },
+    "model:equil": {
+      "number": "4.1",
+      "page": "11"
+    },
+    "model:framework": {
+      "number": "3",
+      "page": "7"
+    },
+    "nne": {
+      "number": "3",
+      "page": "9"
+    },
+    "oneside": {
+      "number": "4",
+      "page": "14"
+    },
+    "prop:indsales": {
+      "number": "3",
+      "page": "17"
+    },
+    "prop:orderprice1": {
+      "number": "8",
+      "page": "24"
+    },
+    "prop:orderprice2": {
+      "number": "7",
+      "page": "24"
+    },
+    "prop:pfta": {
+      "number": "5",
+      "page": "19"
+    },
+    "prop:pftb": {
+      "number": "6",
+      "page": "20"
+    },
+    "prop:price": {
+      "number": "9",
+      "page": "25"
+    },
+    "prop:tsales": {
+      "number": "4",
+      "page": "18"
+    },
+    "prop:yacompare": {
+      "number": "1",
+      "page": "15"
+    },
+    "prop:ybcompare": {
+      "number": "2",
+      "page": "16"
+    },
+    "sec:compare": {
+      "number": "4.2.3",
+      "page": "18"
+    },
+    "sec:con": {
+      "number": "6",
+      "page": "29"
+    },
+    "sec:form": {
+      "number": "3.3",
+      "page": "10"
+    },
+    "sec:lit": {
+      "number": "2",
+      "page": "5"
+    },
+    "sec:main": {
+      "number": "4",
+      "page": "11"
+    },
+    "sec:pricing": {
+      "number": "5",
+      "page": "22"
+    },
+    "sec:pricing-compare-pft": {
+      "number": "5.3",
+      "page": "27"
+    },
+    "sec:pricing-monontone": {
+      "number": "5.2",
+      "page": "25"
+    },
+    "sne": {
+      "number": "2",
+      "page": "8"
+    },
+    "sub@fig:comparepfta-1": {
+      "number": "a",
+      "page": "28"
+    },
+    "sub@fig:comparepfta-2": {
+      "number": "b",
+      "page": "28"
+    },
+    "sub@fig:comparepftb-1": {
+      "number": "c",
+      "page": "28"
+    },
+    "sub@fig:comparepftb-2": {
+      "number": "d",
+      "page": "28"
+    }
+  },
+  "OnlineAppendix": {
+    "appdx-mix": {
+      "number": "B",
+      "page": "14"
+    },
+    "appdx-proof": {
+      "number": "A",
+      "page": "1"
+    },
+    "eq:p8derivative": {
+      "number": "A.26",
+      "page": "13"
+    },
+    "eq:p8expansion": {
+      "number": "A.25",
+      "page": "13"
+    },
+    "eq:p8rectangle": {
+      "number": "A.24",
+      "page": "13"
+    },
+    "eq:p8region": {
+      "number": "A.23",
+      "page": "13"
+    },
+    "eq:prop8b2": {
+      "number": "A.22",
+      "page": "13"
+    },
+    "fig:general": {
+      "number": "B.1",
+      "page": "16"
+    },
+    "fig:general-pfta": {
+      "number": "B.1c",
+      "page": "16"
+    },
+    "fig:general-pftb": {
+      "number": "B.1d",
+      "page": "16"
+    },
+    "fig:general-ya": {
+      "number": "B.1a",
+      "page": "16"
+    },
+    "fig:general-yb": {
+      "number": "B.1b",
+      "page": "16"
+    },
+    "ineq:derybn": {
+      "number": "A.18",
+      "page": "6"
+    },
+    "ineq:sbcompare": {
+      "number": "A.20",
+      "page": "6"
+    },
+    "ineq:sbn": {
+      "number": "A.19",
+      "page": "6"
+    },
+    "lem:modelN-g": {
+      "number": "A.2",
+      "page": "9"
+    },
+    "lem:modelS-g": {
+      "number": "A.1",
+      "page": "9"
+    },
+    "lem:modelg": {
+      "number": "B.1",
+      "page": "14"
+    },
+    "model0:BRA": {
+      "number": "A.2",
+      "page": "1"
+    },
+    "model0:BRB": {
+      "number": "A.3",
+      "page": "1"
+    },
+    "modeln:A1": {
+      "number": "A.12",
+      "page": "3"
+    },
+    "modeln:B1": {
+      "number": "A.14",
+      "page": "4"
+    },
+    "modeln:BRA1-2": {
+      "number": "A.13",
+      "page": "4"
+    },
+    "modeln:BRB1-2": {
+      "number": "A.15",
+      "page": "4"
+    },
+    "modeln:contra-eq": {
+      "number": "A.16",
+      "page": "5"
+    },
+    "modeln:eq1": {
+      "number": "A.17",
+      "page": "5"
+    },
+    "models:A1": {
+      "number": "A.8",
+      "page": "2"
+    },
+    "models:A2": {
+      "number": "A.4",
+      "page": "2"
+    },
+    "models:B1": {
+      "number": "A.10",
+      "page": "3"
+    },
+    "models:B2": {
+      "number": "A.6",
+      "page": "2"
+    },
+    "models:BRA1": {
+      "number": "A.9",
+      "page": "2"
+    },
+    "models:BRA2": {
+      "number": "A.5",
+      "page": "2"
+    },
+    "models:BRB1": {
+      "number": "A.11",
+      "page": "3"
+    },
+    "models:BRB2": {
+      "number": "A.7",
+      "page": "2"
+    },
+    "prob0:A": {
+      "number": "A.1",
+      "page": "1"
+    },
+    "sub@fig:general-pfta": {
+      "number": "c",
+      "page": "16"
+    },
+    "sub@fig:general-pftb": {
+      "number": "d",
+      "page": "16"
+    },
+    "sub@fig:general-ya": {
+      "number": "a",
+      "page": "16"
+    },
+    "sub@fig:general-yb": {
+      "number": "b",
+      "page": "16"
+    },
+    "sys-lem6": {
+      "number": "A.21",
+      "page": "11"
+    }
+  }
+}

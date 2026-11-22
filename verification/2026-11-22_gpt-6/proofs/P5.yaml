@@ -1,0 +1,154 @@
+id: P5
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: The supplied context included a brief historical summary of an earlier verification, including
+    a P2 reference. No earlier verification folder or external file was opened. I used the parent’s current-run
+    reports and scripts.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: 'For each fixed admissible market there is γA>0, independent of θ, such that for every γ≥γA, ΠA,S
+  is nondecreasing on θ∈[0,1], and ΠA,S and ΠA,N are both strictly greater than ΠA,0 throughout. If A’s shares
+  differ across periods, the sign of ΠA,S−ΠA,N is the sign of αA1−αA2 throughout. With equal shares, choose a
+  sufficient ΔA>0. For each fixed qualifying market with Δc≥ΔA, including equality, the growth bound may depend
+  on its costs. For each γ at or above that bound there is θA∈[0,1] (depending on market and γ): S−N≥0 on [0,θA]
+  and S−N<0 on (θA,1].'
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A5
+- A6
+- A7
+- A8
+- A9
+- A10
+- A11
+- I1
+- I2
+unstated_hypotheses: []
+relies_on:
+- L2–L3, conditional second-period profit equals benchmark plus margin times the scenario-specific demand shift.
+- L2–L3 first-period tails and implied expected sales, as rederived in P3 and P4.
+steps:
+- id: 1
+  locator: (a), displayed sum of squares
+  claim: The S profit is nondecreasing throughout the substitution interval.
+  status: verified
+  method: re-derivation
+  note: Use period-one shares a,b and period-two shares x,z, first prices u,v, second-period margins m=pA2−cA,
+    n=pB2−cB. For first-period S tails sA=cA/(u+γm), sB=cB/(v+γn), the θ coefficient of (u+γm)E RA−cA yA is σb(u+γm)(sB−sA)²,
+    by the P3 sales formula and the P1 order formula. Add the same benchmark expression for period two with pA2,
+    z and its benchmark tails. Multiplication by 2σ changes tail differences into signed fractile differences.
+    This reproduces both summands. Double A11 equality gives a permissible flat profit for every γ>0.
+- id: 2
+  locator: (b), O(1) residual and the two profit limits
+  claim: Both profit gains eventually become strictly positive uniformly in θ.
+  status: verified
+  method: re-derivation
+  note: The L2 and L3 continuation shifts give exactly γm E RA,S and γxm E RN,total in addition to bounded first-period
+    profit differences. At equilibrium each period-one stock is at least its share of the lower support μ−σ, and
+    no inventory or sale exceeds a fixed multiple of μ+σ. Thus E RA,S≥a(μ−σ)>0 and E RN,total≥μ−σ>0, uniformly.
+    The limits aμ and μ follow from the tail estimates in the next step. Hence both comparisons hold uniformly
+    for all sufficiently large γ.
+- id: 3
+  locator: (c1), expected sales in S and system lost sales in N
+  claim: The normalized unequal-share difference converges uniformly to μm(a−x).
+  status: verified
+  method: re-derivation
+  note: Both S tails are O(1/γ), whence P3’s formula gives E RA,S=aμ+O(γ⁻²) uniformly. For N let q=cA/(u+γxm),
+    r=γzn and w=[cB−θrq]/[v+(1−θ)r]. P4 gives μ−E RN,total=σ[(a+θb)q²+b(1−θ)w²]. Since 0<w<1, (1−θ)w²≤(1−θ)w≤cB/r
+    even at θ=1. Dividing the bounded current profits and the two continuation terms by γ proves the stated uniform
+    limit. Its nonzero leading coefficient fixes the sign when a≠x.
+- id: 4
+  locator: h_A denominator and θ polynomial
+  claim: Positive denominator clearing gives a polynomial in θ of degree at most three.
+  status: verified
+  method: re-derivation
+  note: Denote S=u+γm, T=v+γn, K=u+γxm, D=v+γzn(1−θ). The positive denominator in print is ST²K²D². The S profit
+    after subtracting the common period-two benchmark is affine; for N the only θ-dependent denominator is D².
+    With q constant, w=q+H/D, H=cB−(v+γzn)q, the ratios θ(w−q), θ(w²−q²) stay bounded at infinity. After clearing
+    D² the N part has degree at most two; S can add a cubic term. Multiplication by the remaining factors and
+    division by γ preserves the sign. This argument concerns polynomial coefficients; model substitution rates
+    remain in [0,1].
+- id: 5
+  locator: (c2), h_A at θ=0 for equal shares
+  claim: The S–N gap at zero substitution eventually has strictly positive sign.
+  status: verified
+  method: re-derivation
+  note: My derivation using the separate newsvendor optima at θ=0 gives ΠS−ΠN=σγabm[cB²/(v+γbn)²−cA²/((u+γm)(u+γam))]
+    when a=x,b=z. After clearing positive factors the quadratic is cB²(u+γm)(u+γam)−cA²(v+γbn)². Its leading coefficient
+    a cB²m²−b²cA²n² is positive since a≥1/2, a>b², and cB m≥cA n. This determines the endpoint eventually at each
+    fixed market.
+- id: 6
+  locator: h_A at θ=1 and sufficient cost cutoff
+  claim: The printed endpoint coefficient yields an eventually negative gap throughout its sufficient cost region.
+  status: verified
+  method: symbolic
+  note: 'At θ=1 put W=[cB−b n cA/(a m)]/v>0. Both S tails vanish as γ→∞; in N q→0 while w→W. Total N sales lose
+    σq², so the large-γ continuation differs from S by o(1) at equal shares. Substitution in the current-period
+    sales/order expressions gives lim(ΠS−ΠN)=σb W(2cA−uW). Multiplying the final parenthesis by a m v yields exactly
+    the printed affine expression in cB. Its cB coefficient is −u[a m+b cA]<0. The fourth-degree coefficient of
+    the cleared endpoint polynomial has the same sign; see independent finite-difference checks. As a parametric
+    quartic it can specialize to a lower degree off the sufficient region: at all prices 4, costs 1 and 5/2, μ=10,
+    σ=1, shares 1/2, h_A(1,γ)=9(3γ+8)²(11γ+12)/2. In the asserted cB>c̄B region the coefficient is strictly negative.'
+- id: 7
+  locator: Choose ΔA with cA+ΔA>c̄B
+  claim: Equality at the chosen cost cutoff is included.
+  status: verified
+  method: re-derivation
+  note: A sufficient positive cutoff with strict buffer makes 2cA−uW<0 at and beyond ΔA throughout the admissible
+    cost region. For each such fixed market take an eventual bound for each endpoint and then their maximum. This
+    does not require a bound common to all costs. The explicit interpretation in theory.md agrees with the printed
+    proposition and supplies no listed difference.
+- id: 8
+  locator: Third θ derivative of h_A
+  claim: The cubic coefficient is nonnegative including at A11 equality.
+  status: verified
+  method: re-derivation
+  note: My derivation with a=x uses the θ slope σbS(sB−sA)² for S after removing the common continuation benchmark.
+    N has no cubic numerator, as shown above. Thus the θ³ coefficient is σb S(sB−sA)²·ST²K²(γbn)²/γ = σb³γn²K²[cB
+    S−cA T]², and multiplication by 6 yields the displayed derivative, also when cB S=cA T. The shared exact-arithmetic
+    coefficient script confirms the expression.
+- id: 9
+  locator: Opposite endpoint signs and a unique root
+  claim: The weak/strict intervals have the stated orientation and meet at equality.
+  status: verified
+  method: re-derivation
+  note: Continuity gives at least one odd-multiplicity root in (0,1). A second distinct root there would force
+    total multiplicity three because endpoint signs differ. With three roots in (0,1) the cubic has positive leading
+    coefficient, and its value at 0 would be negative. A lower-degree polynomial cannot have the required multiplicities.
+    Hence the root is unique. S−N=0 at that root, positive to its left and negative to its right.
+- id: 10
+  locator: Final γA choices
+  claim: A single market-specific growth bound suffices.
+  status: verified
+  method: re-derivation
+  note: Take the maximum of the finitely many applicable growth levels, increasing it past any strict threshold
+    in (b) and including the two endpoint levels for a qualifying equal-share market. Neither the resulting γA
+    nor the market depends on θ. Each γ≥γA has its own substitution cutoff.
+findings: []
+numerical:
+  command: python numerics/run.py -k P5
+  direct: 4/4 passed
+  supporting: 7/7 passed
+  assessment: The four predicates test S monotonicity with exact double-A11 flats, both strict benchmark gains,
+    strict unequal-share directions, and endpoint signs plus one sampled +− run for equal shares satisfying the
+    proof’s negative coefficient. The common sample covers 210 markets, 12 γ rungs and both θ endpoints. The last
+    check adds 90 qualifying markets, using two top rungs as probes. Supporting checks confirm model agreement/branches
+    and vary cB separately to exhibit possible growth-bound dependence. That latter exercise does not test a common
+    market-independent γ threshold. Exact equality at a continuous root follows from the proof.
+  own_checks:
+  - 'scripts/shared_profit_endpoints.py, logs/profit_endpoints.log: fixed-market equal-share limits and the exact
+    threshold numerator.'
+  - 'scripts/shared_profit_polynomials.py, logs/profit_polynomials.log: 32 exact markets with both endpoint leading
+    signs and the claimed cubic derivative.'
+  - 'scripts/shared_order_sales_shapes.py, logs/order_sales_shapes.log: admissible boundary where the parametric
+    quartic specializes to a cubic.'
+not_checked:
+- Numerical checks vary finitely many parameter values. The analytic argument supplies the continuum conclusions.

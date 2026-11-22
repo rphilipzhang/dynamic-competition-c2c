@@ -1,0 +1,59 @@
+id: L4
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: "2026-11-22"
+  prior_exposure: "New verifier for these five records. Received the coordinator’s task notes (including the LB1 interpretation) and system-provided project context. Read no other verification run or external file."
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  For every Section 4 market satisfying the maintained conditions, every θ∈[0,1] and every γ>0, the benchmark order of A per unit of its own market share is at least B’s in each period t=1,2. In each scenario k=S,N this inequality holds for the two first-period orders and, at every first-period sales state, for the second-period orders after subtracting each retailer’s own C2C-induced demand Z_i,2^k. Every comparison is weak.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on: ["L1–L3 proofs, the ordering of the two quantiles in each first-period equilibrium and L1’s ordering at the period-2 prices.","L2 and L3, translated second-period orders at every first-period sales state."]
+steps:
+  - id: 1
+    locator: "(a) By the proof of Lemma 1"
+    claim: "For each period the normalized benchmark inventories satisfy the printed weak ordering."
+    status: verified
+    method: re-derivation
+    note: "For a=α_A,t,b=α_B,t>0, subtract (b z_B)/b from [(a+θb)z_A−θb z_B]/a. The result is (a+θb)(z_A−z_B)/a. By L1’s critical-ratio comparison z_A≥z_B, with equality when c_A/p_A,t=c_B/p_B,t. Both periods’ prices satisfy A11."
+  - id: 2
+    locator: "(b) We first study Scenario S"
+    claim: "In the first period S has the same normalized ordering."
+    status: verified
+    method: re-derivation
+    note: "The preceding subtraction applies to the two S quantiles in L2. Their ordering follows from H_A/c_A−H_B/c_B=(p_A,1/c_A−p_B,1/c_B)+γ(p_A,2/c_A−p_B,2/c_B)≥0 under A10. The difference can be zero when lower A11 equality holds in both periods."
+  - id: 3
+    locator: "Furthermore, by part (a) and Lemma 2"
+    claim: "At every S sales state the net period-2 inventories have the benchmark ordering."
+    status: verified
+    method: re-derivation
+    note: "Under A5, Z_i,2^S=γR_i,1. Subtract this state-dependent term from L2’s equilibrium order, then divide y_i,2⁰ by α_i,2. The resulting inequality is the t=2 instance of part (a) for every past state, including zero sales."
+  - id: 4
+    locator: "Second, we study Scenario N"
+    claim: "The normalized first-period orders in N are ordered."
+    status: verified
+    method: re-derivation
+    note: "L3 gives the same order expressions in its own z_A,z_B. With H_i=p_i,1+α_i,2 γ(p_i,2−c_i) and T_B=θγ α_B,2(p_B,2−c_B), its tail difference is t_B−t_A=(c_B−H_B c_A/H_A)/(H_B−T_B)≥0. Thus z_A≥z_B and direct subtraction gives (a+θb)(z_A−z_B)/a. The strict interior bounds I3 are consequences of A11, I1 and I2, so they require no extra condition here."
+  - id: 5
+    locator: "Furthermore, by analogous arguments"
+    claim: "At every N sales state the net second-period orders satisfy the printed inequality."
+    status: verified
+    method: re-derivation
+    note: "By A6 and L3, subtract Z_i,2^N=α_i,2 γ(R_A,1+R_B,1) from each order. The remaining normalized difference is exactly that of (a) for t=2. All divisions are by positive shares, including equal shares. At θ=0 or 1 the multiplier in the first-period difference remains positive. The argument holds for arbitrarily small positive γ and never evaluates F⁻¹ at a support endpoint."
+findings: []
+numerical:
+  command: "python numerics/run.py -k L4 --report verification/2026-11-22_gpt-6/logs/report_L4.md"
+  direct: "2/2 passed"
+  supporting: "4/4 passed"
+  assessment: >-
+    The two direct tests compute exact rational normalized differences at 210 parameter points (120 regular, 90 edge), for both periods of the benchmark and both S/N first periods. The second-period S/N predicate uses the benchmark identity from L2/L3, so it checks the correct net quantity via that identity. The S/N first-period search spans 12 γ levels, 0.05 to 10⁶⁰, with θ endpoints included. It checks the weak signs and sharper implications: benchmark equality exactly at a binding lower A11 in the specified period, S equality when both bind, and strict first-period N inequality. The latter follows because α_A,2>α_B,2 if p_A,2<p_B,2, whereas equal prices and c_A<c_B give strict margin-to-cost ordering. Three port checks and the admissibility/quantile-region test support the comparisons.
+  own_checks:
+    - script: scripts/shared_inventory_marginals.py
+      result: "The shared marginal-check script also verifies the normalized first-period weak inequality in all 5,040 cases, and the strict N consequence for its 1,260 N cases, including θ endpoints, equal shares, small γ and binding lower A11. The analytical state translation covers all second-period histories."
+not_checked:
+  - "The numerical second-period net-order comparison is evaluated through the proved translation identity. The assertion concerns net period-2 orders and does not separately claim an ordering of gross S inventories."

@@ -1,0 +1,61 @@
+figure1.eps  Figure 1(a)  Scenario S [red, dashed]: 11 points | Scenario N [blue, solid]: 11 points
+figure2.eps  Figure 1(b)  Scenario S [red, dashed]: 11 points | Scenario N [blue, solid]: 11 points
+figure3.eps  Figure 1(c)  Scenario S [red, dashed]: 11 points | Scenario N [blue, solid]: 11 points
+figure4.eps  Figure 1(d)  Scenario S [red, dashed]: 11 points | Scenario N [blue, solid]: 11 points
+yaG.eps      Figure B.1(a)  Scenario GS [red, dashed]: 11 points | Scenario GN [blue, solid]: 11 points
+ybG.eps      Figure B.1(b)  Scenario GS [red, dashed]: 11 points | Scenario GN [blue, solid]: 11 points | Scenario 0 [black, dash-dot]: 11 points
+piaG.eps     Figure B.1(c)  Scenario GS [red, dashed]: 11 points | Scenario GN [blue, solid]: 11 points
+pibG.eps     Figure B.1(d)  Scenario GS [red, dashed]: 11 points | Scenario GN [blue, solid]: 11 points
+wrote published_data.csv (187 rows) and published_data_calibration.json to verification/2026-11-22_gpt-6/scratch/figure-data
+
+Theta grid (expected: Figure 1 = 0.01, 0.1, ..., 0.9, 0.99 and Figure B.1 = 0, 0.1, ..., 1)
+  ok = same number of points and max |theta - expected| <= x resolution (one ps digit)
+  file        series       points   max |theta - expected|  x resolution
+  figure1.eps Scenario S       11                 1.06e-08      8.86e-07  ok
+  figure1.eps Scenario N       11                 1.06e-08      8.86e-07  ok
+  figure2.eps Scenario S       11                 1.06e-08      8.86e-07  ok
+  figure2.eps Scenario N       11                 1.06e-08      8.86e-07  ok
+  figure3.eps Scenario S       11                 1.06e-08      8.86e-07  ok
+  figure3.eps Scenario N       11                 1.06e-08      8.86e-07  ok
+  figure4.eps Scenario S       11                 1.06e-08      8.86e-07  ok
+  figure4.eps Scenario N       11                 1.06e-08      8.86e-07  ok
+  yaG.eps     Scenario GS      11                 6.77e-09      8.06e-07  ok
+  yaG.eps     Scenario GN      11                 6.77e-09      8.06e-07  ok
+  ybG.eps     Scenario GS      11                 6.77e-09      8.06e-07  ok
+  ybG.eps     Scenario GN      11                 6.77e-09      8.06e-07  ok
+  ybG.eps     Scenario 0       11                 6.77e-09      8.06e-07  ok
+  piaG.eps    Scenario GS      11                 6.77e-09      8.06e-07  ok
+  piaG.eps    Scenario GN      11                 6.77e-09      8.06e-07  ok
+  pibG.eps    Scenario GS      11                 6.77e-09      8.06e-07  ok
+  pibG.eps    Scenario GN      11                 6.77e-09      8.06e-07  ok
+
+Decimal rounding of the plotted numbers (information only, see decimal_rounding_test)
+  figure1.eps Figure 1(a): all 22 distinct values are 4-decimal numbers (max deviation 0.506 ps digit, chance <= 1.6e-28)
+  figure2.eps Figure 1(b): all 22 distinct values are 4-decimal numbers (max deviation 0.507 ps digit, chance <= 3.2e-11)
+  figure3.eps Figure 1(c): all 12 distinct values are 4-decimal numbers (max deviation 0.478 ps digit, chance <= 1.0e-17)
+  figure4.eps Figure 1(d): all 12 distinct values are 4-decimal numbers (max deviation 0.441 ps digit, chance <= 1.0e-07)
+  yaG.eps     Figure B.1(a): not rounded to <= 6 decimals
+  ybG.eps     Figure B.1(b): not rounded to <= 6 decimals
+  piaG.eps    Figure B.1(c): not rounded to <= 6 decimals
+  pibG.eps    Figure B.1(d): not rounded to <= 6 decimals
+
+Figure B.1 against numerics/matlab/Figure2_MATLAB/Figure2_reference.csv
+  digit = value_per_ps_digit, ulp = single-precision spacing at the data, range = y-axis range
+  bound = 0.5 digit + 0.5 ulp (rounding of the stored coordinate + single-precision placement)
+  ok    = max|ext-single(ref)| <= 1 digit  and  max|ext-ref| <= bound + 0.5 digit
+  panel series            digit       ulp  max|ext-ref|    /range  /digit  /bound  max|ext-single(ref)|  /digit
+  a     Scenario GS    1.62e-06  4.77e-07     8.603e-07   5.4e-07    0.53    0.82             7.043e-07    0.43  ok
+  a     Scenario GN    1.62e-06  9.54e-07     1.040e-06   6.5e-07    0.64    0.81             8.282e-07    0.51  ok
+  panel a (yaG.eps): max |extracted - reference| = 1.040e-06 = 6.5e-07 of the y-axis range 1.6
+  b     Scenario GS    2.23e-06  4.77e-07     1.028e-06   4.7e-07    0.46    0.76             1.189e-06    0.53  ok
+  b     Scenario GN    2.23e-06  4.77e-07     9.905e-07   4.5e-07    0.44    0.73             8.455e-07    0.38  ok
+  b     Scenario 0     2.23e-06  4.77e-07     5.225e-07   2.4e-07    0.23    0.39             5.225e-07    0.23  ok
+  panel b (ybG.eps): max |extracted - reference| = 1.028e-06 = 4.7e-07 of the y-axis range 2.2
+  c     Scenario GS    3.55e-06  3.81e-06     3.528e-06   1.0e-06    0.99    0.96             1.768e-06    0.50  ok
+  c     Scenario GN    3.55e-06  3.81e-06     3.058e-06   8.7e-07    0.86    0.83             1.636e-06    0.46  ok
+  panel c (piaG.eps): max |extracted - reference| = 3.528e-06 = 1.0e-06 of the y-axis range 3.5
+  d     Scenario GS    9.12e-08  1.91e-06     9.128e-07   1.0e-05   10.01    0.91             4.422e-08    0.48  ok
+  d     Scenario GN    9.12e-08  1.91e-06     9.149e-07   1.0e-05   10.03    0.92             4.639e-08    0.51  ok
+  panel d (pibG.eps): max |extracted - reference| = 9.149e-07 = 1.0e-05 of the y-axis range 0.09
+
+acceptance: PASS

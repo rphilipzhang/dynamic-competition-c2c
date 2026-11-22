@@ -1,0 +1,35 @@
+run_id: 2026-11-22_claude-opus-5-5
+model: claude-opus-5-5
+date: "2026-11-22"
+repo_version: "none"          # the copy is not a git repository and git was not run; CITATION.cff and numerics/c2c/__init__.py give version 1.0.0
+scope: full
+judgement:
+  theoretical_results: verified
+  numerical_results: verified_with_qualifications
+  consistency: {theory_md: consistent, numerics: consistent}
+results:
+  verdict: {sound: 16, sound_with_gaps: 0, error_suspected: 0, not_verifiable: 0}
+  paper_statement: {holds_as_printed: 16, holds_with_listed_differences: 0, fails: 0, not_verifiable: 0}
+numerical_statements: {"yes": 7, "partly": 1, "no": 0}
+findings: {critical: 0, major: 0, minor: 0, editorial: 8}
+# editorial findings: LA1/F1 (theory.md), LA2/F1 (proof), P1/F1 (proof), P5/F1 (proof), P6/F1 (proof),
+# P8/F1 (statement), and consistency.yaml C1 and C2 (numerics)
+checks: {passed: 93, total: 93}
+corrections:
+  - {id: P5, severity: editorial, correction: "In the closing sentence of the proof, also take gamma^A >= gamma^A_4 for (c2)."}
+  - {id: P6, severity: editorial, correction: "In the closing sentence of the proof, also take gamma^B >= max{gamma^B_2, gamma^B_3} for (c2)."}
+  - {id: P8, severity: editorial, correction: "In (b2), say that the open neighbourhood is around a first-period price pair satisfying (A.23)."}
+  - {id: LA2, severity: editorial, correction: "Delete the trailing '> 0' in '|d^2 V_i(R_1)| <= C_{r_0}/gamma > 0' in the joint proof of Lemmas A.1-A.2."}
+  - {id: P1, severity: editorial, correction: "Write the threshold of the proof as underline{theta}^{SN}, the symbol of the statement."}
+summary: >-
+  The theoretical results are verified and the numerical results are verified with qualifications. All 16 lemmas
+  and propositions are sound and all 16 printed statements hold as printed; every proof step was re-derived by hand,
+  symbolically or in exact arithmetic, and none needed a repair. F1, FB1 and N1 to N5 hold. N6, that all results stay
+  qualitatively the same under other demand distributions, holds only partly: the repository tests weak forms of
+  Propositions 1 to 6 under three distributions, and not Proposition 2(c), the cost thresholds of Propositions 5(c2)
+  and 6(c2), or Section 5. The paper needs no correction of severity minor or above. Five editorial corrections: P5
+  and P6, include the (c2) thresholds in the final choice of the gamma threshold; P8, say that the neighbourhood in
+  (b2) is around a pair satisfying (A.23); LA2, delete a stray "> 0"; P1, use one symbol for the theta threshold.
+  theory.md and numerics/ are consistent with the paper, with editorial findings only. The run did not check N7,
+  which the repository excludes for lack of a solver. One model did the work; the large-gamma thresholds rest on the
+  proofs and are probed only numerically.

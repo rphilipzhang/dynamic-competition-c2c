@@ -1,0 +1,97 @@
+id: P9
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: Prior conversation included earlier judgements; no previous verification directory was opened
+    in this run.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: For every admissible continuous-price market and each fixed theta in [0,1), a finite gamma threshold
+  exists after which both two-period games admit the stated price/inventory equilibrium. For both retailers,
+  prices in S start at the lower and end at the upper bound; in N each second-period price at an induced sales
+  state lies strictly above the lower bound and below its own interior first-period price.
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A5
+- A6
+- A7
+- A8
+- A9
+- A10
+- A12
+- A13
+- A14
+- I1
+unstated_hypotheses: []
+relies_on:
+- LA1's uniform S best replies and conditional orders; LA2 joint proof, price-smooth profit expansion for each
+  fixed theta<1, and the stock/sales lower bound for induced states.
+steps:
+- id: 1
+  locator: Scenario S, total payoff and derivative
+  claim: Each retailer's first-period best response is its lower bound.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. At the continuation price upper, value is pi0_i+(upper-ci)*gamma*R_i1. The equilibrium
+    S tails are O_C1(1/gamma); uniform-demand lost-sales expectations are quadratic in them. Thus E R_i1=alpha_i*mu+O_C1(gamma^-2),
+    and stocks/prices have bounded C1 norms. Differentiating the exact payoff gives -gamma*(upper-ci)*beta*mu+O(1),
+    uniformly negative. The lower bound dominates and the two unique upper continuation prices at induced positive
+    sales yield the stated strict path.
+- id: 2
+  locator: Scenario N, derivatives of reduced profit
+  claim: Own curvature is strictly negative and cross derivative bounded.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. For fixed theta<1 use the joint proof's expansion with C² control. Price-independent
+    gamma*nu_i*mu+K_i drops out. Differentiating alpha_i*(mu*p_i-ci*(mu+sigma)) gives the displayed affine
+    marginal and the Hessian entries -2*beta*mu and beta*mu, with O(gamma^-1) remainders uniform in the entire
+    price box.
+- id: 3
+  locator: constrained price best responses
+  claim: Existence and uniqueness in the reduced game, including price bounds.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. A payoff with own derivative decreasing at rate m>=2*beta*mu-C/g and cross slope
+    bounded by L<=beta*mu+C/g has a unique constrained maximizer whose change is bounded by L/m times the rival's
+    change. This follows by adding the two one-dimensional optimality inequalities and is valid at endpoints.
+    The reply map therefore contracts in the sup norm. Expected payoff against a rival distribution retains
+    strict own concavity, giving a single pure reply and excluding a nondegenerate mixed equilibrium of the
+    reduced game.
+- id: 4
+  locator: limiting interior equilibrium
+  claim: Both limiting price pairs are interior and close to actual prices.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. Solve 2*pi-pj=1/(2*beta)+(1+sigma/mu)*ci for the first-period game. This gives
+    1/(2*beta)+(1+sigma/mu)*(2ci+cj)/3. The second-period limits have factor 1 in the cost term. A13 puts the
+    smallest second-period limit above the floor and largest first-period limit below the ceiling. Uniform
+    payoff convergence and compactness force all accumulation points to be the unique interior limiting pair.
+    The inverse of the limiting FOC matrix beta*mu*[[-2,1],[1,-2]] maps the uniform O(1/gamma) residual to
+    O(1/gamma) deviations.
+- id: 5
+  locator: final strict price ordering
+  claim: The positive limiting separation persists on every induced path.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. For either firm the period-1 minus period-2 limit equals sigma*(2ci+cj)/(3*mu)>0.
+    LA2 gives uniform second-period convergence on induced total sales bounded away from zero. Use half the
+    minimum of the price margins and this separation to choose a common gamma for both firms and all induced
+    states. The threshold may depend on theta; theta=1 is excluded.
+findings: []
+numerical:
+  command: python numerics/run.py -k P9 --report verification/2026-11-22_gpt-6/logs/report_P9.md
+  direct: 2/2 passed
+  supporting: 3/3 passed
+  assessment: The S check varies gamma and checks price corners after verifying inventory replies over a price
+    grid. The N check uses five fixed markets below theta=1, searches two starts, checks the residual and deviations
+    and tests strict period-by-period inequalities at representative realized sales. Distances to limiting
+    prices are reported as diagnostics; the analytic argument establishes all induced states.
+  own_checks: []
+not_checked: []

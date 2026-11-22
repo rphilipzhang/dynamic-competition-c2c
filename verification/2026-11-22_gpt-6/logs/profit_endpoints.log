@@ -1,0 +1,5 @@
+At theta=1 the unscaled S-N profit limits are
+A: sigma*b*(H/v)*(2*cA-u*H/v); B: -sigma*b*(cB^2-(b*mB*cA/(a*mA))^2)/v.
+The former has exactly the sign of the printed cutoff numerator; the latter is strictly negative.
+At theta=0 the gamma-scaled limits agree with the closed-form leading coefficients.
+A's is positive since cB*mA>=cA*mB and a>b^2; B's is positive in a neighborhood of equal costs (A11 forces a,b toward 1/2 there).

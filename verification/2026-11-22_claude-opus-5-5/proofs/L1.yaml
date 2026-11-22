@@ -1,0 +1,108 @@
+id: L1
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Fix any admissible point of Section 4: 0 < c_A < c_B, prices with p_{B,t} >= p_{A,t} >= (c_A/c_B) p_{B,t}
+  and p_{i,t} > c_i (A11, I1), beta > 0 with both shares alpha_{i,t} in (0, 1) (I2), theta in [0, 1], and any
+  seed-demand distribution F with interval support in [0, infinity) and a strictly positive density on its
+  interior (A3). Without C2C interactions the two periods decouple. For each period t in {1, 2}, the
+  single-period game in which each retailer i chooses y_{i,t} >= 0 to maximize p_{i,t} E[min(D_{i,t}, y_{i,t})]
+  - c_i y_{i,t}, with D_{i,t} = alpha_{i,t} X_t + theta (alpha_{j,t} X_t - y_{j,t})^+, has exactly one Nash
+  equilibrium in order quantities, namely y^0_{A,t} = (alpha_{A,t} + theta alpha_{B,t}) zeta^0_{A,t} - theta
+  alpha_{B,t} zeta^0_{B,t} and y^0_{B,t} = alpha_{B,t} zeta^0_{B,t}, with zeta^0_{i,t} = F^{-1}(1 - c_i/p_{i,t}).
+differences_checked: []
+hypotheses_used: [A2, A3, A4, A7, A8, A9, A11, I1, I2]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: 'retailer A maximizes its single-period profit in each period $t$'
+    claim: Without C2C the continuation does not depend on period-1 orders, so each period is a static game; p E[y min D] - c y = (p - c) y - p E[y - D]^+.
+    status: verified
+    method: re-derivation
+    note: min(D, y) = y - (y - D)^+. With Z = 0 no state links the periods, so the feedback equilibrium is the pair of period equilibria (A8, A9). Derivation mine.
+  - id: 2
+    locator: 'Retailer A''s profit is concave in $y_{A,t}$ and its derivative'
+    claim: The payoff is concave with derivative p_{A,t} - c_A - p_{A,t} Prob(D_{A,t} <= y_{A,t}).
+    status: verified
+    method: re-derivation
+    note: >-
+      D_A is a continuous, strictly increasing, piecewise-linear function of X (slopes alpha_A and alpha_A +
+      theta alpha_B), so it has no atom; d/dy E[y - D]^+ = Prob(D <= y), which is nondecreasing in y, hence
+      concavity. Derivation mine. The Scenario S version of this derivative, which reduces to it at gamma = 0,
+      matches a central difference of the model payoff (D1 of shared_derivatives_best_responses.py).
+  - id: 3
+    locator: '(A.1)'
+    claim: Prob(D_A <= y_A) = int_0^{y_B/alpha_B} 1{z <= y_A/alpha_A} f + int_{y_B/alpha_B}^infty 1{z <= (y_A + theta y_B)/(alpha_A + theta alpha_B)} f.
+    status: verified
+    method: re-derivation
+    note: For X <= y_B/alpha_B, D_A = alpha_A X; for X > y_B/alpha_B, D_A = (alpha_A + theta alpha_B) X - theta y_B. The lower limit 0 uses X >= 0, which holds by the meaning of the model (seed demand), not a new hypothesis.
+  - id: 4
+    locator: 'If $y_{A,t}/\alpha_{A,t} \geq y_{B,t}/\alpha_{B,t}$, $\frac{y_{B,t}}{\alpha_{B,t}} \leq'
+    claim: The case split; u = (y_A + theta y_B)/(alpha_A + theta alpha_B) lies between y_B/alpha_B and y_A/alpha_A, so Prob = F(u) if y_A/alpha_A >= y_B/alpha_B and F(y_A/alpha_A) otherwise.
+    status: verified
+    method: re-derivation
+    note: u is the average of a = y_A/alpha_A and b = y_B/alpha_B with weights alpha_A > 0 and theta alpha_B >= 0, so u in [b, a] or u in [a, b), strictly below b in the second case.
+  - id: 5
+    locator: '(A.2)'
+    claim: Retailer A's best response is the stated two-branch function with zeta^0_{A,t} = F^{-1}(1 - c_A/p_{A,t}).
+    status: verified
+    method: re-derivation
+    note: >-
+      Derivation mine: the derivative is p - c > 0 at y = 0+ (F(0) = 0 as the support lies in [0, infinity)) and
+      tends to -c < 0, so the maximizer is interior and solves the first-order condition; F is strictly increasing
+      at levels in (0, 1) under A3, so the root is unique (F(u) = q_A gives u = zeta_A; branch 1 lies in its region
+      iff y_B <= alpha_B zeta_A). Single-valued best responses.
+  - id: 6
+    locator: 'By analogous arguments, the best response of retailer B is'
+    claim: (A.3), the mirror of (A.2).
+    status: verified
+    method: re-derivation
+    note: Same derivation with the roles of A and B exchanged.
+  - id: 7
+    locator: 'Since $p_{B,t} c_A/c_B \leq p_{A,t}$, we have $\zeta^0_{A,t} \geq \zeta^0_{B,t}$'
+    claim: A11 gives c_A/p_{A,t} <= c_B/p_{B,t}, hence zeta^0_A >= zeta^0_B.
+    status: verified
+    method: re-derivation
+    note: Only the lower bound of A11 is used. Equality iff A11 binds in period t (C8 of shared_exact_identities.py). A1 is not used by any inference; A11 is nonempty only if c_A <= c_B.
+  - id: 8
+    locator: 'By combining (A.2) and (A.3), for each period $t$, there exists a unique Nash equilibrium'
+    claim: With zeta_A >= zeta_B the two best responses intersect exactly once, at the stated pair.
+    status: verified
+    method: symbolic
+    note: >-
+      Exact enumeration of the four branch pairs of the piecewise-linear best responses at 4000 rational points
+      with zeta_A >= zeta_B, including zeta_A = zeta_B, theta = 0 and theta = 1 (C7 of
+      shared_exact_identities.py): exactly one consistent solution, the claimed one. Equivalent region argument:
+      in y_A/alpha_A < y_B/alpha_B the first-order conditions would give y_A/alpha_A = zeta_A and
+      w = (y_B + theta y_A)/(alpha_B + theta alpha_A) = zeta_B with w > y_A/alpha_A, contradicting zeta_A >= zeta_B.
+      The step needs only F^{-1} strictly increasing, so it holds for every F of the A3 class.
+  - id: 9
+    locator: 'Last, by substituting $y^0_{A,t}$ and $y^0_{B,t}$ into retailers'' profit functions'
+    claim: pi^0_{i,t} = (p_{i,t} - c_i) y^0_{i,t} - p_{i,t} E[L^0_{i,t}] with the displayed leftovers L^0, and R^0 = y^0 - L^0.
+    status: verified
+    method: re-derivation
+    note: L^0_{i,t} = (y^0_{i,t} - D_{i,t})^+ written out at the equilibrium orders; the two displayed expressions match term by term.
+findings: []
+numerical:
+  command: python numerics/run.py -k L1
+  direct: "3/3 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    test_benchmark_equilibrium_of_lemma_1 (L1.eq) computes primitives.nash_gap of the claimed orders for
+    payoffs built from the primitives (Game scenario "0") at 199 games, under the uniform and three other
+    distributions of the A3 class (triangular, beta(2,5), truncated normal on the same support), at regular and
+    edge points (equality in A11, equal prices, theta 0 and 1); right predicate (no profitable deviation, best
+    response at the claim). The two scans (L1.unique) look for a single sign change of T(y_B) - y_B; they are
+    probes, as their docstrings say. Supporting checks tie the port to Lemma 1 (profits, leftovers). The checks
+    use the uniform-type support [mu - sigma, mu + sigma] with mu > sigma; distributions with unbounded support
+    or support starting at 0 are covered only by the derivation.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_exact_identities.py: C7 (unique intersection of (A.2)/(A.3), 4000 exact points, 0 failures), C8 (ordering, equality iff A11 binds, 12000 cases, 0 failures)"
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_boundary_equilibria.py: scenario 0 at hand-built edge points (A11 equality, equal prices, fractiles 0.000999 and 0.999965, theta 0, 1/2, 1), uniform plus beta(2,5) and truncated normal; max relative deviation gain over all 114 games 5.8e-16"
+not_checked:
+  - The discussion after Lemma 1 in Manuscript.tex (for example zeta^0_A > zeta^0_B stated strictly, which fails at equality in A11) is outside the scope of the verification.
+  - Mixed-strategy equilibria were not examined; the paper's equilibrium concept is in order quantities.

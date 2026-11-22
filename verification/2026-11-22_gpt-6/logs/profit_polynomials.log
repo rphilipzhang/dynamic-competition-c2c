@@ -1,0 +1,3 @@
+32 fixed equal-share markets; exact theta degrees and highest derivatives agree.
+P5 theta=1 quartic leading signs represented: [-1, 1]
+P6 second derivatives at both endpoints agree exactly.

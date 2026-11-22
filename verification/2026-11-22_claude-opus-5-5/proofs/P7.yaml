@@ -1,0 +1,135 @@
+id: P7
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Section 5 model (A1-A10, A12, A13, I1). For every gamma > 0, every theta in [0, 1], both scenarios k = S, N,
+  both retailers i, every fixed first-period sales state, and every rival second-period price p_{j,2} in
+  [p_lo, p_hi], consider y^k_{i,2} = y^0_{i,2} + Z^k_{i,2} (the second-period inventory equilibrium) as a function
+  of the second-period prices. (a) As a function of p_{i,2} on [p_lo, p_hi] it is either nonincreasing or has
+  one or two interior local maxima. (b) For every fixed p_{i,2}, as a function of p_{j,2} on [p_lo, p_hi] it is
+  either nondecreasing or first nonincreasing and then nondecreasing.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A12, A13, I1]
+unstated_hypotheses: []
+relies_on:
+  - "LA1-LA2 joint proof, opening paragraph: the second-period inventory equilibrium y^0_{i,2} + Z_{i,2} for every gamma, every price pair and either fractile ordering (the last sentence of LA1(b) and LA2(b), which needs no large gamma)"
+steps:
+  - id: 1
+    locator: 'Conditional on first-period sales, Lemmas A.1 and A.2 imply that y^S_{i,2} = y^0_{i,2}+γR^S_{i,1} and y^N_{i,2} = y^0_{i,2}+α_{i,2}γR^N_1'
+    claim: Second-period orders as functions of second-period prices.
+    status: verified
+    method: re-derivation
+    note: LA1 record step 1; valid for every gamma, which P7 needs since it is stated for every gamma.
+  - id: 2
+    locator: 'the price comparative statics of y^S_{i,2} are identical to those of the benchmark quantity y^0_{i,2}'
+    claim: In Scenario S the C2C term does not depend on second-period prices.
+    status: verified
+    method: reading
+    note: gamma R_{i,1} is fixed given first-period sales.
+  - id: 3
+    locator: '∂y^N_{i,2}/∂p_{i,2} = ∂y^0_{i,2}/∂p_{i,2} - βγR^N_1 and ∂y^N_{i,2}/∂p_{j,2} = ∂y^0_{i,2}/∂p_{j,2} + βγR^N_1'
+    claim: Scenario N shifts the derivatives by a constant.
+    status: verified
+    method: symbolic
+    note: SymPy - d(alpha_A gamma R_1)/d p_A = -beta gamma R_1, d/d p_B = +beta gamma R_1.
+  - id: 4
+    locator: 'If p_{A,2} <= (c_A/c_B)p_{B,2}, ȳ^S_{A,2} = (1/2+βp_{B,2}-βp_{A,2})(-2c_Aσ/p_{A,2}+μ+σ) and ∂ȳ/∂p_{A,2} = c_Aσ(2βp_{B,2}+1)/p_{A,2}^2 - β(μ+σ)'
+    claim: First own-price piece of y^0_A (retailer B has the higher fractile) and its shape.
+    status: verified
+    method: symbolic
+    note: SymPy reproduces the piece and its derivative; the second derivative -2 c_A sigma (1 + 2 beta p_B)/p_A^3 < 0, so the piece is strictly concave and can only decrease, increase then decrease, or increase.
+  - id: 5
+    locator: 'If p_{A,2} > (c_A/c_B)p_{B,2}, ∂ȳ^S_{A,2}/∂p_{A,2} = -β(μ+σ) + c_Aσ(1+θ+2β(1-θ)p_{B,2})/p_{A,2}^2 + 2βc_Bθσ/p_{B,2}'
+    claim: Second own-price piece and its derivative.
+    status: verified
+    method: symbolic
+    note: SymPy reproduces it; second derivative -2 c_A sigma (1 + theta + 2 beta (1-theta) p_B)/p_A^3 < 0 (strictly concave).
+  - id: 6
+    locator: '∂_{p_{A,2}} ȳ^S_{A,2} <= -β(μ^2 - μσ + σ^2)/(μ+σ) < 0 at p_{A,2} = p_hi'
+    claim: The own-price slope is negative at the upper price bound.
+    status: verified
+    method: numerical
+    note: >-
+      My derivation: p_hi always lies on the second piece (p_hi > (c_A/c_B) p_B). A12 and A13 give
+      p_lo > W := (mu+sigma)(c_A + 2 c_B)/(3 mu) (from p_hi - p_lo < 1/(2 beta) and p_hi > 1/(2 beta) + W) and
+      1/p_hi < 2 beta/(1 + x) with x = 2 beta W. The claim is equivalent to
+      c_A(1+theta+2 beta(1-theta) p_B)/p_hi^2 + 2 beta theta c_B/p_B <= 3 beta mu/(mu+sigma); both sides are affine
+      in theta, and at theta = 0 and theta = 1 it reduces to 2 c_A x (2+x)/(1+x)^2 < c_A + 2 c_B and
+      4 c_A x/(1+x)^2 <= c_A, which hold. scripts/P7_derivatives_and_endpoint_bounds.py: adversarial search over
+      1.28 million admissible points (theta = 0 and 1 included, p_hi and p_lo pushed to their limits), smallest
+      normalised slack 3.6e-7 >= 0; the constant is sharp in the limit c_A -> 0, p_lo -> W, theta = 1.
+  - id: 7
+    locator: 'Thus, ȳ^S_{A,2} exhibits four possible patterns'
+    claim: Two strictly concave pieces joined continuously, ending with a negative slope, give exactly the four listed patterns.
+    status: verified
+    method: symbolic
+    note: SymPy - y^0_A is continuous at the switch and its derivative jumps by c_B sigma theta (c_B - 2 beta p_B (c_B - c_A))/(c_A p_B^2), of either sign; an upward jump allows two interior maxima. Each piece has at most one interior maximum, so at most two; all patterns end decreasing.
+  - id: 8
+    locator: 'By analogous arguments, ȳ^S_{B,2} exhibits the same patterns.'
+    claim: Retailer B's own-price shape.
+    status: verified
+    method: numerical
+    note: >-
+      Mirror formulas derived by SymPy: both pieces strictly concave; B's derivative always jumps upward at the
+      switch (by c_A sigma theta (c_A + 2 beta p_A (c_B - c_A))/(c_B p_A^2)). Unlike A, p_B = p_hi can lie on
+      either piece (B-high when p_A <= (c_A/c_B) p_hi); the endpoint bound holds on both (adversarial search:
+      smallest normalised slack 0.0065 away from sigma -> 0; analytic endpoint check as in step 6).
+  - id: 9
+    locator: 'Therefore, we proved part (a).'
+    claim: Part (a) for Scenario N.
+    status: verified
+    method: re-derivation
+    note: My derivation (the text states only the shift of step 3) - subtracting beta gamma R_1 keeps each piece strictly concave, leaves the jump unchanged and makes the end slope more negative, so the same patterns follow.
+  - id: 10
+    locator: 'If p_{B,2} < (c_B/c_A)p_{A,2}, ∂ȳ^S_{A,2}/∂p_{B,2} = β(-2c_A(1-θ)σ/p_{A,2}+μ+σ) - 2c_Bβθp_{A,2}σ/p_{B,2}^2 - c_Bθσ/p_{B,2}^2'
+    claim: First rival-price piece and its shape.
+    status: verified
+    method: symbolic
+    note: SymPy reproduces it; second derivative 2 c_B sigma theta (1 + 2 beta p_A)/p_B^3 >= 0 (convex), so the piece can increase, decrease then increase, or decrease.
+  - id: 11
+    locator: 'If p_{B,2} >= (c_B/c_A)p_{A,2}, ∂ȳ^S_{A,2}/∂p_{B,2} = β(-2c_Aσ/p_{A,2}+μ+σ) > 0'
+    claim: Second rival-price piece increases.
+    status: verified
+    method: symbolic
+    note: Equals beta zeta^0_A >= beta (mu - sigma) > 0.
+  - id: 12
+    locator: '∂_{p_{B,2}} ȳ^S_{A,2} >= β(μ^2 - μσ + σ^2)/(μ+σ) > 0 at p_{B,2} = p_hi'
+    claim: The rival-price slope is positive at the upper price bound.
+    status: verified
+    method: numerical
+    note: >-
+      My derivation for both pieces (p_hi lies on the first, convex piece when p_hi < (c_B/c_A) p_A, and that is
+      the case in which the bound is needed to exclude a curve that only decreases; the text attaches the bound
+      to the second piece, whose slope is positive anyway). First piece, affine in theta: at theta = 0 it reduces
+      to 2 c_A < c_A + 2 c_B, at theta = 1 to 2 c_B x (2+x)/(1+x)^2 < c_A + 2 c_B. Second piece: c_A/p_A < mu/(mu+sigma).
+      Adversarial search: smallest normalised slack 0.17.
+  - id: 13
+    locator: 'ȳ^S_{A,2} either increases or first decreases then increases in p_{B,2}. By analogous arguments, ȳ^S_{B,2} either increases or first decreases then increases in p_{A,2}.'
+    claim: Part (b) for both retailers in Scenario S.
+    status: verified
+    method: symbolic
+    note: For A in p_B - convex first piece ending with a positive slope if it contains p_hi, then an increasing piece. For B in p_A - convex B-high piece at low p_A (second derivative 2 c_A sigma theta (1 + 2 beta p_B)/p_A^3), then the A-high piece with slope beta zeta^0_B > 0, which always contains p_hi.
+  - id: 14
+    locator: 'We have proved part (b).'
+    claim: Part (b) for Scenario N.
+    status: verified
+    method: re-derivation
+    note: My derivation - adding beta gamma R_1 to the rival-price slope keeps the first piece convex and the slopes at p_hi and on the second piece positive.
+findings: []
+numerical:
+  command: python numerics/run.py -k P7
+  direct: "2/2 passed"
+  supporting: "1/1 passed"
+  assessment: >-
+    The direct checks classify 16,000 own-price and 16,000 rival-price curves (both scenarios, both retailers,
+    gamma in [0.05, 50], theta = 0 and 1 included) on 1,501-point grids with the literal predicates of (a) and (b)
+    (two interior maxima occur twice; no accepted curve ends rising). The supporting check confirms from the
+    primitives that the evaluated orders are the second-period equilibrium for either fractile ordering. The sampler
+    keeps p_hi at least 1% above its A13 bound, so the region where the endpoint bound is tight is not sampled; my
+    adversarial search covers it.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/P7_derivatives_and_endpoint_bounds.py: SymPy derivative formulas, curvatures and kink jumps; adversarial search of the endpoint bounds over the admissible region (all slacks >= 0)."
+not_checked: []

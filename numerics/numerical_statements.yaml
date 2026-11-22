@@ -1,0 +1,85 @@
+# The paper's statements about its numerical results: the two figures and the
+# sentences of the text that describe numerical findings.
+#
+# `quote` is the text as the paper prints it, with cross-references resolved.
+# `numerics/tests/test_figures.py` checks that every quote occurs in the LaTeX source.
+# The checks that bear on a statement name its ID, so that
+#
+#     pytest numerics -k N2
+#
+# runs them. The technical statements (lemmas and propositions) are in theory.md.
+#
+# Every numerical statement of the paper has an entry. A statement that the
+# repository does not check has a field `excluded` that gives the reason.
+
+- id: F1
+  kind: figure
+  where: Figure 1, Section 5.3
+  quote: Comparison of retailers' equilibrium profits across scenarios.
+  content: >-
+    Equilibrium two-period profits of retailers A and B in Scenarios S and N, as
+    functions of theta, in the two-price game of Section 5.3. Panels (a) and (c):
+    gamma = 0.7. Panels (b) and (d): gamma = 2.
+  authors_code: numerics/matlab/Figure1_MATLAB/
+  python_port: numerics/c2c/figures.py, numerics/c2c/pricing.py, numerics/c2c/closed_form.py
+  published_panels: paper/figure1.eps, paper/figure2.eps, paper/figure3.eps, paper/figure4.eps
+
+- id: FB1
+  kind: figure
+  where: Figure B.1, Online Appendix B
+  quote: Retailers' equilibrium order quantities and profits comparison under a mix of within-brand and cross-brand C2C interactions
+  content: >-
+    Equilibrium first-period order quantities and profits of both retailers in the
+    mixed scenario of Online Appendix B, as functions of theta. The MATLAB code and
+    earlier drafts call this figure "Figure 2".
+  authors_code: numerics/matlab/Figure2_MATLAB/
+  authors_values: numerics/matlab/Figure2_MATLAB/Figure2_reference.csv
+  python_port: numerics/c2c/figures.py, numerics/c2c/closed_form.py
+  published_panels: paper/yaG.eps, paper/ybG.eps, paper/piaG.eps, paper/pibG.eps
+
+- id: N1
+  kind: text
+  where: Section 5.3
+  quote: However, in our numerical experiments, although the equilibrium prices across the two periods may not be the same, the resulting split ratios remain constant over time.
+
+- id: N2
+  kind: text
+  where: Section 5.3, about Figure 1(a) and (c)
+  quote: For retailer A, as $\theta$ increases to 1, Scenario N becomes more profitable than Scenario S. For retailer B, when $\theta$ is small, Scenario S yields higher profit.
+
+- id: N3
+  kind: text
+  where: Section 5.3, about Figure 1(b)
+  quote: Figure 1(b) shows that retailer A always earns more in Scenario N, even when $\theta$ is small and $\alpha_{A,1} = \alpha_{A,2}$
+
+- id: N4
+  kind: text
+  where: Section 5.3, about Figure 1(d)
+  quote: Figure 1(d) further shows that, across all $\theta$ values, retailer B consistently earns more in Scenario N, even though $\alpha_{B,1} = \alpha_{B,2}$.
+
+- id: N5
+  kind: text
+  where: Online Appendix B, about Figure B.1
+  quote: Figure B.1(b) shows that retailer B's free-riding behavior in Scenario GN, i.e., its order quantity in Scenario GN decreases in substitution rate. Figure B.1(c) [Figure B.1(d)] generalizes the result in Proposition 5 [Proposition 6].
+
+- id: N6
+  kind: text
+  where: Section 3
+  quote: Moreover, we have numerically tested that all our results remain qualitatively the same with other distributions.
+  note: >-
+    The authors' experiments behind this sentence are not in the code they
+    provided. `numerics/tests/test_other_distributions.py` tests weak forms of
+    Propositions 1 to 6 under three other distributions, and the equilibrium
+    checks of Lemmas 1 to 3 and B.1 use the same three distributions. Nothing in
+    `numerics/` tests Proposition 2(c), the cost thresholds of Propositions 5(c2)
+    and 6(c2), or Section 5 under another distribution.
+
+- id: N7
+  kind: text
+  where: Online Appendix B, last paragraph on the Endogenous Price Model with both interactions
+  quote: Our numerical results show that firms' equilibrium prices may increase or decrease across periods, that is, the two intertemporal patterns shown in Proposition 9 still exist for the two scenarios. Our numerical experiments show that, if $\gamma$ is large enough, firms' equilibrium prices may increase in both scenarios.
+  excluded: >-
+    Appendix B specifies the GS and GN mixing weights and adopts the numerical
+    setting of Section 5.3, including the price menu {2, 4}. The repository
+    contains neither a solver for endogenous prices with both interactions nor
+    the authors' output for those experiments, so N7 cannot be reproduced here.

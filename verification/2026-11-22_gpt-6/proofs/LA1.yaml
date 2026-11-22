@@ -1,0 +1,332 @@
+id: LA1
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: "2026-11-22"
+  prior_exposure: >-
+    The supplied session context contained brief descriptions of previous work and the parent identified
+    the issues to verify. I opened no other verification folder or file outside the repository.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  For each fixed admissible market there is a finite threshold common to every price pair in the
+  first-period box and every θ in [0,1]. Above it, in S there is exactly one pure first-period
+  inventory equilibrium. With a=α_A, b=α_B in period 1, L=μ−σ, H=μ+σ, w=2σ, and
+  z_i=H−wc_i/[p_i+γ(p_hi−c_i)], its orders are (a z_A+θb(z_A−z_B), b z_B).
+  For each fixed pair of strictly positive first-period sales, including an off-path pair, above
+  a possibly sales-dependent threshold the only second-period price equilibrium is (p_hi,p_hi).
+  For every second-period price pair the unique conditional inventory equilibrium is the
+  contemporaneous benchmark order plus γ times own first-period sales, for each firm.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A7, A8, A9, A10, A12, A13, A14, I1]
+unstated_hypotheses: []
+relies_on:
+  - L1 proof, single-period quantile best responses, including the relabelled ordering of the fractiles.
+  - L2 and L3 proofs, translation of period-2 inventory and value conditional on the observed state.
+  - L2 proof, quantile best response with a constant continuation margin in the first period.
+steps:
+  - id: 1
+    locator: "Following analogous arguments in Lemmas 2–3"
+    claim: Translation gives unique conditional terminal stocks and the value identity in either scenario for every price pair.
+    status: verified
+    method: re-derivation
+    note: >-
+      Write x_i=y_i−Z_i, with Z_i=γR_i in S and Z_i=γα_iR in N. Then R_{i,2}=Z_i+
+      min(x_i,α_iX+θ(α_jX−x_j)^+). Stocks below Z_i+α_iL cannot maximize payoff, since
+      increasing them to that amount sells the entire increment at strictly positive margin.
+      On the remaining domain profit is exactly π_i^benchmark+(p_i−c_i)Z_i. Let
+      z_i=H−wc_i/p_i. The unique best reply in translated units is α_i z_i+θ(α_j z_i−x_j)^+
+      by strict monotonicity of effective demand as a function of X. If z_i≥z_j, then at any
+      fixed point x_i≥α_i z_i≥α_i z_j, so x_j=α_j z_j and the other response determines x_i.
+      Swap names for the other ordering. Ties, θ=0 and θ=1 all satisfy the same argument.
+      It uses neither A11 nor a large-γ approximation. This justifies the inputs to P7.
+  - id: 2
+    locator: "bounded ... π⁰; the derivative ... is M-Lipschitz continuous"
+    claim: Static equilibrium payoffs are bounded and C¹ with Lipschitz price gradients globally, and analytic on either strict-fractile branch.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation across the moving branch boundary: E min(X,z)=μ−(H−z)²/(2w).
+      At the best-response quantile, the profit attributable to spilling stock is
+      θ α_j [p_i∫_{z_j}^{z_i}P(X>x)dx−c_i(z_i−z_j)] when z_i>z_j, zero otherwise.
+      Since p_i P(X>z_i)=c_i, this gives exactly
+      π_i⁰=α_i[p_i μ−c_i H+w c_i²/(2p_i)]+θ α_j p_i[(z_i−z_j)^+]²/(2w).
+      The squared positive part is C¹,¹. All smooth factors and their derivatives are bounded
+      on a neighborhood of the compact box with positive prices, uniformly for θ in [0,1].
+      Thus the own gradient is Lipschitz in either price, including across equality. Choosing
+      no inventory is feasible so the equilibrium payoff is nonnegative. On a strict branch
+      the expression is rational in prices and affine in θ.
+  - id: 3
+    locator: "retailer i’s second-period equilibrium profit ... bounded between"
+    claim: S continuation values lie between γ(p_hi−c_i)R_i and that quantity plus a uniform constant.
+    status: verified
+    method: re-derivation
+    note: >-
+      In any continuation equilibrium, posting p_hi gives at least the lower bound against
+      every rival price by steps 1–2. Every action yields at most the upper bound since
+      p_i≤p_hi and 0≤π_i⁰≤C. The bounds also apply to expected payoffs of mixed continuations
+      at states away from the large-sales region. Compact continuous price games admit mixed
+      equilibria; no uniqueness or differentiability of such small-state selections is used.
+  - id: 4
+    locator: "y below δ is dominated by 2δ ... above μ+σ is also dominated"
+    claim: All S candidate equilibrium stocks and induced own sales have a uniform positive floor.
+    status: verified
+    method: re-derivation
+    note: >-
+      Set m=1/2−β(p_hi−p_lo)>0 and δ=mL/2. At any rival order and any X,
+      D_i≥α_i L≥2δ. Raising y_i<δ to 2δ sells the entire increment. Using step 3 at both
+      states gives a payoff gain at least (p_i−c_i+γ(p_hi−c_i))(2δ−y_i)−C, positive for
+      a common large γ. Conversely reducing any y_i>H to H saves its excess cost without
+      changing either firm's first-period sales. On the remaining square each R_i≥δ.
+  - id: 5
+    locator: "making ... derivative > 0"
+    claim: The upper bound is strictly dominant for either seller for sufficiently large own sales times γ.
+    status: verified
+    method: re-derivation
+    note: >-
+      The own-price derivative is γR_i+∂_iπ_i⁰, whose second term is uniformly bounded.
+      Hence both firms have the upper endpoint as unique best reply for γ min_i R_i larger
+      than the same static bound. This establishes (b) for arbitrarily small fixed positive
+      off-path sales, with a threshold depending on that particular state. Step 4 gives a common
+      threshold on all candidate equilibrium states. The nonrestrictive-interior bound A13 is
+      maintained in Section 5 and is used on the N side of this joint proof, not in this S bound.
+  - id: 6
+    locator: "cross multiplication ... analysis ... follows analogous arguments in Lemma 2"
+    claim: The unique S first-period inventory equilibrium has the stated exact orders.
+    status: verified
+    method: re-derivation
+    note: >-
+      On [δ,H]² the continuation equals π_i⁰(p_hi,p_hi)+γ(p_hi−c_i)R_i.
+      The first-period problem is thus the single-period problem of step 1 with effective price
+      P_i=p_i+γ(p_hi−c_i). The inequality c_A/P_A≤c_B/P_B is equivalent to
+      γp_hi(c_B−c_A)≥c_Ap_B−c_Bp_A, whose RHS is at most c_A p_hi−c_B p_lo.
+      Choose γ with strict slack throughout the price box. Each z_i=H−wc_i/P_i lies strictly
+      inside (L,H); the quantile responses of step 1 yield the two stocks in (a).
+      They are between α_iL and H. Steps 3–4 exclude every deviation outside the square globally,
+      and the same quantile argument excludes every other fixed point in it. Equal shares
+      cause no degeneracy. P8 and P9 can use this exact formula and the exact continuation.
+  - id: 7
+    locator: "Scenario N ... decreasing margin ... Lipschitz with bound"
+    claim: The N price game has a unique equilibrium for large λ=γR, including constrained best responses.
+    status: verified
+    method: re-derivation
+    note: >-
+      With A6 replacing A5, payoff at a fixed state is π_i⁰+λ h_i, h_i=α_i(p_i−c_i).
+      By step 2 the own gradient decreases by at least (2βλ−M) times any positive own-price
+      increment, and changes by at most (βλ+M) times a rival-price increment. Apply the two
+      maximizing first-order variational inequalities at the two constrained optima and add:
+      (2βλ−M)|ΔBR|²≤(βλ+M)|Δp_j||ΔBR|. Thus replies are unique and a contraction in the
+      product sup norm for βλ>2M. This works at endpoints without assuming interiority.
+      Strict own concavity also rules out nondegenerate mixing since averaging against any
+      rival distribution preserves strict concavity. This step requires only λ large, with no
+      prerequisite floor on R at arbitrary off-path states.
+  - id: 8
+    locator: "Compactness and uniform profit convergence ... first-order equalities"
+    claim: N price equilibria converge uniformly to the interior limit and eventually remain on one strict-fractile branch.
+    status: verified
+    method: re-derivation
+    note: >-
+      The scaled payoffs differ from h_i by at most C/λ. The limiting best replies are
+      projections of (1/(2β)+p_j+c_i)/2; the unconstrained intersection is
+      p̂_i=1/(2β)+(2c_i+c_j)/3 and lies strictly inside the box by A13. Its contraction
+      is 1/2. Every limit point of equilibrium pairs along λ→∞, with θ allowed to vary,
+      is a best-response pair for h by the uniform payoff bound. There is only the stated
+      limit. At that pair α̂_i=β(p̂_i−c_i)>0 and the lower-cost A has strictly higher margin
+      and share. Thus ν_i=β(p̂_i−c_i)², ν_A>ν_B>0 and c_A/ν_A<c_B/ν_B.
+      Also c_A/p̂_A<c_B/p̂_B since c_B p̂_A−c_A p̂_B=(c_B−c_A)(1/(2β)+(c_A+c_B)/3).
+      A single neighborhood avoids both the price constraints and the fractile seam.
+  - id: 9
+    locator: "analytic implicit function theorem ... V_i(R)=γν_iR+K_i(θ)+e_i(R)"
+    claim: The unique large-λ prices have O(1/λ) errors and the continuation expansion has the claimed uniform C⁴ state bounds.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation: write ε=1/λ. The two equations ∂_i h_i+ε∂_iπ_i⁰=0 are analytic
+      near (p̂,0,θ) by step 2 and have p-Jacobian β[[-2,1],[1,-2]] of determinant 3β².
+      The implicit branches agree by uniqueness; finitely many analytic neighborhoods of the
+      compact θ-interval give uniform derivative bounds on a common smaller ε interval.
+      Let W_i(ε,θ)=(h_i+επ_i⁰)(p(ε,θ)); its Taylor expansion is
+      ν_i+εK_i(θ)+ε²B_i(ε,θ) with B_i analytic and bounded together with four derivatives.
+      Actual profit is W_i/ε, so e_i(R)=(γR)⁻¹ B_i((γR)⁻¹,θ). Differentiating through
+      order four costs only fixed powers of 1/r₀ on R∈[r₀,H], giving O(1/γ) there.
+      Therefore V_i′=γν_i+O(1/γ)>0 and |V_i″|≤C_r₀/γ. A fixed positive off-path R gives
+      the claimed price rate, with its constant allowed to depend on R.
+  - id: 10
+    locator: "When γ R₁ is bounded ... at least one y ≥ δ ... exclude y_i ≤ α_i(μ−σ)"
+    claim: Every N equilibrium lies in the region where the preceding smooth price continuation applies.
+    status: verified
+    method: re-derivation
+    note: >-
+      My global-to-local derivation avoids assuming the desired floor at arbitrary states.
+      For λ below a fixed cutoff, compactness bounds all π_i⁰, λh_i and λν_i, so
+      |V_i−γν_iR|≤C for any continuation selection. Above the cutoff apply step 9 for
+      the same O(1) bound. If both stocks are <δ, increasing one to 2δ sells the entire
+      increment and leaves the other retailer selling its original stock since both were below
+      their seed-demand floors. Thus R rises by >δ and the profit gain is at least
+      (p_i−c_i+γν_i)δ−2C>0. At least one stock is therefore ≥δ and R≥δ. While increasing an
+      own stock ≤α_i L, this floor persists; own sales rise unit for unit, total sales are
+      nondecreasing (step 11), and V_i′>0 on R≥δ. At equality the right expected marginal
+      own unit sale is one since X has no atom at L; the positive first-period margin suffices.
+      Thus each equilibrium stock exceeds α_i L; induced sales in each state are at least
+      α_i L and in total at least L≥2δ. Above H the truncation argument of step 4 applies.
+  - id: 11
+    locator: "density ... at least 1/(2σ) ... R₁=min{...}"
+    claim: Own immediate profit is strongly concave on its demand support and total sales are nondecreasing and concave.
+    status: verified
+    method: re-derivation
+    note: >-
+      For fixed rival stock, D_i(x) has positive slopes α_i and α_i+θα_j≤1 on adjacent
+      intervals. Its transformed density is 1/(w times the relevant slope)≥1/w almost
+      everywhere on its connected support; integrate its continuous CDF to obtain strong
+      concavity, including at a possible density jump. For a realized X, examining neither,
+      either, or both seed stocks being short gives R=min{X,y_A+y_B,
+      (a+θb)X+(1−θ)y_B,(b+θa)X+(1−θ)y_A}. Each affine slope in stock is in [0,1],
+      hence the minimum is concave and nondecreasing.
+  - id: 12
+    locator: "at each kink ... Brouwer’s theorem"
+    claim: Against each rival stock in the candidate square there is a continuous unique best response and a pure equilibrium exists.
+    status: verified
+    method: re-derivation
+    note: >-
+      A rival with stock ≥δ sells at least δ in every realization, even after an arbitrary
+      unilateral deviation. On every affine segment of total sales the own-stock second
+      derivative of V_i(R) is ≤C_δ/γ. At a kink its first derivative jumps weakly downward
+      since V_i′>0. Thus V_i(R)−C_δ y_i²/(2γ) is concave. Taking expectations and adding the
+      immediate payoff gives strong concavity with modulus p_i/w−C_δ/γ on the support.
+      Below this support the direct marginal is p_i−c_i>0 and the continuation is
+      nondecreasing; above it an additional unit changes neither firm's sales, so the marginal
+      is −c_i. Own optimum is single valued; continuity follows from payoff continuity on the
+      square and compactness (maximum theorem). Replies take [δ,H] into itself by steps 10–11.
+      The same bounds include rival stock H by the same formulas. Brouwer supplies existence.
+  - id: 13
+    locator: "Suppose y_A/α_A ≤ y_B/α_B ... contradicting the optimality"
+    claim: All equilibria have A’s normalized stock strictly above B’s.
+    status: verified
+    method: re-derivation
+    note: >-
+      Under the reverse ordering B stocks out only when X>z_B=(y_B+θy_A)/(b+θa); there both
+      sell their stocks so Q=y_A+y_B is total sales. B's interior optimality gives
+      c_B=(p_B+V_B′(Q))Pr(X>z_B); in particular this event has positive probability, so
+      Q belongs to [δ,H]. A's marginal gross revenue on this event alone is at least
+      c_B(p_A+V_A′(Q))/(p_B+V_B′(Q)), since all other statewise increments are
+      nonnegative. This converges uniformly to c_Bν_A/ν_B>c_A. The strict contradiction
+      includes equal normalized stocks and θ=1.
+  - id: 14
+    locator: "μ−σ < s < z < μ+σ ... differentiating firms’ profits"
+    claim: The two interior inventory FOCs are exactly the displayed equations before (A.21).
+    status: verified
+    method: re-derivation
+    note: >-
+      Write b=α_B, a=1−b, h=a+θb, s=y_B/b, z=(y_A+θy_B)/h, Q=h z+(1−h)s.
+      Steps 10 and 13 give s>L and s<z. If z≥H, a marginal A unit never sells or increases
+      total sales, contradicting c_A>0. For X<s total sales are X. For s<X<z, B sells y_B,
+      A sells hX−θy_B and total sales are hX+(1−θ)y_B. Above z both sell out. Only in
+      this last interval does a marginal A unit create a sale; a marginal B unit creates
+      an own sale throughout X>s, increasing total sales by 1−θ inside (s,z) and by 1
+      above z. Uniform integration gives both equations, with null switching events.
+  - id: 15
+    locator: "(A.21) and the bounds on q and t"
+    claim: Tail variables satisfy (A.21), and rescaling by γ and 1+γ(1−θ) bounds both unknowns.
+    status: verified
+    method: re-derivation
+    note: >-
+      Put d=1−θ, q=(H−z)/w and t=(H−s)/w. In the middle interval R runs affinely from
+      s to Q. Its contribution to B's tail equation is d(t−q) times the mean of V_B′ on
+      that segment. Replacing V′ by γν+e′ leaves A error q e_A′(Q) and B error
+      d(t−q)∫₀¹e_B′(s+λ(Q−s))dλ+q e_B′(Q). The leading B terms sum to
+      θγν_Bq+(p_B+dγν_B)t. From A's exact equation q≤c_A/(p_A+γν_A−C/γ).
+      From the positive exact B terms c_B≥[p_B+d(γν_B−C/γ)]t since the q coefficient
+      left after this lower bound is nonnegative. Thus q=O(1/γ) and t=O(1/(1+γd)).
+  - id: 16
+    locator: "both two error terms ... second-order partial derivatives ... on a convex region"
+    claim: The normalized residuals including all first and second stock and price derivatives are uniformly O(γ⁻²).
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation: let D=1+γd, u=γq, v=Dt. For each γ,θ use the intersection of a common
+      bounded box in (u,v) with L≤s=H−wv/D≤z=H−wu/γ≤H. This is convex, includes all
+      candidates and is independent of first-period prices. The affine interpolation points
+      between s and Q=hz+(1−h)s lie in [L,H]. For derivatives use the expansion in step 9
+      on a slightly larger positive-state interval. The price-dependent h=a+θb is affine with
+      uniformly bounded derivatives. Therefore s,z,Q and all interpolated arguments have
+      bounded derivatives of orders 1 and 2 in (u,v,p_A,p_B). The prefactors q=u/γ
+      and d(t−q)=dv/D−du/γ have C² norm O(1/γ), since d/D≤1/γ, even at d=0.
+      Each composed e_i′ has C² norm O(1/γ) by step 9 and the chain rule; integration over
+      [0,1] preserves this bound. The product rule proves the assertion with constants
+      independent of θ and p, including θ=1 and 1−θ of order 1/γ.
+  - id: 17
+    locator: "its inverse is uniformly bounded ... contradicts ... two distinct inventory equilibria"
+    claim: The normalized system has at most one equilibrium solution.
+    status: verified
+    method: re-derivation
+    note: >-
+      The leading matrix M has entries (ν_A+p_A/γ,0; θν_B,(p_B+γdν_B)/(1+γd)).
+      The last diagonal is a convex combination of p_B and ν_B. Both diagonal entries
+      have fixed positive lower bounds, and the off-diagonal is bounded, so the triangular
+      inverse is uniformly bounded. For two solutions x and x̃ of Mx+E(x,p)=c,
+      use the line segment in the convex set of step 16: |x−x̃|≤||M⁻¹|| sup||E_x|| |x−x̃|.
+      The coefficient is <1 at large γ. Combine this with existence from step 12.
+  - id: 18
+    locator: "neglecting the error terms ... implicit differentiation"
+    claim: Both normalized solution errors, and the claimed inventory errors, are O(γ⁻²) in C² of first-period prices.
+    status: verified
+    method: re-derivation
+    note: >-
+      Solving the triangular system gives q⁰=c_A/(p_A+γν_A),
+      t⁰=(c_B−θγν_Bq⁰)/(p_B+γdν_B). For large γ, 0<q⁰<t⁰<1 uniformly in the sense of
+      pointwise strict ordering: c_B−θν_Bγq⁰≥c_B−ν_Bc_A/ν_A>0, c_B<p_B, and the ordering
+      reduces to c_B(p_A+γν_A)>c_A(p_B+γν_B). These tails thus evaluate valid interior
+      quantiles even at θ=1. Let x=(u,v) and x⁰=M⁻¹c; x−x⁰=−M⁻¹E(x,p), which gives
+      both displayed component identities. M and its inverse have bounded price derivatives
+      through order two. M+E_x has uniformly bounded inverse by step 16. Differentiating the
+      implicit equation once gives bounded x_p, twice gives bounded x_pp using the same
+      inverse; substituting those bounds in −M⁻¹E(x(p),p) gives O(γ⁻²) also through two price
+      derivatives. The strict constraints defining the endogenous box and the analytic
+      expressions give the necessary local extensions at its boundary. Transforming back
+      (q=u/γ, t=v/D, y_B=b(H−wt), y_A=h(H−wq)−θb(H−wt)) preserves at least this C² rate.
+      These uniform bounds are the derivative input used in P8.
+  - id: 19
+    locator: "Last, by substituting inventory equilibrium back ... for each fixed θ<1"
+    claim: The reduced N profit has the printed O(γ⁻¹) remainder including its first two price derivatives.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation: for fixed d=1−θ>0, q,t both have C²(p) norm O_d(1/γ) by step 18, hence
+      y_i=α_iH+O_C²(1/γ). Put J(x)=(H−x)²/(2w). Integrating step 14 gives
+      E R_B=b(μ−J(s)), E R_A=aμ+θbJ(s)−hJ(z), and E R=μ−dbJ(s)−hJ(z).
+      Both J terms are O_C²(γ⁻²), since s=H−wt and z=H−wq. For E e_i(R), split
+      [L,H] at s,z and map each segment to [0,1]; its length and the affine state on it
+      have bounded derivatives through order two. Step 9 and the product/chain rules give
+      E e_i(R)=O_C²(γ⁻¹). Thus p_i E R_i−c_i y_i+E V_i(R) =
+      γν_iμ+K_i(θ)+α_i(μp_i−c_iH)+O_C²(γ⁻¹), uniformly in p for this fixed θ.
+      The constant may grow as θ approaches 1. P9 uses exactly the fixed-θ statement.
+findings: []
+numerical:
+  command: python numerics/run.py -k LA1 --report verification/2026-11-22_gpt-6/logs/report_LA1.md
+  direct: "4/4 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    Checked the actual markers, payoff computations and direction of each predicate. The exact
+    S first-period claim was evaluated at 30 markets with one fixed price pair per market as γ
+    increased from 1 to 10⁶. Three passed all criteria at 1 and all 30 at 100. Checks combined
+    whole-interval deviations, marginal profits and the sales-dominance condition. Sixty
+    best-reply iterations tested attraction above a stated small-stock strip; step 4 handles
+    that strip in the proof. At 30 other fixed positive sales states both upper prices were
+    uniquely observed on the price grid, with strict advantage at the largest γ and whole-price
+    deviation searches; all 30 passed from γ=10. The conditional stock and payoff check tested
+    100 states/price pairs including 25 with B's fractile higher. The three supporting checks
+    validate integration and continuation derivatives against model calculations, benchmark
+    helpers, and 17 quotations with independent transcription. Finite grids, sampled response
+    attraction and thresholds on these particular ladders do not establish global uniqueness.
+  own_checks:
+    - >-
+      python verification/2026-11-22_gpt-6/scripts/shared_joint_lemma_identities.py:
+      exact integration reproduced both static payoff formulas at 605 price/substitution
+      triples, including 10 ties, using 11 prices per firm and θ in {0,1/3,2/3,999/1000,1}.
+      It also reproduced the total-sales minimum and the three integral formulas at 2,420
+      ordered stock/price/substitution combinations on one fixed admissible market.
+not_checked:
+  - No claim of a common price threshold across all strictly positive off-path states approaching zero is made.
+  - Analytic uniformity concerns fixed market primitives, including fixed positive costs, price-box slack, and positive L.

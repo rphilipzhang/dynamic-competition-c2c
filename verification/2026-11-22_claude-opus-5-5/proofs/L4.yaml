@@ -1,0 +1,69 @@
+id: L4
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  For every admissible point of Section 4 (A1, A10, A11, I1, I2), every theta in [0, 1] and every gamma > 0, with
+  the equilibrium orders of Lemmas 1 to 3: (a) for t = 1, 2, y^0_{A,t}/alpha_{A,t} >= y^0_{B,t}/alpha_{B,t};
+  (b) for k in {S, N}, y^k_{A,1}/alpha_{A,1} >= y^k_{B,1}/alpha_{B,1}, and for every first-period sales state,
+  (y^k_{A,2} - Z^k_{A,2})/alpha_{A,2} >= (y^k_{B,2} - Z^k_{B,2})/alpha_{B,2}, where Z^k_{i,2} is the C2C-induced
+  demand at that state. Weak inequalities; equality occurs in (a) exactly when A11 binds in period t and in the
+  first period of S exactly when A11 binds in both periods, and never in the first period of N.
+differences_checked: []
+hypotheses_used: [A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on:
+  - "L1 proof: zeta^0_{A,t} >= zeta^0_{B,t} under A11 and the closed forms y^0"
+  - "L2 proof: zeta^S_{A,1} >= zeta^S_{B,1} and the second-period orders y^0_{i,2} + gamma R_{i,1}"
+  - "L3 proof: y^N_{A,1}/alpha_{A,1} >= y^N_{B,1}/alpha_{B,1} (the equilibrium lies in that region) and the second-period orders y^0_{i,2} + alpha_{i,2} gamma R_1"
+steps:
+  - id: 1
+    locator: 'By the proof of Lemma 1, $\frac{y^0_{A,t}}{\alpha_{A,t}} - \frac{y^0_{B,t}}{\alpha_{B,t}} = \frac{1}{\alpha_{A,t}} (\alpha_{A,t} + \theta \alpha_{B,t})(\zeta^0_{A,t}-\zeta^0_{B,t}) \geq 0$'
+    claim: Part (a) - the identity and its sign.
+    status: verified
+    method: symbolic
+    note: '[(alpha_A + theta alpha_B) zeta_A - theta alpha_B zeta_B]/alpha_A - zeta_B = (alpha_A + theta alpha_B)(zeta_A - zeta_B)/alpha_A, nonnegative by zeta^0_A >= zeta^0_B (L1 step 7). Exact check C8 (12000 cases, 0 failures). Holds for every F of the A3 class; A10 is in force but not needed.'
+  - id: 2
+    locator: 'By the proof of Lemma 2,  $\frac{y^S_{A,1}}{\alpha_{A,1}} - \frac{y^S_{B,1}}{\alpha_{B,1}}'
+    claim: Part (b), Scenario S, first period.
+    status: verified
+    method: symbolic
+    note: Same identity with zeta^S; zeta^S_A >= zeta^S_B by L2 step 10 (C1).
+  - id: 3
+    locator: 'by part (a) and Lemma 2, $\frac{y^S_{A,2} - Z^S_{A,2}}{\alpha_{A,2}} = \frac{y^0_{A,2}}{\alpha_{A,2}}'
+    claim: Part (b), Scenario S, second period.
+    status: verified
+    method: re-derivation
+    note: y^S_{i,2} - Z^S_{i,2} = y^0_{i,2} at every sales state by L2, then part (a) at t = 2.
+  - id: 4
+    locator: 'By the proof of Lemma 3, we have $\frac{y^N_{A,1}}{\alpha_{A,1}} \geq \frac{y^N_{B,1}}{\alpha_{B,1}}'
+    claim: Part (b), Scenario N, first period.
+    status: verified
+    method: symbolic
+    note: From the identity of step 1 with zeta^N and zeta^N_A >= zeta^N_B (L3 step 17). The inequality is strict under A1 and gamma > 0 (C2, C3).
+  - id: 5
+    locator: 'Furthermore, by analogous arguments, we have $\frac{y^N_{A,2} - Z^N_{A,2}}{\alpha_{A,2}}'
+    claim: Part (b), Scenario N, second period.
+    status: verified
+    method: re-derivation
+    note: y^N_{i,2} - Z^N_{i,2} = y^0_{i,2} by L3, then part (a) at t = 2.
+findings: []
+numerical:
+  command: python numerics/run.py -k L4
+  direct: "2/2 passed"
+  supporting: "4/4 passed"
+  assessment: >-
+    test_lemma_4a_benchmark_order_per_unit_of_share and test_lemma_4b_order_per_unit_of_share_in_scenarios_s_and_n
+    evaluate e = y_A/alpha_A - y_B/alpha_B in exact rational arithmetic at 210 points (edge points with A11
+    equality, equal prices, theta 0 and 1) over a 12-rung gamma ladder and a theta grid; the predicate e >= 0 is
+    the statement's, and the extra equality conditions (e = 0 exactly where A11 binds; e^N > 0) are true
+    refinements (C2, C8), so they cannot fail where the statement holds. The second-period part of (b) is checked
+    as part (a) at t = 2, relying on the second-period forms of L2 and L3, which are checked from the primitives
+    elsewhere. The checks use the closed forms of the port under the uniform law; the link to claimed_first_period
+    is a supporting check.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_exact_identities.py: C8 identity and sign for Lemma 1, Lemma 2 and Lemma 3 orders (12000 exact cases, 0 failures), C2 strictness in Scenario N"
+not_checked:
+  - The corollary and discussion after Lemma 4 in Manuscript.tex (for example y^0_{A,t} > y^0_{B,t} for all theta) are outside the scope.

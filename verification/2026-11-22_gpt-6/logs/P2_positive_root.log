@@ -1,0 +1,3 @@
+Derivative coefficients (descending): [-M*d3, -2*L*d3, -L*d2 + M*d1, 2*M*d0, L*d0]
+For 0 <= theta < 1 all d_i,L,M are positive under A11: m>n, B*u>=C*v, B*k>=C*n.
+Exactly one positive zero by Descartes and the opposite endpoint signs; gap tends to zero at each end.

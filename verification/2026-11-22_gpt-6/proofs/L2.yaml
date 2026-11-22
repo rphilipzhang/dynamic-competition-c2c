@@ -1,0 +1,95 @@
+id: L2
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: "2026-11-22"
+  prior_exposure: "New verifier for these five records. Received the coordinator’s task notes (including the LB1 interpretation) and system-provided project context. Read no other verification run or external file."
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  For every admissible Section 4 market with within-brand C2C, θ∈[0,1], γ>0 and every A3 seed law, the unique feedback inventory equilibrium has period-1 orders b z_B and a z_A+θ b(z_A−z_B) for B and A, respectively, with period-1 shares a,b and z_i=F⁻¹(1−c_i/[p_i,1+ργ(p_i,2−c_i)]). At every observed first-period sales state, period-2 orders are y_i,2⁰+γR_i,1. With L_i,t=(y_i,t−D_i,t)⁺ and R_i,t=y_i,t−L_i,t, the period-1 objective and affine continuation give the claimed total profits for both firms. The main-text formula specializes the appendix’s arbitrary ρ∈(0,1] to ρ=1.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A7, A8, A9, A10, A11, I1, I2]
+unstated_hypotheses: []
+relies_on: ["L1 proof, (A.1) demand CDF and the two best responses (A.2)–(A.3)."]
+steps:
+  - id: 1
+    locator: "(A.4)"
+    claim: "Translation by γR_i,1 separates the past-sales state from A’s order problem."
+    status: verified
+    method: re-derivation
+    note: "Fix any nonnegative sales state, put Z_i=γR_i,1 and h_i=y_i,2−Z_i. Then D_i,2=Z_i+a_iX_2+θ(a_jX_2−h_j)⁺. Subtracting Z_i inside min(y_i,D_i) adds (p_i,2−c_i)Z_i to the benchmark objective. Independence of X_2 from the state gives the same seed distribution at each state."
+  - id: 2
+    locator: "(A.5)"
+    claim: "The translated best response of A has the two benchmark branches."
+    status: verified
+    method: re-derivation
+    note: "Every h_i<0 has positive own-order slope p_i,2−c_i because demand after subtracting Z_i is nonnegative. The feasible lower bound is −Z_i. Maximization therefore gives h_A=a z_A⁰+θ(b z_A⁰−h_B)⁺, valid even for a negative rival translated order. The objective is concave as in L1."
+  - id: 3
+    locator: "(A.6)"
+    claim: "B’s translated objective has a constant depending only on its own past sales."
+    status: verified
+    method: re-derivation
+    note: "Substitution into B’s demand yields bX_2+θ(aX_2−h_A)⁺ after subtracting Z_B. The extra margin is (p_B,2−c_B)γR_B,1, independent of B’s current order."
+  - id: 4
+    locator: "(A.7)"
+    claim: "B’s two translated best-response branches are the benchmark ones."
+    status: verified
+    method: re-derivation
+    note: "Inverting its atomless demand at the price/cost fractile yields h_B=b z_B⁰+θ(a z_B⁰−h_A)⁺. The same expression holds at the common branch boundary."
+  - id: 5
+    locator: "Combining (A.5) and (A.7)"
+    claim: "The continuation game has exactly one equilibrium and the claimed continuation values."
+    status: verified
+    method: re-derivation
+    note: "L1’s intersection applies at the second-period prices under A11; negative translated own orders are strictly dominated. Adding Z_i yields y_i,2⁰+γR_i,1. At equilibrium the state-conditioned expected profit is π_i,2⁰+(p_i,2−c_i)γR_i,1. Given the orders, R_i,1 is determined by X_1, so the paper’s conditional expectation notation agrees."
+  - id: 6
+    locator: "(A.8)"
+    claim: "A’s first-period objective is a newsvendor problem with an effective value per own sale."
+    status: verified
+    method: re-derivation
+    note: "Put H_i=p_i,1+ργ(p_i,2−c_i)>p_i,1. The present revenue, order cost and discounted continuation sum to H_A E R_A,1−c_A y_A,1+ρπ_A,2⁰. Replacing sales by inventory minus leftovers gives (A.8) and differentiation gives H_A[1−P(D_A,1≤y_A,1)]−c_A."
+  - id: 7
+    locator: "(A.9)"
+    claim: "A’s first-period best response equals its effective-revenue quantile demand."
+    status: verified
+    method: re-derivation
+    note: "At 0<c_A/H_A<1 invert the derivative with L1’s (A.1). The response is a z_A+θ(b z_A−y_B)⁺. Concavity and strict CDF increase at an interior quantile give uniqueness."
+  - id: 8
+    locator: "(A.10)"
+    claim: "B has the corresponding effective-revenue objective."
+    status: verified
+    method: re-derivation
+    note: "Only B’s own sales enter the discounted market growth for B. Subtract c_B y_B and add ρπ_B,2⁰ to H_B E R_B,1, then expand R_B,1 as y_B,1−L_B,1."
+  - id: 9
+    locator: "(A.11) and z_i^S > z_i⁰"
+    claim: "B’s response and the strict increase of each retailer’s own critical quantity are valid."
+    status: verified
+    method: re-derivation
+    note: "The same demand inversion produces b z_B+θ(a z_B−y_A)⁺. Since ρ,γ,p_i,2−c_i and c_i are strictly positive, 1−c_i/H_i>1−c_i/p_i,1; the strictly increasing quantile on (0,1) preserves this strict comparison."
+  - id: 10
+    locator: "Since p_B,t c_A/c_B ≤ p_A,t"
+    claim: "A has the weakly higher effective fractile and the first-period equilibrium is unique."
+    status: verified
+    method: re-derivation
+    note: "My cross-multiplication gives H_A/c_A−H_B/c_B=(p_A,1/c_A−p_B,1/c_B)+ργ(p_A,2/c_A−p_B,2/c_B)≥0. Equality is possible when both lower A11 inequalities bind. Each A response is at least a z_A≥a z_B, hence B must play b z_B; substituting back yields exactly the printed A order. No contraction in θ is needed. The same bounds apply against a randomized opponent as in L1."
+  - id: 11
+    locator: "Last, by substituting ... profits"
+    claim: "The equilibrium orders, leftovers, sales, and profits match the appendix."
+    status: verified
+    method: re-derivation
+    note: "Substitute the equilibrium orders into L_i=[y_i−a_iX_1−θ(a_jX_1−y_j)⁺]⁺ to obtain each displayed expression, including the sign on θ b z_B in B’s expression. Then total expected profit is (H_i−c_i)y_i−H_i E L_i+ρπ_i,2⁰. At γ↓0 the quantiles tend to L1’s, and the price/share and θ endpoints use the same formulas. A10 supplies only the main text’s ρ=1 normalization here."
+findings: []
+numerical:
+  command: "python numerics/run.py -k L2 --report verification/2026-11-22_gpt-6/logs/report_L2.md"
+  direct: "8/8 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    The first- and second-period unilateral-deviation checks use 109 markets each across four seed laws, with an affine continuation in the former and independent payoff evaluation at one sales state per market in the latter. Two 28-market uniqueness scans seek one sign-changing bracket per period. Exact branch/quotation and profit comparisons, including 25 rational transcription points, 500 uniform order/sales/profit cases and 400 continuation price/state cases, check the indicated retailer, period, formula and best-response distances. The supporting tests cover symbolic uniform leftovers, mixed endpoints and the alternative port. The code sets ρ=1. Finite deviation searches and one bracket per grid do not prove general uniqueness.
+  own_checks:
+    - script: scripts/shared_inventory_marginals.py
+      result: "The shared exact probe covers 1,260 Scenario S cases for uniform and unbounded shifted Lomax demand, θ=0, 7/19 or 1, γ=10⁻⁸, 7/3 or 10⁸, and ρ=1 or 1/11. Both firms' payoffs have zero marginal gain at the reported order and the opposite strict signs immediately on either side."
+not_checked:
+  - "The repository’s numerical checks use the undiscounted normalization. The algebra covers every ρ∈(0,1] in the appendix and every A3 law."

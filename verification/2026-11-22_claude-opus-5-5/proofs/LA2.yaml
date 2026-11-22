@@ -1,0 +1,86 @@
+id: LA2
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Section 5 model (A1-A10 with rho = 1 and uniform X, A12, A13, I1), Scenario N, with
+  phat_{i,2} = 1/(2 beta) + (2 c_i + c_j)/3 and nu_i = alpha_{i,2}(phat)(phat_{i,2} - c_i).
+  (a) There are gamma_0 and C, depending only on (c_A, c_B, beta, mu, sigma, p_lo, p_hi), such that for every
+  gamma >= gamma_0, every theta in [0, 1] and every (p_{A,1}, p_{B,1}) in P, the first-period inventory subgame
+  has exactly one pure equilibrium, and |y_{A,1} - [(alpha_A + theta alpha_B) zeta_A - theta alpha_B zeta_B]| and
+  |y_{B,1} - alpha_B zeta_B| are at most C gamma^-2, with zeta_A = F^{-1}(1 - c_A/(p_{A,1} + gamma nu_A)) and
+  zeta_B = F^{-1}(1 - (c_B - theta gamma nu_B c_A/(p_{A,1} + gamma nu_A))/(p_{B,1} + (1-theta) gamma nu_B)).
+  (b) For every R_1 > 0 there is gamma_1(R_1) such that for gamma >= gamma_1 the second-period price equilibrium
+  is unique and |p^N_{i,2}(R_1) - phat_{i,2}| <= C'/(gamma R_1); for every gamma, price pair and sales state the
+  second-period inventory subgame has the unique equilibrium y^0_{i,2} + gamma alpha_{i,2} R_1.
+steps_in: LA1
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A6, A7, A8, A9, A10, A12, A13, A14, I1]
+unstated_hypotheses: []
+relies_on:
+  - "L1 proof and its mirror image (second-period inventory subgame for either fractile ordering)"
+steps:
+  - id: 1
+    locator: 'Scenario N: 2nd-period pricing subgame (LA1 record, steps 9-20)'
+    claim: LA2(b), first sentence - unique second-period price equilibrium for gamma R_1 large, p^N_{i,2} = phat_{i,2} + O((gamma R_1)^{-1}).
+    status: verified
+    method: re-derivation
+    note: >-
+      Specific to LA2: the contraction (LA1 step 13), the interior limit equilibrium under A13 (step 14), the
+      ordering c_A/phat_A < c_B/phat_B that puts phat in the analytic region (step 16) and the implicit-function
+      expansion (step 17). For given R_1 > 0 the threshold is a threshold on gamma R_1, so it depends on R_1, as
+      the statement allows. LA2.b check: log10 rate exactly 1.0 over the last two decades, unique equilibrium at
+      all 12 markets from gamma = 10.
+  - id: 2
+    locator: 'conditional on second-period prices, the second-period inventory subgame has a unique equilibrium y^N_{i,2} = y^0_{i,2} + γα_{i,2}R^N_1'
+    claim: LA2(b), second sentence.
+    status: verified
+    method: re-derivation
+    note: LA1 step 1 with Z_i = alpha_{i,2} gamma R_1; holds for every gamma.
+  - id: 3
+    locator: '1st-period inventory subgame (LA1 record, steps 21-29 and 35)'
+    claim: LA2(a), existence and uniqueness of a pure equilibrium for gamma large, uniformly in prices and theta in [0, 1].
+    status: verified
+    method: re-derivation
+    note: Domination from above and below (steps 21-23), strict concavity and Brouwer (24-27), the ordering y_A/alpha_A > y_B/alpha_B from c_B nu_A/nu_B > c_A (28), and the contraction in (u, v) (35). Every constant is uniform in theta in [0, 1].
+  - id: 4
+    locator: 'q^0, t^0 ... u - u^0, v - v^0 ... O_{C^2(p_1;P)}(γ^{-2}) (LA1 record, steps 36-38)'
+    claim: LA2(a), the closed form up to O(gamma^-2), uniformly in theta in [0, 1], with two price derivatives.
+    status: verified
+    method: symbolic
+    note: >-
+      (q^0, t^0) reproduce zeta^N_A and zeta^N_B exactly (SymPy). The y_B error is alpha_B 2 sigma (v - v^0)/(1 + gamma(1-theta)),
+      O(gamma^-2) at theta = 1 and O(gamma^-3) for fixed theta < 1; the LA2.a checks observe orders 2 and 3 and a
+      scaled error gamma^2 e(gamma) flat in gamma uniformly over gamma(1-theta) in [0, 30].
+  - id: 5
+    locator: 'Then ν_A > ν_B > 0 and c_A/ν_A < c_B/ν_B (LA1 record, step 9)'
+    claim: Margin ordering that replaces A11 in Scenario N.
+    status: verified
+    method: symbolic
+    note: Uses A12 and A13 (both limit prices in the box give alpha_B(phat) > 0).
+findings:
+  - id: F1
+    severity: editorial
+    scope: proof
+    locator: '|∂^2 V_i(R_1)| <= C_{r_0}/γ > 0 for R_1 >= r_0 > 0'
+    description: The trailing "> 0" after the bound C_{r_0}/γ is a slip; the claim is the upper bound on |∂^2 V_i|.
+    suggested_fix: Write "|∂^2 V_i(R_1)| <= C_{r_0}/γ for R_1 >= r_0 > 0".
+    evidence: LA1 record, steps 18 and 20.
+numerical:
+  command: python numerics/run.py -k LA2
+  direct: "5/5 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    LA2.a is tested by solving the model's first-order conditions with a continuation (SecondPeriodN) computed
+    from the primitives, measuring the distance to the closed form along gamma = 10 to 1e4 (observed order >= 1.75
+    from gamma = 100; 2 at theta = 1, 3 for theta < 1), a uniformity check over theta = 1 - l/gamma with l in
+    [0, 30], whole-interval deviation searches, and uniqueness probes (best-response iteration and a one-sign-change
+    scan of the fixed-point residual). LA2.b is tested by a price-game solution with interval searches and corner
+    iterations, the rate 1/gamma, and the inventory equilibrium y^0 + Z at arbitrary prices. They test the named
+    parts with the statement's predicates; uniqueness is probed, not proved, and rests on the proof.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/LA1_joint_proof_checks.py (shared with LA1)."
+not_checked:
+  - As in LA1, second-period equilibria at states that no unilateral deviation reaches are not constructed; the proof's bounds do not depend on the selection there.

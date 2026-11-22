@@ -1,0 +1,87 @@
+id: P3
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Under A1 to A11, I1 and I2: (a) for every admissible market there is a gamma* such that for gamma >= gamma*
+  both E[R^S_{A,1}] and E[R^N_{A,1}] are nondecreasing in theta on [0, 1] (the proof gives this for every
+  gamma > 0); and there is theta' in [0, 1] (depending on gamma and the market) with E[R^S_{A,1}] >= E[R^N_{A,1}]
+  on [0, theta'] and E[R^S_{A,1}] < E[R^N_{A,1}] on (theta', 1] (the proof gives such a theta' for every gamma > 0,
+  in (0, 1) for gamma large). (b) For every gamma > 0, E[R^N_{B,1}] is nonincreasing in theta, E[R^S_{B,1}] does
+  not depend on theta, and E[R^N_{B,1}] < E[R^S_{B,1}] for every theta in [0, 1].
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: '\frac{\partial \mathbb{E}[R^S_{A,1}]}{\partial\theta} =\alpha_{B,1}\sigma\left[(1-F(\zeta^S_{B,1}))^2-(1-F(\zeta^S_{A,1}))^2\right]\geq 0'
+    claim: Theta-derivative of A's expected sales in Scenario S, nonnegative.
+    status: verified
+    method: symbolic
+    note: >-
+      From E[R_A] = alpha_{A,1} mu + theta alpha_{B,1} sigma r_B^2 - (alpha_{A,1} + theta alpha_{B,1}) sigma r_A^2,
+      which I checked against direct integration of min(D_A, y_A) over the uniform law (shared_sec4_closed_forms.py).
+      In S the r's do not depend on theta; r^S_B >= r^S_A by A11 (P1 record, step 1).
+  - id: 2
+    locator: 'At \theta=0, the same calculation using Lemma 3 gives a nonnegative right derivative in Scenario N'
+    claim: dE[R^N_{A,1}]/dtheta at theta = 0 is alpha_{B,1} sigma (r^N_B(0)^2 - r_A^2) >= 0.
+    status: verified
+    method: symbolic
+    note: The extra term 2 theta alpha_{B,1} sigma r_B r_B' vanishes at 0; r^N_B(0) - r^N_A = (X1 + gamma W)/((p_{B,1} + alpha_{B,2} gamma m_B) P_N) > 0.
+  - id: 3
+    locator: 'direct differentiation of the closed form of \mathbb{E}[R_{A,1}^N] gives \frac{\partial^2 \mathbb{E}[R_{A,1}^N]}{\partial \theta^2} \geq 0'
+    claim: E[R^N_{A,1}] is convex in theta, so with step 2 it is nondecreasing.
+    status: verified
+    method: symbolic
+    note: My derivation - d2E/dtheta2 = 2 alpha_{B,1} sigma [2 r_B r_B' + theta (r_B'^2 + r_B r_B'')], with r_B > 0, r_B' = N/D_N^2 > 0 and r_B'' = 2 alpha_{B,2} gamma m_B N/D_N^3 > 0 (identities symbolic; the second-derivative identity in exact rational arithmetic at 200 random points). The monotonicity holds for every gamma > 0, which implies the "gamma large" claim.
+  - id: 4
+    locator: 'If \theta = 0, we have \mathbb{E}[R^S_{A,1}] - \mathbb{E}[R^N_{A,1}] = \frac{\alpha_{A,1} \alpha_{B,2} \gamma c_{A}^2 \sigma ...}{...}> 0'
+    claim: Value of the sales difference at theta = 0, positive for gamma > 0.
+    status: verified
+    method: symbolic
+    note: SymPy identity with the printed expression; all factors positive.
+  - id: 5
+    locator: 'If \theta = 1, ... g^{SN}_R(\gamma) is a function of \gamma with \frac{\partial^5 g^{SN}_R(\gamma)}{\partial \gamma^5} < 0'
+    claim: At theta = 1 the difference is a positive factor times g_R^SN, negative for large gamma.
+    status: verified
+    method: symbolic
+    note: >-
+      My derivation: with the printed prefactor gamma sigma/(p_{B,1}^2 P_S^2 Q_S^2 P_N^2) > 0, g_R^SN is a polynomial
+      of degree exactly 5 in gamma with leading coefficient -alpha_{B,1} m_A^2 m_B^2 W^2 < 0, so its fifth derivative is
+      a negative constant and g_R^SN < 0 for large gamma. The text calls g_R^SN "a function"; the inference needs it to
+      be a quintic polynomial, which holds.
+  - id: 6
+    locator: 'Hence, \mathbb{E}[R_{A,1}^S]-\mathbb{E}[R_{A,1}^N] is concave in \theta. For each \gamma>0, ... closed interval [0,\underline{\theta}'']'
+    claim: Concave difference positive at 0 gives the cutoff theta' for every gamma > 0; theta' = 1 if the difference is nonnegative at 1; theta' in (0,1) for large gamma.
+    status: verified
+    method: re-derivation
+    note: E[R^S_A] is affine in theta (symbolic), E[R^N_A] convex. The superlevel set of a continuous concave function is a closed interval; it contains 0 and, by continuity, a neighbourhood of 0; on its complement in [0,1] the difference is strictly negative. This is the printed predicate (>= on [0, theta'], < on (theta', 1]).
+  - id: 7
+    locator: '(b). Since R_{B,1}^k=\min\{\alpha_{B,1} X_1, y_{B,1}^k\}, part (b) follows Proposition 2.'
+    claim: Retailer B receives no spillover in the first period, so its sales are monotone in its order.
+    status: verified
+    method: re-derivation
+    note: >-
+      If alpha_{A,1} X > y_{A,1} then X > y_{A,1}/alpha_{A,1} >= y_{B,1}/alpha_{B,1} (Lemma 4), so B has already
+      stocked out; hence R_B = min(alpha_{B,1} X, y_B). E[R_B] = alpha_{B,1}(mu - sigma r_B^2) (symbolic), strictly
+      decreasing in r_B on [0, 1]. P2(a) (r^N_B strictly increasing in theta) and (A.20) (r^S_B < r^N_B) then give
+      all three claims, the last one strictly.
+findings: []
+numerical:
+  command: python numerics/run.py -k P3
+  direct: "2/2 passed"
+  supporting: "5/5 passed"
+  assessment: >-
+    P3.a requires, at gamma = 1e50 and 1e60, E[R^N_A] strictly increasing, E[R^S_A] strictly increasing or exactly
+    constant where A11 binds in both periods, and d = E[R^S_A] - E[R^N_A] with d(0) > 0, d(1) < 0 and pattern "+-";
+    at every gamma of the ladder it requires d(0) > 0 and pattern "+" or "+-". This matches the printed predicate
+    (the strict "<" region and the allowed cutoff at 1) and the scenario, retailer and period. P3.b requires strict
+    decrease of E[R^N_B], exact constancy of E[R^S_B] and E[R^N_B] < E[R^S_B] at every node and gamma. Supporting
+    checks tie the closed-form sales to the model's sales.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/P3_symbolic_checks.py: all identities True; leading coefficient of g_R^SN equals -alpha_B1 mA^2 mB^2 W^2. Probe: the sign pattern of d along theta is '+-' at every gamma tried where g_R^SN < 0 and '+' otherwise (positive roots of g_R^SN: none, 0.58, none, 690 for the four probe markets)."
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_sec4_counterexample_search.py: 0 violations of the P3.a monotonicity, of the P3.a cutoff pattern (d(0) > 0 and pattern '+' or '+-') and of P3.b at 160 exact random admissible markets with boundaries and gamma from 0.001 to 1000."
+not_checked: []

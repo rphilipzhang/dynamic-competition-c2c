@@ -1,0 +1,4 @@
+Exact total sales and B-profit slope identities verified; H=c_B-(v+r)*q_A>0.
+P4 numerator/H is v*(2*q_A*v+H)+r*(1-theta)*(2*q_A*v-H).
+P6 slope = sigma*alpha_B1*r*[c_B^2-((v+r)*q_A)^2]/D^2.
+P3 derivative uses E R_A=a*mu-a*sigma*q_A^2+theta*b*sigma*(q_B^2-q_A^2), with q_B=q_A+H/D.

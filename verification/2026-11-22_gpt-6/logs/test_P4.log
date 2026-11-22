@@ -1,0 +1,15 @@
+....                                                                     [100%]
+4 passed, 89 deselected in 38.68s
+
+Results of theory.md
+  L3  direct    1/1   supporting    1/1
+  L4  direct      –   supporting    2/2
+  P1  direct      –   supporting    2/2
+  P2  direct      –   supporting    2/2
+  P3  direct      –   supporting    3/3
+  P4  direct    1/1   supporting    3/3
+  P5  direct      –   supporting    3/3
+  P6  direct      –   supporting    3/3
+Numerical statements
+  F1  direct      –   supporting    2/2
+wrote verification/2026-11-22_gpt-6/logs/report_P4.md

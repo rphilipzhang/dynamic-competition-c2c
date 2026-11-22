@@ -1,0 +1,80 @@
+id: LB1
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: "2026-11-22"
+  prior_exposure: "New verifier for these five records. Received the coordinator’s task notes (including the LB1 interpretation) and system-provided project context. Read no other verification run or external file."
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  For every θ∈[0,1], γ>0, λ^S,λ^N∈[0,1] with sum one, every admissible fixed-price market under A11, and every A3 demand law, let m_i=p_i,2−c_i, U_i=m_i γ_i,2, V_i=m_i γ_i,2^C, H_i=p_i,1+U_i. With ρ=1, put t_A=c_A/H_A, t_B=(c_B−θV_B t_A)/(H_B−θV_B), z_i=F⁻¹(1−t_i). The mixed scenario has a unique feedback inventory equilibrium. In period 1, retailer B stocks α_B,1 z_B and A stocks (α_A,1+θ α_B,1)z_A−θ α_B,1 z_B. At every observed sales state, the period-2 order of each retailer is the benchmark order plus γ_i,2 R_i,1+γ_i,2^C R_j,1.
+differences_checked:
+  - difference: 1
+    needed: true
+    note: "Needed (standalone condition imposed by context). Appendix B generalizes Section 4’s exogenous-price game, and the staged transcription found only the disclosed insertion of A11 in this statement and no proof change. The printed lemma holds in its maintained setting. Without A11, take c_A=1,c_B=2, p_A,1=p_A,2=6/5, p_B,1=p_B,2=6, β=1/20, θ=1/2, γ=1, λ^S=λ^N=1/2 and X uniform on [2,7]. Then a=37/50, b=13/50, z_A⁰=17/6<z_B⁰=16/3. At any state the proposed translated second-period y_B=b z_B⁰ exceeds b z_A⁰; A’s true translated best response is a z_A⁰, which exceeds the forced A-high formula by 13/40. No manuscript correction follows. The ρ=1 annotation restates the Section 4 normalization."
+hypotheses_used: [A1, A2, A3, A4, A7, A8, A9, A10, A11, A15, I1, I2, I3]
+unstated_hypotheses: []
+relies_on: ["L1’s equilibrium and its period-2 order formulas under A11.","L2 and L3 proofs, state translation and the two-region marginal payoffs of (A.12)–(A.17), applied with separate own- and rival-sales weights."]
+steps:
+  - id: 1
+    locator: "Appendix B definition of the mixed scenario"
+    claim: "Own and rival past sales enter with distinct, ordered coefficients."
+    status: verified
+    method: re-derivation
+    note: "A15 combines the model’s S and N mechanisms. Thus γ_i,2=γ(λ^S+λ^N α_i,2) and γ_i,2^C=γλ^N α_i,2, so U_i≥V_i≥0 and H_i−θV_i≥p_i,1>c_i. The mixture formula already contains the A5/A6 demand mechanisms. A10 here supplies ρ=1; the quantile derivation uses A3 rather than uniformity."
+  - id: 2
+    locator: "We first study the subgame in the second period"
+    claim: "Translating each order by its own mixed demand shift gives the benchmark equilibrium."
+    status: verified
+    method: re-derivation
+    note: "Condition on R_A,1,R_B,1. Set Z_i=γ_i,2 R_i,1+γ_i,2^C R_j,1. Then D_i−Z_i=a_i X_2+θ(a_j X_2−(y_j−Z_j))⁺. Thus the objective in translated quantities is L1’s plus m_i Z_i. Negative own translated orders have strictly positive marginal profit; the unique solution under A11 is y_i,2⁰+Z_i for every sales state."
+  - id: 3
+    locator: "In the first period, by analogous arguments"
+    claim: "The marginal payoff depends on U_i for an own sale and V_i for a rival sale."
+    status: verified
+    method: re-derivation
+    note: "My derivation uses the preceding continuation value: the objective equals H_i E R_i+V_i E R_j−c_i y_i+π_i,2⁰. Write u_i=y_i/a_i, v_i=(y_i+θy_j)/(a_i+θa_j), T_i=θV_i with period-1 shares. Own marginal sales are 1−F(min(u_i,v_i)); rival marginal sales are −θ[F(v_j)−F(u_i)]⁺ by the model’s stockout rule."
+  - id: 4
+    locator: "Retailer A’s first response and first unnumbered display"
+    claim: "A’s explicit branch and its implicit equation are the maximizers of its objective."
+    status: verified
+    method: re-derivation
+    note: "For u_A≥u_B the derivative is H_A[1−F(v_A)]−c_A; its zero gives the explicit order when y_B≤b z_A. Below u_B the derivative is (H_A−T_A)[1−F(u_A)]+T_A[1−F(v_B)]−c_A, equivalent to the printed equation. It is nonincreasing and continuous at the join. At the low-branch root, 1−c_A/(H_A−T_A)≤F(u_A)≤1−c_A/H_A, both interior, so the root and the maximizer are unique."
+  - id: 5
+    locator: "Retailer B’s response and second unnumbered display"
+    claim: "The B branches use B’s own sales coefficient and B’s rival-sales coefficient."
+    status: verified
+    method: re-derivation
+    note: "Interchanging the two retailers in the primitive marginal gives H_B[1−F(v_B)]−c_B on the high branch. Below u_A it gives (H_B−T_B)[1−F(u_B)]+T_B[1−F(v_A)]−c_B. Both root forms agree on the boundary. The response is continuous and weakly decreasing by the same CDF comparison as L3, also if V_B=0. The low-branch equation uses γ_B,2−θγ_B,2^C, not γ_B,2(1−θ)."
+  - id: 6
+    locator: "By analogous arguments ... normalized orders"
+    claim: "A has the weakly higher seed-demand critical probability for every mixture, ruling out the opposite order."
+    status: verified
+    method: re-derivation
+    note: "My derivation of the asserted ordering is H_A/c_A−H_B/c_B=(p_A,1/c_A−p_B,1/c_B)+γ[λ^S(r_A−r_B)+λ^N(α_A,2 r_A−α_B,2 r_B)], with r_i=p_i,2/c_i−1. A11 gives r_A≥r_B>0 and α_A,2≥α_B,2; all terms are nonnegative. If u_A<u_B, B’s equation fixes F(v_B)=1−c_B/H_B in the support interior. With u_A<v_B and H_A−T_A>0, A’s equation gives 1−c_A/H_A<F(v_B). This contradicts the ordering; θ=0,1 and all weights, including the pure endpoints, are covered."
+  - id: 7
+    locator: "Last displayed system and conclusion"
+    claim: "Sequential inversion gives exactly the printed feasible orders and a unique equilibrium."
+    status: verified
+    method: re-derivation
+    note: "In the remaining branch F(v_A)=1−t_A, (H_B−T_B)[1−F(u_B)]=c_B−T_B t_A. My explicit inversion verifies t_B−t_A=(c_B−H_B t_A)/(H_B−T_B)≥0 and t_B≤c_B/(H_B−T_B)≤c_B/p_B,1<1. Since t_A>0, both quantiles are interior and single valued. u_B=z_B and v_A=z_A give the printed orders and their normalized difference (a+θb)(z_A−z_B)/a≥0. The concave payoffs make these FOCs sufficient. Uniqueness follows from inversion and the exclusion of the other branch; the decreasing-best-response interval argument of L3 also excludes nondegenerate randomized equilibria."
+  - id: 8
+    locator: "Endpoints and equality"
+    claim: "The mixed result includes S and N and permits an order tie."
+    status: verified
+    method: re-derivation
+    note: "At λ^S=1, V_i=0 and γ_i,2=γ, giving L2. At λ^S=0, V_i=U_i=m_i γα_i,2, giving L3. In the pure-S case lower A11 equality in both periods permits z_A=z_B. Equal retail prices give strictly positive shares of 1/2. As γ↓0, coefficients vanish and the benchmark limits are recovered. The support endpoints cannot be quantile solutions by the strict interior bounds."
+findings: []
+numerical:
+  command: "python numerics/run.py -k LB1 --report verification/2026-11-22_gpt-6/logs/report_LB1.md"
+  direct: "6/6 passed"
+  supporting: "2/2 passed"
+  assessment: >-
+    The first- and second-period game checks test numerical unilateral gains and order distances at 109 markets each and a state-conditioned continuation value in period 2. Two 28-market fixed-point scans bracket the candidate for each period. The other direct checks compare four printed formula strings and both orders/profits at 25 rational mixed markets, and compare both pure-weight reductions at 25 rational points. The supporting checks establish symbolic uniform leftovers and compare 300 uniform closed-form orders. The numerical scans vary prices, costs, γ, θ, weights and four seed laws but can miss multiple roots between nodes. Uniqueness follows from the analytical argument.
+  own_checks:
+    - script: scripts/shared_inventory_marginals.py
+      result: "The shared script evaluates 1,890 mixed-scenario configurations, including both pure endpoints and λ^S=1/3, three γ values, three θ values and uniform/shifted Lomax laws. For each firm it checks the marginal payoff at and on both sides of the formula using the primitive substitution events."
+not_checked:
+  - "This equilibrium concerns predetermined prices satisfying A11, including equality, as maintained in the Section 4 extension. The numerical comparisons sample state and parameter values."

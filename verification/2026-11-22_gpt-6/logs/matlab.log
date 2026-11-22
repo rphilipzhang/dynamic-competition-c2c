@@ -1,0 +1,39 @@
+{
+  "markets": 300,
+  "scalar_comparisons": 4200,
+  "by_file": {
+    "pftaT2Case1": [
+      300,
+      0.0
+    ],
+    "pftbT2Case1": [
+      300,
+      0.0
+    ],
+    "period2_profit": [
+      1200,
+      0.0
+    ],
+    "SpftaT1": [
+      300,
+      0.0
+    ],
+    "SpftbT1": [
+      300,
+      0.0
+    ],
+    "NpftaT1": [
+      300,
+      0.0
+    ],
+    "NpftbT1": [
+      300,
+      0.0
+    ],
+    "FindGeneral_exo": [
+      1200,
+      0.0
+    ]
+  },
+  "branch_combinations_seen": 7
+}

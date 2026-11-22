@@ -1,0 +1,118 @@
+id: P1
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Under A1 to A11, I1 and I2 (uniform seed demand on [mu - sigma, mu + sigma], rho = 1, exogenous prices with
+  p_{B,t} >= p_{A,t} >= (c_A/c_B) p_{B,t}): (i) for every admissible market and every gamma > 0, each of
+  y^0_{A,1}, y^S_{A,1} and y^N_{A,1} is nondecreasing in theta on [0, 1] (y^0_{A,2} likewise); (ii) for every
+  admissible market there is a gamma* (it may depend on prices, costs, beta and sigma, not on theta) such that
+  for every gamma >= gamma* there is a theta^SN in [0, 1] (it may depend on gamma and the market) with
+  y^S_{A,1} >= y^N_{A,1} on [0, theta^SN] and y^S_{A,1} <= y^N_{A,1} on [theta^SN, 1].
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: 'By Lemma 1 and Lemma 2, for k = 0, S, y^k_{A,1} = \alpha_{A,1} \zeta^k_{A,1} + \theta \alpha_{B,1} (\zeta^k_{A,1} - \zeta^k_{B,1})'
+    claim: The benchmark and Scenario S orders of A are affine in theta with slope alpha_{B,1}(zeta_A - zeta_B) >= 0.
+    status: verified
+    method: symbolic
+    note: >-
+      Identity checked from the closed forms; second theta-derivative is 0. With r_i = 1 - F(zeta_i), the slope is
+      2 sigma alpha_{B,1}(r_B - r_A); (r^0_B - r^0_A) p_{A,1} p_{B,1} = X1 := c_B p_{A,1} - c_A p_{B,1} >= 0 and
+      (r^S_B - r^S_A) P_S Q_S = X1 + gamma X2 >= 0 (X2 := c_B p_{A,2} - c_A p_{B,2}), both by A11. This also
+      confirms the editorial Interpretation paragraph (slope zero exactly when A11 binds in period 1, resp. in both periods).
+  - id: 2
+    locator: '\frac{\partial y^{N}_{A,1}}{\partial \theta} = \alpha_{B,1} (\zeta^N_{A,1} - \zeta^N_{B,1}) - \theta \alpha_{B,1} \frac{\partial \zeta^N_{B,1}}{\partial \theta}'
+    claim: Derivative of y^N_{A,1} in theta (zeta^N_A does not depend on theta).
+    status: verified
+    method: symbolic
+    note: Checked by SymPy from the Lemma 3 closed form.
+  - id: 3
+    locator: '(A.18)'
+    claim: d zeta^N_B/d theta = -(1/f(zeta^N_B)) d/dtheta of the critical ratio.
+    status: verified
+    method: symbolic
+    note: Inverse-function rule; under A10 f = 1/(2 sigma) on the support and zeta^N_B lies in it (fractile in (0,1)). Checked symbolically.
+  - id: 4
+    locator: '(A.19) One can check ... \geq 0'
+    claim: The critical ratio of B in Scenario N is nondecreasing in theta.
+    status: verified
+    method: symbolic
+    note: >-
+      My derivation: d r^N_B/d theta = alpha_{B,2} gamma m_B (X1 + gamma W) / (P_N D_N^2), with m_B = p_{B,2} - c_B,
+      P_N = p_{A,1} + alpha_{A,2} gamma m_A, D_N = p_{B,1} + alpha_{B,2} gamma (1 - theta) m_B and
+      W = alpha_{A,2} c_B m_A - alpha_{B,2} c_A m_B = alpha_{A,2} X2 + (alpha_{A,2} - alpha_{B,2}) c_A m_B. W > 0:
+      if X2 > 0 the first term is positive; if X2 = 0 then p_{A,2} < p_{B,2} (A1), so alpha_{A,2} > alpha_{B,2}.
+      Hence (A.19) holds strictly for gamma > 0 (the numerator does not depend on theta).
+  - id: 5
+    locator: 'Thus, \frac{\partial y^N_{A,1}}{\partial \theta} \geq 0'
+    claim: y^N_{A,1} is nondecreasing in theta.
+    status: verified
+    method: re-derivation
+    note: Both terms of step 2 are nonnegative; the first is positive since r^N_B(theta) >= r^N_B(0) > r^N_A ((r_B(0) - r_A) has numerator X1 + gamma W > 0), so y^N_{A,1} is strictly increasing.
+  - id: 6
+    locator: 'if \theta = 0, we have y^N_{A,1} - y^S_{A,1} = -\frac{2 \alpha_{A,1} \alpha_{B,2} \gamma c_A \sigma (p_{A,2}-c_A)}{...} < 0'
+    claim: Value of the order difference at theta = 0, negative for gamma > 0.
+    status: verified
+    method: symbolic
+    note: SymPy identity with the printed expression; every factor is positive.
+  - id: 7
+    locator: 'If \theta = 1, ... g_A^{SN}(\gamma) is quadratic ... \frac{\partial^2 g_A^{SN}(\gamma)}{\partial \gamma^2} = ... >0'
+    claim: At theta = 1 the difference is a positive factor times a quadratic g_A^SN with positive second derivative, so it is positive for large gamma.
+    status: verified
+    method: symbolic
+    note: >-
+      (y^N - y^S)|_{theta=1} p_{B,1} P_S Q_S P_N / (2 gamma sigma) is a polynomial of degree 2 in gamma; its second
+      derivative equals the printed expression, whose inner bracket equals -W, so it is 2 alpha_{B,1} m_A m_B W > 0.
+      The prefactor 2 gamma sigma / (p_{B,1} P_S Q_S P_N) is positive. The constant term can be negative, so for small
+      gamma the difference at theta = 1 can be negative (probe: A11 binding in both periods, gamma = 0.1), consistent with "when gamma is large".
+  - id: 8
+    locator: 'direct differentiation of the closed form in Lemma 3 gives \frac{\partial^2 y_{A,1}^N}{\partial \theta^2}\geq 0'
+    claim: y^N_{A,1} is convex in theta; y^S_{A,1} is affine, so y^N - y^S is convex.
+    status: verified
+    method: symbolic
+    note: My derivation, checked by SymPy - d2 y^N_{A,1}/d theta2 = 4 sigma alpha_{B,1} N / D_N^2 + 4 sigma theta alpha_{B,1} alpha_{B,2} gamma m_B N / D_N^3 with N = alpha_{B,2} gamma m_B (X1 + gamma W)/P_N > 0.
+  - id: 9
+    locator: 'By the above arguments, there exists \theta^{SN}\in(0,1)'
+    claim: Single crossing of the convex difference, negative at 0 and positive at 1.
+    status: verified
+    method: re-derivation
+    note: The sublevel set of thetas with y^N - y^S <= 0 of the continuous convex difference is a closed interval containing 0 and not 1, so it is [0, theta^SN] with theta^SN in (0,1), and the difference is positive on (theta^SN, 1]. This gives the printed claim with theta^SN in [0,1].
+findings:
+  - id: F1
+    severity: editorial
+    scope: proof
+    locator: 'By the above arguments, there exists \theta^{SN}\in(0,1)'
+    description: >-
+      The statement names the threshold \underline{\theta}^{SN} (Manuscript.tex, Proposition 1), while the last
+      sentence of the proof names it \theta^{SN} (OnlineAppendix.tex, proof of Proposition 1). The object is the same;
+      only the symbol differs. Added by the orchestrator, who found it by a fixed-string search of both TeX files.
+    suggested_fix: Write \underline{\theta}^{SN} in the last sentence of the proof.
+    evidence: >-
+      grep -F '\underline{\theta}^{SN}' finds it only in paper/Manuscript.tex (Proposition 1); grep -F '\theta^{SN}'
+      finds the plain symbol only in paper/OnlineAppendix.tex, in the proof of Proposition 1. theory.md reproduces both
+      as printed.
+numerical:
+  command: python numerics/run.py -k P1
+  direct: "2/2 passed"
+  supporting: "4/4 passed"
+  assessment: >-
+    test_proposition_1_i (P1.i) evaluates y^0_{A,1}, y^S_{A,1}, y^N_{A,1} exactly on a theta grid at 210 points (90 on
+    edges, including A11 binding) and every gamma from 1/20 to 1e60; it requires strict increase, or exact constancy
+    where A11 binds (period 1 for k = 0, both periods for k = S). This is the exact truth derived above and implies the
+    weak printed predicate. test_proposition_1_ii (P1.ii) requires, at gamma = 1e50 and 1e60, d = y^S - y^N > 0 at 0,
+    < 0 at 1 and sign pattern "+-" (zeros skipped), and at every gamma d(0) > 0 with pattern "+" or "+-". Retailer,
+    scenario and period are those of the statement; the interior crossing is stronger than the printed theta^SN in
+    [0,1]. The threshold claim is probed only at two astronomically large gammas, as the docstring says. Supporting
+    checks tie the closed-form orders to the model and confirm admissibility of the sample.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_sec4_closed_forms.py: my SymPy closed forms of Lemmas 1-3 equal numerics/c2c/closed_form.py at 40 exact points (largest difference 0); E[R_A], E[R_B] closed forms equal direct integration."
+    - "verification/2026-11-22_claude-opus-5-5/scripts/P1_symbolic_checks.py: every display and sign claim of the proof (all True). Positive roots of g_A^SN at probe markets: 0.088 (regular), 0.83 (A11 binding both periods), 0.34 (equal prices), 1069 (c_A/c_B = 0.999), 0.0016 (alpha_A = 0.999); the crossing pattern '+-' holds above these roots and '+' below."
+    - "verification/2026-11-22_claude-opus-5-5/scripts/shared_sec4_counterexample_search.py: 160 exact random admissible markets with boundaries (A11 binding, equal prices, extreme shares and cost ratios), gamma in {0.001, 0.1, 1, 10, 1000}, 42 theta nodes: 0 violations of P1.i."
+not_checked:
+  - The general-distribution version is not claimed (A10 is in force); only the uniform closed forms were differentiated.

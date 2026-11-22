@@ -1,0 +1,14 @@
+......                                                                   [100%]
+6 passed, 87 deselected in 17.50s
+
+Results of theory.md
+  L1  direct    3/3   supporting    3/3
+  L2  direct      –   supporting    1/1
+  L3  direct      –   supporting    1/1
+  L4  direct      –   supporting    1/1
+  P1  direct      –   supporting    1/1
+  P2  direct      –   supporting    1/1
+  P5  direct      –   supporting    1/1
+  P6  direct      –   supporting    1/1
+  LB1 direct      –   supporting    1/1
+wrote verification/2026-11-22_claude-opus-5-5/logs/report_L1.md

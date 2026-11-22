@@ -1,0 +1,102 @@
+id: P8
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: Prior conversation included earlier judgements; no previous verification directory was opened
+    in this run.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: On the whole price box and for sufficiently large gamma, both S orders fall weakly in own price
+  and rise weakly in rival price, and in N, A's order falls and B's rises with A's price. Under (A.22) there
+  exist an interior price neighborhood U and positive ell and finite gamma threshold common on U such that,
+  whenever 0<=gamma*(1-theta)<=ell and gamma exceeds it, A's N order decreases and B's increases with B's price.
+  For each fixed theta<1 the directions reverse on the box for sufficiently large gamma (depending on theta).
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A5
+- A6
+- A7
+- A8
+- A9
+- A10
+- A12
+- A13
+- A14
+- I1
+unstated_hypotheses: []
+relies_on:
+- 'LA1 closed form and LA2 joint proof: uniform C² price control of the inventory approximation in (A.21),
+  stronger than just the displayed value approximation of LA2.'
+steps:
+- id: 1
+  locator: P8(a)
+  claim: Signs of the four S derivatives.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. Differentiate the S order formula with the upper continuation price fixed. The
+    critical points equal upper seed demand h=mu+sigma plus O(gamma^-1), with their own-price derivatives O(gamma^-2)
+    uniformly. Since share slopes are +/-beta, the limiting slopes are +/-beta*h, strictly separated from zero
+    on the compact box, including theta endpoints.
+- id: 2
+  locator: P8(b1)
+  claim: Uniform signs with respect to A's price in N.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. In LA2 the B denominator pB1+(1-theta)*gamma*nuB is bounded below by the lower
+    price. Differentiating the numerator correction in pA1 contributes only O(gamma^-1), uniformly even at
+    theta=1. The leading slopes are beta*zB for B and -beta*((1-theta)*zA+theta*zB) for A. Both z's are bounded
+    below by mu-sigma>0; thus a common gamma suffices.
+- id: 3
+  locator: (A.22)–(A.24)
+  claim: The condition selects an actual interior rectangle and a positive ell.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. Put K=cB-cA*nuB/nuA>0, by the second-period limit margins and share ordering.
+    The RHS of pB1²<sigma*K*(1+2*beta*pA1)/(beta*h) is strictly increasing in pA1. Its supremum at upper exceeds
+    lower² exactly under A.22. Strict slack lets one choose an interior center, then a closed rectangle around
+    it and ell>0 small enough to retain slack with the worst endpoints and ell*nuB. Equality in A.22 imposes
+    no such conclusion.
+- id: 4
+  locator: (A.25)
+  claim: Order and aggregate-order expansions are uniform in the specified regime.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. For L=gamma*(1-theta)<=ell, theta*gamma*nuB*cA/(pA1+gamma*nuA)=cA*nuB/nuA+O_C1(gamma^-1)
+    and the B denominator is >=lower. Summing orders gives zA+(1-theta)*alphaB*(zB-zA) up to the LA2 remainder.
+    Its own C1 distance to h is O(gamma^-1), also at L=0.
+- id: 5
+  locator: (A.26) and the uniform bound
+  claim: The B-price derivative is positive for B and negative for A in the rectangle.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. At fixed L, differentiate alphaB*(h-2*sigma*K/(pB1+L*nuB)); the derivative is
+    -beta*h+sigma*K*(1+2*beta*pA1+2*beta*L*nuB)/(pB1+L*nuB)^2. The positive slack in A.24 bounds it below uniformly
+    at the worst corner. Subtract from the aggregate slope O(gamma^-1) to obtain A's negative slope using the
+    same common threshold.
+- id: 6
+  locator: Finally, for any fixed theta<1
+  claim: Opposite B-price signs at fixed theta.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. With 1-theta fixed positive both critical tails are O_C1(gamma^-1) in the price
+    arguments. LA2 then gives y_i=alpha_i*h+O_C1(gamma^-1). B's own slope tends to -beta*h and A's rival slope
+    to +beta*h. The constant can diverge as theta tends to 1, consistent with the quantifiers.
+findings: []
+numerical:
+  command: python numerics/run.py -k P8 --report verification/2026-11-22_gpt-6/logs/report_P8.md
+  direct: 3/3 passed
+  supporting: 3/3 passed
+  assessment: Checks distinguish the fixed-theta grid from markets satisfying A.22 and prices inside A.23.
+    The local test varies gamma at fixed markets and uses both theta=1 and a scaled near-one path; the other
+    test holds theta<1 fixed. Finite differences in independently solved inventory games probe the strict leading
+    signs and exclude rounded zeros.
+  own_checks:
+  - scripts/shared_price_derivatives.py; logs/price_derivatives.log
+not_checked: []

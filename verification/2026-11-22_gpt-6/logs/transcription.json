@@ -1,0 +1,747 @@
+{
+  "labels": {
+    "Manuscript": 37,
+    "OnlineAppendix": 47
+  },
+  "pdf_pages": {
+    "Manuscript": 33,
+    "OnlineAppendix": 16
+  },
+  "published_labels": [
+    [
+      "Manuscript",
+      "lem:model0",
+      "1",
+      "12"
+    ],
+    [
+      "Manuscript",
+      "lem:models",
+      "2",
+      "12"
+    ],
+    [
+      "Manuscript",
+      "lem:modeln",
+      "3",
+      "12"
+    ],
+    [
+      "Manuscript",
+      "lem:oneside",
+      "4",
+      "14"
+    ],
+    [
+      "Manuscript",
+      "prop:yacompare",
+      "1",
+      "15"
+    ],
+    [
+      "Manuscript",
+      "prop:ybcompare",
+      "2",
+      "16"
+    ],
+    [
+      "Manuscript",
+      "prop:indsales",
+      "3",
+      "17"
+    ],
+    [
+      "Manuscript",
+      "prop:tsales",
+      "4",
+      "18"
+    ],
+    [
+      "Manuscript",
+      "prop:pfta",
+      "5",
+      "19"
+    ],
+    [
+      "Manuscript",
+      "prop:pftb",
+      "6",
+      "20"
+    ],
+    [
+      "Manuscript",
+      "prop:orderprice2",
+      "7",
+      "24"
+    ],
+    [
+      "Manuscript",
+      "prop:orderprice1",
+      "8",
+      "24"
+    ],
+    [
+      "Manuscript",
+      "prop:price",
+      "9",
+      "25"
+    ],
+    [
+      "Manuscript",
+      "fig:compare",
+      "1",
+      "28"
+    ],
+    [
+      "Manuscript",
+      "general",
+      "1",
+      "8"
+    ],
+    [
+      "Manuscript",
+      "sne",
+      "2",
+      "8"
+    ],
+    [
+      "Manuscript",
+      "nne",
+      "3",
+      "9"
+    ],
+    [
+      "OnlineAppendix",
+      "lem:modelS-g",
+      "A.1",
+      "9"
+    ],
+    [
+      "OnlineAppendix",
+      "lem:modelN-g",
+      "A.2",
+      "9"
+    ],
+    [
+      "OnlineAppendix",
+      "lem:modelg",
+      "B.1",
+      "14"
+    ],
+    [
+      "OnlineAppendix",
+      "fig:general",
+      "B.1",
+      "16"
+    ],
+    [
+      "OnlineAppendix",
+      "prob0:A",
+      "A.1",
+      "1"
+    ],
+    [
+      "OnlineAppendix",
+      "model0:BRA",
+      "A.2",
+      "1"
+    ],
+    [
+      "OnlineAppendix",
+      "model0:BRB",
+      "A.3",
+      "1"
+    ],
+    [
+      "OnlineAppendix",
+      "models:A2",
+      "A.4",
+      "2"
+    ],
+    [
+      "OnlineAppendix",
+      "models:BRA2",
+      "A.5",
+      "2"
+    ],
+    [
+      "OnlineAppendix",
+      "models:B2",
+      "A.6",
+      "2"
+    ],
+    [
+      "OnlineAppendix",
+      "models:BRB2",
+      "A.7",
+      "2"
+    ],
+    [
+      "OnlineAppendix",
+      "models:A1",
+      "A.8",
+      "2"
+    ],
+    [
+      "OnlineAppendix",
+      "models:BRA1",
+      "A.9",
+      "2"
+    ],
+    [
+      "OnlineAppendix",
+      "models:B1",
+      "A.10",
+      "3"
+    ],
+    [
+      "OnlineAppendix",
+      "models:BRB1",
+      "A.11",
+      "3"
+    ],
+    [
+      "OnlineAppendix",
+      "modeln:A1",
+      "A.12",
+      "3"
+    ],
+    [
+      "OnlineAppendix",
+      "modeln:BRA1-2",
+      "A.13",
+      "4"
+    ],
+    [
+      "OnlineAppendix",
+      "modeln:B1",
+      "A.14",
+      "4"
+    ],
+    [
+      "OnlineAppendix",
+      "modeln:BRB1-2",
+      "A.15",
+      "4"
+    ],
+    [
+      "OnlineAppendix",
+      "modeln:contra-eq",
+      "A.16",
+      "5"
+    ],
+    [
+      "OnlineAppendix",
+      "modeln:eq1",
+      "A.17",
+      "5"
+    ],
+    [
+      "OnlineAppendix",
+      "ineq:derybn",
+      "A.18",
+      "6"
+    ],
+    [
+      "OnlineAppendix",
+      "ineq:sbn",
+      "A.19",
+      "6"
+    ],
+    [
+      "OnlineAppendix",
+      "ineq:sbcompare",
+      "A.20",
+      "6"
+    ],
+    [
+      "OnlineAppendix",
+      "sys-lem6",
+      "A.21",
+      "11"
+    ],
+    [
+      "OnlineAppendix",
+      "eq:prop8b2",
+      "A.22",
+      "13"
+    ],
+    [
+      "OnlineAppendix",
+      "eq:p8region",
+      "A.23",
+      "13"
+    ],
+    [
+      "OnlineAppendix",
+      "eq:p8rectangle",
+      "A.24",
+      "13"
+    ],
+    [
+      "OnlineAppendix",
+      "eq:p8expansion",
+      "A.25",
+      "13"
+    ],
+    [
+      "OnlineAppendix",
+      "eq:p8derivative",
+      "A.26",
+      "13"
+    ]
+  ],
+  "assumption_matches": {
+    "A1": [
+      true
+    ],
+    "A2": [
+      true
+    ],
+    "A3": [
+      true,
+      true
+    ],
+    "A4": [
+      true,
+      true
+    ],
+    "A5": [
+      true
+    ],
+    "A6": [
+      true
+    ],
+    "A7": [
+      true
+    ],
+    "A8": [
+      true
+    ],
+    "A9": [
+      true
+    ],
+    "A10": [
+      true
+    ],
+    "A11": [
+      true,
+      true
+    ],
+    "A12": [
+      true
+    ],
+    "A13": [
+      true
+    ],
+    "A14": [
+      true
+    ],
+    "A15": [
+      true
+    ]
+  },
+  "formula_quotes": [
+    [
+      "test_port_matches_paper",
+      [
+        "Manuscript"
+      ],
+      "\\zeta_{i,t}^0= F^{-1}(1 - \\frac{c_i}{p_{i,t}})"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "Manuscript"
+      ],
+      "y^{0}_{A,t} = (\\alpha_{A,t} + \\theta \\alpha_{B,t}) \\zeta_{A,t}^0 - \\theta \\alpha_{B,t} \\zeta_{B,t}^0"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "\\pi^{0}_{A,t} := (p_{A,t}-c_A)y^0_{A,t} - p_{A,t} \\mathbb{E}[L^0_{A,t}]"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "Manuscript"
+      ],
+      "\\zeta^S_{i,1} = F^{-1}\\left( 1 - \\frac{c_i}{p_{i,1} + \\gamma (p_{i,2}-c_i)}\\right)"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "Manuscript"
+      ],
+      "y^{S}_{A,1} = (\\alpha_{A,1} + \\theta \\alpha_{B,1}) \\zeta_{A,1}^S - \\theta \\alpha_{B,1} \\zeta_{B,1}^S"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "[p_{A,1} -c_A + \\rho (p_{A,2} -c_A)\\gamma]y_{A,1} - [p_{A,1}+\\rho (p_{A,2} -c_A)\\gamma] \\mathbb{E} \\left[y_{A,1} - D_{A,1} \\right]^+ + \\rho \\pi^{0}_{A,2},"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "Manuscript"
+      ],
+      "\\zeta^N_{A,1} = F^{-1} \\bigg( 1- \\frac{c_A}{p_{A,1} + \\alpha_{A,2} \\gamma (p_{A,2} -c_A)} \\bigg)"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "Manuscript"
+      ],
+      "\\zeta^N_{B,1}= F^{-1} \\bigg( 1- \\frac{c_B - \\alpha_{B,2} \\gamma \\theta (p_{B,2} -c_B) \\frac{c_A}{p_{A,1} + \\alpha_{A,2} \\gamma (p_{A,2}-c_A)}}{p_{B,1} + \\alpha_{B,2} \\gamma (1-\\theta)(p_{B,2} -c_B)} \\bigg);"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "+ \\rho (p_{A,2} -c_A)\\alpha_{A,2} \\gamma y_{B,1} - \\rho (p_{A,2} -c_A)\\alpha_{A,2} \\gamma \\mathbb{E} \\left[y_{B,1} - D_{B,1} \\right]^+ + \\rho \\pi^{0}_{A,2},"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "\\zeta^G_{A,1} = F^{-1} \\bigg( 1- \\frac{c_A}{p_{A,1} + \\gamma_{A,2} (p_{A,2} -c_A)} \\bigg)"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "\\zeta^G_{B,1}= F^{-1} \\bigg( 1- \\frac{c_B - \\gamma^C_{B,2} \\theta (p_{B,2} -c_B) \\frac{c_A}{p_{A,1} + \\gamma_{A,2} (p_{A,2}-c_A)}}{p_{B,1} + (\\gamma_{B,2}-\\gamma^C_{B,2}\\theta )(p_{B,2} -c_B)} \\bigg);"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "\\gamma_{i,t}:=(\\lambda^S + \\lambda^N \\alpha_{i,t}) \\gamma"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "\\gamma^C_{i,t} := \\lambda^N \\gamma \\alpha_{i,t}"
+    ],
+    [
+      "test_port_matches_paper",
+      [
+        "OnlineAppendix"
+      ],
+      "Note that Scenario S is a special case of Scenario G if $\\lambda^S = 1$ and $\\lambda^N = 0$"
+    ],
+    [
+      "test_propositions_exogenous",
+      [
+        "OnlineAppendix"
+      ],
+      "-2 \\alpha_{A,1} c_{A}^2 p_{B,1}+\\alpha_{B,1} c_{A} p_{A,1} p_{B,2}+2 \\alpha_{A,1} c_{A} p_{A,2} p_{B,1} - c_B p_{A,1} (\\alpha_{A,1} p_{A,2}-(2 \\alpha_{A,1} -1) c_A)"
+    ],
+    [
+      "test_propositions_exogenous",
+      [
+        "OnlineAppendix"
+      ],
+      "\\frac{\\partial^4 h_A(1,\\gamma)}{\\partial \\gamma^4} <0$ if $c_B > \\overline{c}_B"
+    ],
+    [
+      "test_propositions_exogenous",
+      [
+        "OnlineAppendix"
+      ],
+      "\\frac{\\partial^2 h_B(0, \\gamma)}{\\partial \\gamma^2} = (1-\\alpha_{A,1} ) \\alpha_{A,1} \\sigma [-2 c_B^2 (p_{A,2}-c_A)^2 \\alpha_{A,2}^2 -2 c_A^2 (p_{B,2}-c_B)^2 \\alpha_{A,2} + 2 c_A^2 (p_{B,2}-c_B)^2]"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\widehat p_{i,2} :=1/(2\\beta)+(2c_i+c_j)/3"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\nu_i :=\\alpha_{i,2}(\\widehat p_{A,2},\\widehat p_{B,2})(\\widehat p_{i,2}-c_i)"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\sigma\\left(c_B-c_A\\frac{\\nu_B}{\\nu_A}\\right)(1+2\\beta\\overline{p}) >\\beta(\\mu+\\sigma)\\underline{p}^{\\,2}. \\label{eq:prop8b2}"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\underline{p}<p_{B,1}< \\min\\left\\{\\overline{p},\\ \\sqrt{\\frac{\\sigma(c_B-c_A\\nu_B/\\nu_A)(1+2\\beta p_{A,1})}{\\beta(\\mu+\\sigma)}}\\right\\}. \\label{eq:p8region}"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\widehat p_{i,1} = \\frac1{2\\beta} +\\frac{(\\mu+\\sigma)(2c_i+c_j)}{3\\mu}"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "y_{A,1}^S=(\\alpha_{A,1}+\\theta\\alpha_{B,1})\\zeta_{A,1}^S -\\theta\\alpha_{B,1}\\zeta_{B,1}^S$ and $y_{B,1}^S=\\alpha_{B,1}\\zeta_{B,1}^S"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\zeta^S_{i,1} := F^{-1}(1 - \\frac{c_i}{p_{i,1} + \\gamma (\\overline{p}-c_i)})"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "(p^S_{A,2}, p^S_{B,2})=(\\overline{p},\\overline{p})"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "y_{A,1}^N=(\\alpha_{A,1}+\\theta\\alpha_{B,1})\\zeta_{A,1}^N -\\theta\\alpha_{B,1}\\zeta_{B,1}^N + O({\\gamma^{-2}})$ and $y_{B,1}^N=\\alpha_{B,1}\\zeta_{B,1}^N + O({\\gamma^{-2}})"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\zeta^N_{A,1} = F^{-1}\\left( 1- \\frac{ c_A}{p_{A,1}+\\gamma\\nu_A} \\right)"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "OnlineAppendix"
+      ],
+      "\\zeta^N_{B,1} = F^{-1}\\left( 1- \\frac{c_B-\\theta\\gamma\\nu_Bc_A/(p_{A,1}+\\gamma\\nu_A)}{p_{B,1}+(1-\\theta)\\gamma\\nu_B} \\right)"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "Manuscript"
+      ],
+      "$y^S_{i,1}$ decreases in $p_{i,1}$ and increases in $p_{j,1}$"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "Manuscript"
+      ],
+      "$y^N_{A,1}$ decreases in $p_{A,1}$ and $y^N_{B,1}$ increases in $p_{A,1}$"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "Manuscript"
+      ],
+      "$y^N_{A,1}$ decreases in $p_{B,1}$ and $y^N_{B,1}$ increases in $p_{B,1}$, provided that $\\gamma>\\gamma^D$ and $0\\leq\\gamma(1-\\theta)\\leq\\ell^D$"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "Manuscript"
+      ],
+      "for a fixed $\\theta<1$ and sufficiently large $\\gamma$, $y^N_{A,1}$ increases in $p_{B,1}$ and $y^N_{B,1}$ decreases in $p_{B,1}$"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "Manuscript"
+      ],
+      "\\underline{p} = p^{S}_{i,1} < p^{S}_{i,2} = \\overline{p}"
+    ],
+    [
+      "test_section_5_transcription",
+      [
+        "Manuscript"
+      ],
+      "\\underline{p} < p^{N}_{i,2} < p^{N}_{i,1} < \\overline{p}"
+    ]
+  ],
+  "numerical_quotes": {
+    "F1": true,
+    "FB1": true,
+    "N1": true,
+    "N2": true,
+    "N3": true,
+    "N4": true,
+    "N5": true,
+    "N6": true,
+    "N7": true
+  },
+  "comparisons": {
+    "model": {
+      "words_and_math_tokens": 2785,
+      "changes": []
+    },
+    "section4": {
+      "words_and_math_tokens": 329,
+      "changes": []
+    },
+    "section5": {
+      "words_and_math_tokens": 724,
+      "changes": []
+    },
+    "appendixA2": {
+      "words_and_math_tokens": 485,
+      "changes": []
+    },
+    "appendixB": {
+      "words_and_math_tokens": 507,
+      "changes": []
+    },
+    "L1 statement": {
+      "words_and_math_tokens": 152,
+      "changes": []
+    },
+    "L1 proof": {
+      "words_and_math_tokens": 1982,
+      "changes": []
+    },
+    "L2 statement": {
+      "words_and_math_tokens": 276,
+      "changes": []
+    },
+    "L2 proof": {
+      "words_and_math_tokens": 3732,
+      "changes": []
+    },
+    "L3 statement": {
+      "words_and_math_tokens": 427,
+      "changes": []
+    },
+    "L3 proof": {
+      "words_and_math_tokens": 7367,
+      "changes": []
+    },
+    "L4 statement": {
+      "words_and_math_tokens": 171,
+      "changes": []
+    },
+    "L4 proof": {
+      "words_and_math_tokens": 515,
+      "changes": []
+    },
+    "P1 statement": {
+      "words_and_math_tokens": 160,
+      "changes": []
+    },
+    "P1 proof": {
+      "words_and_math_tokens": 1448,
+      "changes": []
+    },
+    "P2 statement": {
+      "words_and_math_tokens": 151,
+      "changes": []
+    },
+    "P2 proof": {
+      "words_and_math_tokens": 1220,
+      "changes": []
+    },
+    "P3 statement": {
+      "words_and_math_tokens": 285,
+      "changes": []
+    },
+    "P3 proof": {
+      "words_and_math_tokens": 868,
+      "changes": []
+    },
+    "P4 statement": {
+      "words_and_math_tokens": 68,
+      "changes": []
+    },
+    "P4 proof": {
+      "words_and_math_tokens": 577,
+      "changes": []
+    },
+    "P5 statement": {
+      "words_and_math_tokens": 273,
+      "changes": []
+    },
+    "P5 proof": {
+      "words_and_math_tokens": 2056,
+      "changes": []
+    },
+    "P6 statement": {
+      "words_and_math_tokens": 284,
+      "changes": []
+    },
+    "P6 proof": {
+      "words_and_math_tokens": 1654,
+      "changes": []
+    },
+    "LA1 statement": {
+      "words_and_math_tokens": 315,
+      "changes": []
+    },
+    "LA1 proof": {
+      "words_and_math_tokens": 4280,
+      "changes": []
+    },
+    "LA2 statement": {
+      "words_and_math_tokens": 392,
+      "changes": []
+    },
+    "P7 statement": {
+      "words_and_math_tokens": 152,
+      "changes": []
+    },
+    "P7 proof": {
+      "words_and_math_tokens": 1331,
+      "changes": []
+    },
+    "P8 statement": {
+      "words_and_math_tokens": 339,
+      "changes": []
+    },
+    "P8 proof": {
+      "words_and_math_tokens": 1583,
+      "changes": []
+    },
+    "P9 statement": {
+      "words_and_math_tokens": 242,
+      "changes": []
+    },
+    "P9 proof": {
+      "words_and_math_tokens": 804,
+      "changes": []
+    },
+    "LB1 statement": {
+      "words_and_math_tokens": 506,
+      "changes": [
+        [
+          "insert",
+          "",
+          ", and the price condition of Section 4 holds , p _ { B , t } \\geq p _ { A , t } \\geq \\frac { c _ A } { c _ B } p _ { B , t } for t = 1 , 2"
+        ]
+      ]
+    },
+    "LB1 proof": {
+      "words_and_math_tokens": 1655,
+      "changes": []
+    }
+  }
+}

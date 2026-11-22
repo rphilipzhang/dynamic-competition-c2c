@@ -1,0 +1,26 @@
+L1 exit=0 secs=18
+L2 exit=0 secs=25
+L3 exit=0 secs=25
+LB1 exit=0 secs=25
+L4 exit=0 secs=38
+P1 exit=0 secs=39
+P2 exit=0 secs=47
+P3 exit=0 secs=39
+P4 exit=0 secs=39
+P5 exit=0 secs=40
+P6 exit=0 secs=40
+LA1 exit=0 secs=10
+LA2 exit=0 secs=19
+P7 exit=0 secs=4
+P8 exit=0 secs=9
+P9 exit=0 secs=28
+F1 exit=0 secs=3
+FB1 exit=0 secs=2
+N1 exit=0 secs=1
+N2 exit=0 secs=2
+N3 exit=0 secs=2
+N4 exit=0 secs=1
+N5 exit=0 secs=2
+N6 exit=0 secs=26
+DONE
+full exit=0 secs=218

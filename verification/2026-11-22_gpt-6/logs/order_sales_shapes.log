@@ -1,0 +1,4 @@
+Order curvature 4*s*b*H*r*(v+r)/D^3; sales curvature s*b*(2*f' + theta*f'').
+P1 quadratic second derivative = 2*b*m*n*J.
+P3 quintic fifth derivative = -120*b*m^2*n^2*J^2; J=B*x*m-A*z*n>0.
+Boundary market h_A(1,gamma) = 9*(3*gamma + 8)**2*(11*gamma + 12)/2 ; degree = 3

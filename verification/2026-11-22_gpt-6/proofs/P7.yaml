@@ -1,0 +1,94 @@
+id: P7
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: Prior conversation included earlier judgements; no previous verification directory was opened
+    in this run.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: For either firm, scenario and every fixed feasible first-period sales state, all gamma>0 and every
+  fixed other second-period price, the own-price curve on the price interval is nonincreasing or has one or
+  two interior local maxima. As the rival price varies, the curve is nondecreasing or first nonincreasing and
+  then nondecreasing.
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A5
+- A6
+- A7
+- A8
+- A9
+- A10
+- A12
+- A13
+- I1
+unstated_hypotheses: []
+relies_on:
+- 'LA1/LA2 joint proof: conditional second-period stock translation holds at all given prices and all gamma,
+  independently of the large-gamma price-equilibrium conclusion.'
+- L1 proof in each of the two possible orders of critical ratios.
+steps:
+- id: 1
+  locator: conditional orders
+  claim: A shift in S and a tilt in N.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. Conditional Z adds to the inventory solution in either critical-ratio order;
+    the S sales increment is constant, and the N share increment contributes -beta*gamma*R or +beta*gamma*R
+    to the own or rival derivative. This holds even at zero sales.
+- id: 2
+  locator: (a), two own-price pieces
+  claim: Both branch derivatives decrease with the own price.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. Rescale prices and costs by 2*beta and demand by mu, so 2*beta=mu=1 in the following
+    derivative bounds; write s=sigma/mu,U=upper,r=other,x=own. For the lower critical ratio, the derivative
+    is -beta*(1+s)+c_i*s*(1+r)/x². For the higher it is -beta*(1+s)+c_i*s*(1+theta+(1-theta)*r)/x²+2*beta*c_j*theta*s/r.
+    Each varies as a positive multiple of x^-2 plus a constant; both stock formulas agree at x=c_i*r/c_j.
+- id: 3
+  locator: (a), displayed negative upper-end bound
+  claim: At the upper price the own-price derivative is strictly negative on either branch.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. Write D=U-1. A13 implies D>(1+s)(c_A+2*c_B)/3 and A12 puts every feasible price
+    above D. In units of beta*s the positive adjustment at x=U is affine in theta on the high branch. At theta=0
+    it is bounded by 2*c_i*(1+U)/U²<=2*c_i/D; this covers the low branch too. At theta=1 it is bounded by 4*c_i/U²+2*c_j/r<=(c_i+2*c_j)/D
+    using U²>=4D. Both are bounded by 3/(1+s). Thus the derivative is at most -beta*(1-s+s²)/(1+s) in normalized
+    units, including either assignment of firms; subtracting the N tilt preserves negativity.
+- id: 4
+  locator: (a), joining the pieces
+  claim: Own-price shape has at most two interior maxima.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. The slope is decreasing on each of at most two pieces. At the tie the added spillover
+    term is theta*alpha_j*(z_i-z_j), which is zero there and has nonnegative right slope in the own price.
+    No additional downward slope jump creates a third peak. The final slope is negative. Any positive-slope
+    segment therefore has a following interior maximum, and there can be at most two.
+- id: 5
+  locator: (b), both rival-price pieces and the upper bound
+  claim: Rival-price slope can turn from negative to positive at most once, and ends positive.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. With r now the varying rival price, on the high-own-ratio piece the derivative
+    is beta*(1+s-2*c_i*(1-theta)*s/x)-c_j*theta*s*(1+x)/r², increasing in r. On the other piece it is beta*(1+s-2*c_i*s/x)>0
+    since x>c_i and s<1. At r=U the adverse adjustment in units of beta*s is at most 2*c_i/D when theta=0 and
+    2*c_j*(1+U)/U²<=2*c_j/D when theta=1. Both are <=3/(1+s), giving the stated positive bound for either retailer
+    in original units. The N tilt is positive; the same alternatives hold if the ratio tie is outside the interval
+    or theta=0 or 1.
+findings: []
+numerical:
+  command: python numerics/run.py -k P7 --report verification/2026-11-22_gpt-6/logs/report_P7.md
+  direct: 2/2 passed
+  supporting: 1/1 passed
+  assessment: The two direct checks classify 16,000 own and 16,000 rival curves on 1,501-price grids, varying
+    the market, rival price, theta and feasible prior-sales state. Supporting checks apply Nash-gap tests in
+    both fractile branches. The sign proof covers kinks and peaks narrower than those grids.
+  own_checks:
+  - scripts/shared_price_derivatives.py; logs/price_derivatives.log
+not_checked: []

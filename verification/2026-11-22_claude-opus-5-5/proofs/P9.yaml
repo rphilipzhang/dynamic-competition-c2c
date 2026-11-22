@@ -1,0 +1,95 @@
+id: P9
+run_id: 2026-11-22_claude-opus-5-5
+auditor: {model: claude-opus-5-5, harness: Claude Code, date: "2026-11-22", prior_exposure: "Orchestrator session context listed one-line memory notes that an earlier verification run of this repository exists; no earlier audit, other verification folder or file outside the repository root was read."}
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Section 5 model (A1-A10, A12, A13, A14, I1). For every theta in [0, 1) there is gamma^P(theta) >= 0 such that for
+  every gamma > gamma^P a (feedback) equilibrium of the two-period price-inventory game exists in each scenario, and
+  (a) in Scenario S every such equilibrium has p_{i,1} = p_lo and p_{i,2} = p_hi for i = A, B (so p_lo < p_hi is the
+  strict increase); (b) in Scenario N the first-period price pair is unique and, at every realized first-period
+  sales state, p_lo < p_{i,2} < p_{i,1} < p_hi for i = A, B.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A12, A13, A14, I1]
+unstated_hypotheses: []
+relies_on:
+  - "LA1-LA2 joint proof, last paragraph (LA1 record, step 39): Pi_i^N = gamma nu_i mu + K_i(theta) + alpha_{i,1}(mu p_{i,1} - c_i(mu+sigma)) + O_{C^2(p_1;P)}(gamma^-1) for each fixed theta < 1"
+  - "LA1-LA2 joint proof, Scenario S (LA1 record, steps 4-8): at every state a unilateral first-period deviation can reach, both retailers charge p_hi in period 2, so V_i = pi^0_i(p_hi, p_hi) + gamma (p_hi - c_i) R_i"
+  - "LA1-LA2 joint proof, Scenario N (LA1 record, step 17): p^N_{i,2} = phat_{i,2} + O((gamma R_1)^{-1}) uniformly over R_1 >= mu - sigma, the on-path range"
+steps:
+  - id: 1
+    locator: 'By Lemma A.1, the retailer i''s total payoff is exactly Π^S_i(p_1) = [p_{i,1}+γ(p_hi - c_i)]E R^S_{i,1} - c_i y^S_{i,1} + π^0_{i,2}(p_hi,p_hi)'
+    claim: Reduced first-period payoff in Scenario S.
+    status: verified
+    method: re-derivation
+    note: For gamma above the LA1 threshold the first-period orders are the unique LA1(a) pair at every p_1 in P, with R_i >= delta, so second-period prices are (p_hi, p_hi) and V_i is affine in R_i (relies_on).
+  - id: 2
+    locator: '∂Π^S_i/∂p_{i,1} = -γ(p_hi - c_i)βμ + O(1) < 0 uniformly on the price box for large γ'
+    claim: The reduced payoff strictly decreases in the own first-period price.
+    status: verified
+    method: numerical
+    note: >-
+      My derivation with the exact sales identities of LA1 step 39 (here s = zeta_B, z = zeta_A): e.g. for B,
+      d/d p_B [G_B E R_B - c_B y_B] = -beta G_B (mu - sigma t^2) + O(1), G_B = p_B + gamma (p_hi - c_B), t = c_B/G_B;
+      similarly for A. scripts/P9_payoff_expansion_and_price_path.py: on a 5 x 5 grid of the box the ratio of the
+      model derivative to -gamma (p_hi - c_i) beta mu lies in [0.992, 1.008] at gamma = 100 and in [0.9999, 1.0001]
+      at gamma = 1e4.
+  - id: 3
+    locator: 'Thus p_lo is each retailer''s unique first-period best response to every rival price ... unique first-period price equilibrium (p_lo,p_lo); Lemma A.1 gives the unique second-period prices (p_hi,p_hi) at all induced states'
+    claim: Part (a).
+    status: verified
+    method: re-derivation
+    note: Strictly decreasing payoff gives the corner; induced on-path states have R_i >= delta > 0, so LA1(b) applies with a uniform threshold; p_lo < p_hi by A13.
+  - id: 4
+    locator: 'Fix θ<1 and use Π^N_i(p_{A,1},p_{B,1}) = γν_iμ+K_i(θ)+α_{i,1}(μp_{i,1}-c_i(μ+σ))+O_{C^2(p_1;P)}(γ^{-1}) in the proof of Lemma A.2'
+    claim: Use of the expansion derived inside the joint proof.
+    status: verified
+    method: re-derivation
+    note: Verified in the LA1 record, step 39 (relies_on). The restriction to fixed theta < 1 matches the statement's quantifier "for any theta in [0, 1), there exists gamma^P".
+  - id: 5
+    locator: '∂_{p_{i,1}}Π^N_i = μ(1/2+βp_{j,1}-2βp_{i,1})+βc_i(μ+σ)+O(γ^{-1}), ∂^2_{p_{i,1}}Π^N_i = -2βμ+O(γ^{-1}) < 0, ∂_{p_{i,1}}∂_{p_{j,1}}Π^N_i = βμ+O(γ^{-1})'
+    claim: Derivatives of the reduced payoff.
+    status: verified
+    method: symbolic
+    note: SymPy - derivatives of alpha_i (mu p_i - c_i (mu+sigma)); the O(gamma^-1) terms come from the C^2 remainder.
+  - id: 6
+    locator: 'The constrained price best responses are therefore single-valued and Lipschitz with a constant at most (βμ+C/γ)/(2βμ-C/γ) < 1. Therefore, there exists a unique fixed point'
+    claim: Existence and uniqueness of the first-period price equilibrium of the reduced game.
+    status: verified
+    method: re-derivation
+    note: Same projected-root argument as LA1 step 13; Banach on the box; strict own-price concavity makes every best response to a mixed strategy pure, so no mixed equilibria.
+  - id: 7
+    locator: 'This limiting price game has a unique equilibrium phat_{i,1} = 1/(2β)+(μ+σ)(2c_i+c_j)/(3μ), which is interior in [p_lo,p_hi] by the definitions'
+    claim: Limit first-period prices and their interiority.
+    status: verified
+    method: symbolic
+    note: SymPy solves the limit FOCs and gives the Jacobian beta mu [[-2, 1], [1, -2]]. phat_{A,1} > phat_{A,2} > p_lo and phat_{A,1} < phat_{B,1} < p_hi under A13 (2000 markets in LA1_joint_proof_checks.py).
+  - id: 8
+    locator: 'Compactness and uniform payoff convergence place the actual equilibrium in its interior neighborhood ... p^N_{i,1} = phat_{i,1}+O(γ^{-1})'
+    claim: First-period equilibrium prices are interior and within O(1/gamma) of the limit.
+    status: verified
+    method: numerical
+    note: Interior FOC F(p) + O_{C^1}(1/gamma) = 0 with F linear and nonsingular. scripts/P9_payoff_expansion_and_price_path.py at theta = 0.5 - gamma |p_1 - phat_1| = 2.28 and 2.48 at gamma = 100 and 1e3.
+  - id: 9
+    locator: 'p^N_{i,1} - p^N_{i,2} = σ(2c_i+c_j)/(3μ) + O(γ^{-1}) > 0'
+    claim: The first-period price exceeds the second-period price at every realized state.
+    status: verified
+    method: symbolic
+    note: SymPy - phat_{i,1} - phat_{i,2} = sigma (2 c_i + c_j)/(3 mu) > 0. On path R_1 >= mu - sigma (R_1 = X for X <= s), so p^N_{i,2} = phat_{i,2} + O(1/gamma) uniformly over the realized states; p_lo < phat_{i,2} strictly. Probe at theta = 0.5 - gaps at the mean demand (0.368, 0.384) and (0.389, 0.404) at gamma = 100 and 1e3 against the limits (0.392, 0.407).
+findings: []
+numerical:
+  command: python numerics/run.py -k P9
+  direct: "2/2 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    P9.a computes the reduced Scenario S payoffs on a 101 x 41 price grid, interval searches and corner iterations,
+    and the second-period grid games at three sales states (holds at all 20 markets from gamma = 1e3). P9.b computes
+    the Scenario N first-period price equilibrium by best-response iteration on reduced payoffs from two starts,
+    checks the orders and second-period prices by searches, and tests p_lo < min p_{i,2} and max p_{i,2} < p_{i,1} < p_hi
+    over 201 seed demands, at 5 markets with theta scaled to 0.9 theta and gamma = 100, 1e3, 1e4. Both use the
+    statement's predicates; theta is fixed per market, which matches the theta-dependent threshold.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5/scripts/P9_payoff_expansion_and_price_path.py: the Pi^N expansion at theta = 0.5 (spread x gamma 11.6, 12.6, 12.7) and its failure at theta = 1 - 1/gamma (spread about 0.40 at every gamma); the Scenario S slope ratio; the Scenario N price path and gaps."
+not_checked:
+  - Equilibrium selection at second-period states that no unilateral deviation reaches (both retailers far below delta); the existence claim needs some continuation there, for which a mixed second-period equilibrium suffices and the proof's bounds are selection-free.

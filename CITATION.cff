@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the paper."
+title: "Dynamic Competition in Online Retailing: Implications of Customer-to-Customer Interactions: paper, theory and numerical checks"
+type: software
+version: 1.0.0
+license: MIT
+authors:
+  - family-names: Jiang
+    given-names: Zheyu
+    affiliation: "School of Management and Engineering, Nanjing University"
+  - family-names: Geng
+    given-names: Xin
+    affiliation: "Miami Herbert Business School, University of Miami"
+  - family-names: Yang
+    given-names: Nan
+    affiliation: "Miami Herbert Business School, University of Miami"
+  - family-names: Zhang
+    given-names: Renyu
+    affiliation: "CUHK Business School, The Chinese University of Hong Kong"
+preferred-citation:
+  type: article
+  title: "Dynamic Competition in Online Retailing: Implications of Customer-to-Customer Interactions"
+  authors:
+    - family-names: Jiang
+      given-names: Zheyu
+    - family-names: Geng
+      given-names: Xin
+    - family-names: Yang
+      given-names: Nan
+    - family-names: Zhang
+      given-names: Renyu
+  journal: "Manufacturing & Service Operations Management"
+  status: in-press
+  year: 2026

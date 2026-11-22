@@ -1,0 +1,87 @@
+id: LA2
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: "2026-11-22"
+  prior_exposure: >-
+    The supplied session context contained brief descriptions of previous work and the parent identified
+    the issues to verify. I opened no other verification folder or file outside the repository.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  In each fixed admissible market and for every θ∈[0,1] and first-period price vector p in the
+  closed price box, a common sufficiently large γ gives a unique pure N first-period inventory
+  equilibrium. Write a=α_A, b=α_B in period 1, H=μ+σ, w=2σ, and
+  q⁰=c_A/(p_A+γν_A), t⁰=(c_B−θγν_Bq⁰)/(p_B+γ(1−θ)ν_B). Its orders are
+  (a+θb)(H−wq⁰)−θb(H−wt⁰) and b(H−wt⁰), each with a remainder bounded by C/γ²
+  uniformly in θ and p. For each fixed positive total sale R in period 1, even off path,
+  the unique equilibrium period-2 prices are p̂_i+O(1/(γR)) for sufficiently large γ,
+  with p̂_i=1/(2β)+(2c_i+c_j)/3 and ν_i=α_i(p̂)(p̂_i−c_i). The cutoff and the
+  O(1/γ) constant can depend on the fixed sales state. At every second-period price pair
+  the unique stock for each firm equals its benchmark order plus its current share of γR.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A6, A7, A8, A9, A10, A12, A13, A14, I1]
+unstated_hypotheses: []
+relies_on:
+  - L1 and L3 proofs, quantile best responses and translation of the terminal value; both price branches rederived in LA1 step 1.
+  - LA1 joint proof, steps 2 and 7–19, including the normalized residual derivative bound and the fixed-θ profit expansion.
+steps_in: LA1
+steps:
+  - id: 1
+    locator: "A.2(a), ζ^N_A, ζ^N_B and the two order expressions"
+    claim: The two leading stock expressions are exactly those obtained from the joint proof's two tail probabilities.
+    status: verified
+    method: re-derivation
+    note: >-
+      For X uniform on [L,H], F⁻¹(1−q⁰)=H−wq⁰ and F⁻¹(1−t⁰)=H−wt⁰. LA1 steps 14–18
+      show 0<q<t<1 and 0<q⁰<t⁰<1 for large γ, including θ=1. The exact coordinate inversion
+      y_B=b s, y_A=(a+θb)z−θb s returns the two expressions with O_C²(p)(γ⁻²) error.
+      At θ=0, t⁰=c_B/(p_B+γν_B); at θ=1, its denominator is p_B, so t may be order one
+      even though q is order 1/γ. For intermediate paths with γ(1−θ) bounded, LA1 step 16
+      retains the uniform remainder. Equal prices/shares and the A11 equality line have no
+      special first-period singularity; A11 is not imposed in the endogenous-price model.
+  - id: 2
+    locator: "A.2(b), given R^N₁>0 ... conditional on second-period prices"
+    claim: At a fixed positive total sale the N prices have the stated rate and the stock identity is exact at all prices.
+    status: verified
+    method: re-derivation
+    note: >-
+      With R fixed the λ=γR price-equilibrium expansion of LA1 steps 7–9 gives
+      p_i=p̂_i+O(γ⁻¹), independently of how that total was split across retailers. On R≥r₀>0
+      the expansion is uniform. The translation Z_i=γα_i(p_2)R in LA1 step 1 is exact
+      even for small γ or zero sales. P7 uses this conditional stock identity, P8 uses the
+      uniform price derivatives of the period-1 stocks in part (a), and P9 uses the more
+      specific fixed-θ<1 reduced-profit expansion in the joint proof (LA1 step 19).
+findings: []
+numerical:
+  command: python numerics/run.py -k LA2 --report verification/2026-11-22_gpt-6/logs/report_LA2.md
+  direct: "5/5 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    Read the marked checks in test_section_5_first_period.py, test_section_5_second_period.py and
+    the transcription checks alongside the smooth-continuation, marginal-profit and claimed-order
+    functions in c2c/section5.py. One check fits stock remainder rates and searches unilateral
+    deviations in 16 markets at fixed price pairs, θ=0, θ=1 or fixed interior θ, γ from 10 to
+    10⁴. The last usable orders rounded to 2 at θ=1 and 3 at θ<1, both compatible with O(γ⁻²).
+    A second holds each of eight markets/prices fixed and varies θ=1−ℓ/γ for eight ℓ values
+    from 0 to 30 at γ=300,1000,3000; the successive maxima of the scaled errors had ratios
+    rounding to 1.0. A third used 18 best-response iterations and four fixed-point sign scans
+    at γ=1000, with a positive rival floor, and found a single crossing in each scan. A fourth
+    checked price order/ν at 2000 markets and compared limit prices with computed equilibria
+    at 12 fixed positive total sales on a γ ladder from 10 to 10⁶; all 12 met the price and
+    deviation criteria and the last two rates rounded to 1. Its empirical linear-rate,
+    monotone-decay and tolerance criteria are more specific than the stated upper bound.
+    The fifth tested both stock/conditional-payoff identities at 100 prices/states, 25 on
+    the reverse-fractile branch. Three supporting checks cover integration/continuation
+    machinery, benchmark helpers and transcription. The checks give pointwise and boundary
+    evidence; the uniform derivative and positive-state arguments are in the joint record.
+  own_checks:
+    - >-
+      python verification/2026-11-22_gpt-6/scripts/shared_joint_lemma_identities.py verified
+      the static payoff identity at 605 price/substitution triples and the first-period sales
+      integrals at 2,420 parameter/stock combinations with rational arithmetic; see LA1.
+not_checked:
+  - At θ=1 the statement does not claim the fixed-θ<1 reduced-profit expansion used by P9.
+  - At a sales state tending to zero with γ, the state-specific price approximation need not be uniform.

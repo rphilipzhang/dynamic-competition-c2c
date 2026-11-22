@@ -1,0 +1,87 @@
+id: P4
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: The supplied context included a brief historical summary of an earlier verification, including
+    a P2 reference. No earlier verification folder or external file was opened. I used the parent’s current-run
+    reports and scripts.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: For each fixed admissible market there exists a finite γR>0 such that for each γ>γR the total equilibrium
+  expected period-one sales of the two retailers in N decrease and then increase as θ runs from 0 to 1. An interior
+  minimizer can depend on γ and the market.
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A6
+- A7
+- A8
+- A9
+- A10
+- A11
+- I1
+- I2
+unstated_hypotheses: []
+relies_on:
+- L3, first-period equilibrium tails in N and one-sided substitution in its A-high solution.
+steps:
+- id: 1
+  locator: L3 closed form for total sales
+  claim: Total sales are the mean seed demand less two weighted expected shortages.
+  status: verified
+  method: re-derivation
+  note: Use a,b for A,B shares in period one, x,z for period two, u,v for first prices and m,n for second-period
+    margins. Let q=cA/(u+γxm), r=γzn, D=v+r(1−θ), H=cB−(v+r)q and w=q+H/D. Integrating the lost sales of the uniform
+    law gives E R=μ−σ[(a+θb)q²+(1−θ)bw²]. These are strictly interior uniform tails for any γ>0 including binding
+    A11 and either θ endpoint.
+- id: 2
+  locator: Displayed derivative, g_R is affine
+  claim: The derivative is a positive factor times a function affine in θ.
+  status: verified
+  method: symbolic
+  note: 'My symbolic differentiation gives E R′=σbH L/D³, L=v(2qv+H)+r(1−θ)(2qv−H). Put K=u+γxm and J=cB*x*m−cA*z*n.
+    We have H=(cB*u−cA*v+γJ)/K>0: the first numerator term is nonnegative by A11, J>0 by x≥z and cB*m≥cA*n, with
+    simultaneous equality impossible. The printed bracket with its negative sign equals KH, and its displayed
+    squared first factor is K². Thus its g_R=KL, indeed affine in θ.'
+- id: 3
+  locator: g_R(0) quadratic
+  claim: The zero-substitution slope is negative for all sufficiently large γ.
+  status: verified
+  method: re-derivation
+  note: Substitute r=γzn and Kq=cA. Then g_R(0)=v(2cA v+KH)+r(2cA v−KH), whose squared-growth coefficient is −znJ<0.
+    Choose γR beyond its last nonnegative root if one exists.
+- id: 4
+  locator: g_R(1) positive
+  claim: The full-substitution slope is positive at every γ>0.
+  status: verified
+  method: re-derivation
+  note: At θ=1, g_R=v[cA v+cB u+γJ]. This is the printed expression after expanding the margins and using z=1−x.
+    All factors are positive even at a binding price ratio.
+- id: 5
+  locator: First negative then positive
+  claim: There is exactly one derivative sign change in (0,1).
+  status: verified
+  method: re-derivation
+  note: An affine function with opposite strict endpoint signs has one zero in (0,1) and strict sign on either
+    side. Its positive derivative multiplier cannot change that sign. Taking the endpoint γR once controls every
+    θ simultaneously; small γ need not give the same shape.
+findings: []
+numerical:
+  command: python numerics/run.py -k P4
+  direct: 1/1 passed
+  supporting: 3/3 passed
+  assessment: The total N sales predicate uses exact differences on a θ mesh that resolves the O(1/γ) layer next
+    to 1. It asks for negative first and positive last increments and a single −+ sign run at γ=10^50,10^60; across
+    210 regular and boundary markets it also records the lower γ rungs. The supports verify the N inventory and
+    sales/profit forms against the model and verify parameter admissibility. This tests the two directions and
+    excludes visible extra turns. The derivative establishes the whole interval.
+  own_checks:
+  - 'scripts/shared_exogenous_sales.py, logs/exogenous_sales.log: symbolic total-sales derivative.'
+not_checked:
+- Numerical checks vary finitely many parameter values. The analytic argument supplies the continuum conclusions.

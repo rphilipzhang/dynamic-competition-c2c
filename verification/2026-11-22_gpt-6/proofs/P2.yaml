@@ -1,0 +1,83 @@
+id: P2
+run_id: 2026-11-22_gpt-6
+auditor:
+  model: gpt-6
+  harness: Codex
+  date: '2026-11-22'
+  prior_exposure: Prior conversation included earlier judgements; no previous verification directory was opened
+    in this run.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: For each admissible exogenous market and every gamma>0 on the full closed theta interval, B's
+  N order is nonincreasing and the 0 and S orders are constant in theta; at every theta the strict ordering
+  is 0<N<S. For each fixed theta<1, holding the other market inputs fixed, the S-minus-N order gap first rises,
+  then falls with gamma.
+differences_checked: []
+hypotheses_used:
+- A1
+- A2
+- A3
+- A4
+- A5
+- A6
+- A7
+- A8
+- A9
+- A10
+- A11
+- I1
+- I2
+unstated_hypotheses: []
+relies_on:
+- L1/L2 order solution; L3 own and cross continuation tail equations; P1 proof (A.18)–(A.19).
+steps:
+- id: 1
+  locator: P2(a), (A.18)–(A.19)
+  claim: Direction of the N derivative and constancy of the other orders.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. Use u=pA1,v=pB1,C=cA,B=cB,k=alphaA2*(pA2-C),n=alphaB2*(pB2-B),m=pB2-B. The N
+    tail is qA+H/[v+(1-theta)n*gamma] with qA=C/(u+k*gamma), H=B-(v+n*gamma)*qA. A11 gives Bu>=Cv and Bk>=Cn,
+    with strictness in their relevant weighted combination because either second-period shares differ, or equal
+    second-period prices and unequal costs give strictly ordered margins per unit cost. Thus H>0. The tail
+    increases and the uniform quantile order falls. The S and benchmark B tails contain no theta.
+- id: 2
+  locator: (A.20)
+  claim: Both inequalities between B's three orders are strict.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. The N tail lies between its endpoint values. At theta=0 it is B/(v+n*gamma)>B/(v+m*gamma)
+    since 0<n<m. At theta=1 it is [B-n*gamma*qA]/v<B/v. Since 2*sigma*alphaB1>0, each strict tail comparison
+    reverses for orders; endpoints and binding price ratios are included.
+- id: 3
+  locator: P2(c), quartic coefficient signs
+  claim: There is at most one positive derivative root for every fixed theta<1.
+  status: verified
+  method: symbolic
+  note: Auditor's derivation. Apart from the positive scale, the gap equals gamma*(L+M*gamma)/D with D=(u+k*gamma)(v+(1-theta)*n*gamma)(v+m*gamma).
+    L=Bu(m-n)+theta*n*(Bu-Cv)>0. M=(1-theta)*Bk*(m-n)+theta*m*(Bk-Cn)>0. Writing D as d0+d1*g+d2*g²+d3*g³,
+    all four coefficients are positive; the derivative numerator has ascending coefficients Ld0,2Md0,Md1-Ld2,-2Ld3,-Md3.
+    There is one sign change whatever the middle coefficient. scripts/P2_positive_root.py verifies the identities
+    in symbols.
+- id: 4
+  locator: interior maximum gives a positive root
+  claim: Existence of the crossing and both directions of monotonicity.
+  status: verified
+  method: re-derivation
+  note: Auditor's derivation. For fixed theta<1 the gap is positive by (b) and tends to zero at both ends of
+    (0,infinity), as also follows from its positive linear/quadratic numerator and cubic denominator. Continuity
+    puts a positive maximum in the interior. Equivalently, the derivative numerator is positive at zero and
+    eventually negative. Together with Descartes this gives exactly one positive stationary point and the asserted
+    order of signs. Theta=1 is outside part (c) and is covered by (a,b).
+findings: []
+numerical:
+  command: python numerics/run.py -k P2 --report verification/2026-11-22_gpt-6/logs/report_P2.md
+  direct: 3/3 passed
+  supporting: 4/4 passed
+  assessment: Exact grids scan theta, including 0 and 1 and binding A11, compare strict order levels, and examine
+    the direction in gamma for fixed theta<1. Fixed-order sign comparisons and the derivative-root certificate
+    establish different parts; a finite grid alone could miss a turning point.
+  own_checks:
+  - scripts/P2_positive_root.py; logs/P2_positive_root.log
+not_checked: []
