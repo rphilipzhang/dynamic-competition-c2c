@@ -1,4 +1,4 @@
-"""Lemma 4 and Propositions 1 to 6, part by part, in exact rational arithmetic.
+"""Lemma 4 and Propositions 1 to 6, part by part, in exact rational arithmetic, and statement N8.
 
 Each test checks one part of one statement and is marked with the ID of that
 part. The quantities are the closed forms of `c2c.closed_form`.
@@ -773,3 +773,48 @@ def test_proposition_6c2_threshold_in_theta_below_the_cost_threshold(sample, rec
     record("signs_along_theta_above_the_cost_threshold", sorted({e.by_gamma[TOP[-1]]["pattern B"] for e in above}))
     require_for_large_gamma(sample, "P6.c2", record)
     require_crossing_at_further_points(further_points(636, lambda pt: p6_sign_at_theta_zero(pt) > 0), "B", "P6.c2", record)
+
+
+# ----------------------------------------------------------------------------- statement N8 of Section 4.2.3
+N8_GAMMAS = (Fr(1), Fr(10), Fr(50), Fr(100), Fr(1000))
+N8_TESTED = (Fr(50), Fr(100))           # "strong cross-brand C2C" for the purpose of the test
+
+
+def rise_fall_rise(values) -> tuple[int, int] | None:
+    """The first and the last step at which the sequence falls, if it rises over its first and
+    its last step and falls over some step in between. None otherwise."""
+    steps = [b - a for a, b in zip(values, values[1:])]
+    falls = [k for k, s in enumerate(steps) if s < 0]
+    if falls and steps[0] > 0 and steps[-1] > 0:
+        return falls[0], falls[-1]
+    return None
+
+
+@pytest.mark.claims("N8")
+def test_profit_of_retailer_a_in_scenario_n_can_fall_at_intermediate_theta(record):
+    """N8, Section 4.2.3: when strong cross-brand C2C is present, Pi^N_A may decrease in theta
+    when theta takes intermediate values. The sentence says that such markets exist.
+    Points: the 120 regular points of the sample (`draw_exogenous_exact`, seed 606, two of
+    every three with equal shares), gamma in {1, 10, 50, 100, 1000}, and theta = 0, 1/20, ..., 1.
+    Computed: Pi^N_A on the grid from `npfta_t1` in exact rational arithmetic, and for each
+    gamma the number of points at which Pi^N_A rises over the first and the last step of the
+    grid and falls over some step in between.
+    Criterion: at gamma = 50 and at gamma = 100 at least one point has this pattern."""
+    theta = [Fr(k, 20) for k in range(21)]
+    rng = seeded_rng(606)
+    points = [draw_exogenous_exact(rng, equal_shares=(k % 3 != 0)) for k in range(N_REGULAR)]
+    found = {}
+    for gamma in N8_GAMMAS:
+        found[gamma] = []
+        for pt in points:
+            a = (pt.pa1, pt.pb1, pt.pa2, pt.pb2, np.array(theta, dtype=object), pt.ca, pt.cb, pt.beta,
+                 pt.mu, pt.sigma, gamma)
+            pattern = rise_fall_rise(_spread(cf.npfta_t1(*a), len(theta)))
+            if pattern:
+                found[gamma].append((pt, pattern))
+        record(f"points_with_a_fall_at_intermediate_theta_at_gamma_{gamma}", len(found[gamma]))
+    if found[N8_TESTED[0]]:
+        _, (first, last) = found[N8_TESTED[0]][0]
+        record("first_example_at_gamma_50_falls_between_theta", f"{theta[first]} and {theta[last + 1]}")
+    missing = [str(g) for g in N8_TESTED if not found[g]]
+    assert not missing, f"no point with a fall of Pi^N_A at intermediate theta at gamma = {', '.join(missing)}"

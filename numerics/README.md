@@ -5,7 +5,7 @@ Code that computes the model of the paper, and checks that test the paper's stat
 ```
 numerics/
 ├── run.py                       runs the checks and summarises them by result
-├── numerical_statements.yaml    the paper's statements about Figures 1 and B.1 and its other numerical findings (F1, FB1, N1 to N7, of which N7 is listed and not checked)
+├── numerical_statements.yaml    the paper's statements about Figures 1 and B.1 and its other numerical findings (F1, FB1, N1 to N8, of which N7 is listed and not checked)
 ├── paper_labels.json            printed LaTeX reference numbers from the manuscript and appendix
 ├── c2c/                         Python package
 │   ├── primitives.py            the model of Section 3 from its definition, with no result of the paper
@@ -41,7 +41,7 @@ python numerics/run.py --report FILE       # all checks, and a Markdown report o
 | File | What it checks |
 |---|---|
 | `test_equilibria_from_primitives.py` | Lemmas 1 to 3 and B.1: the stated order quantities are an equilibrium of the model, under four demand distributions, and a scan of best responses finds no other |
-| `test_propositions_exogenous.py` | Lemma 4 and Propositions 1 to 6, part by part, in exact rational arithmetic on random and boundary points |
+| `test_propositions_exogenous.py` | Lemma 4 and Propositions 1 to 6, part by part, in exact rational arithmetic on random and boundary points, and statement N8 |
 | `test_profits_and_price_game.py` | the closed forms of sales and profits against the model, and the payoffs of the price game behind Figure 1 |
 | `test_proposition_7_shapes.py` | Proposition 7: the shapes of the second-period orders as functions of prices |
 | `test_section_5_second_period.py` | Lemmas A.1(b) and A.2(b) |

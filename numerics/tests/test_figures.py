@@ -259,9 +259,9 @@ def test_published_data_match_a_fresh_extraction_from_the_eps_files(repo_root, t
     record("plotted_points", rows)
 
 
-@pytest.mark.supports("F1", "FB1", "N1", "N2", "N3", "N4", "N5", "N6")
+@pytest.mark.supports("F1", "FB1", "N1", "N2", "N3", "N4", "N5", "N6", "N8")
 def test_numerical_statements_are_quoted_from_the_paper(repo_root, record):
-    """Points: the nine entries of `numerics/numerical_statements.yaml`, including N7,
+    """Points: the ten entries of `numerics/numerical_statements.yaml`, including N7,
     which the repository lists and does not check.
     Computed: each quote, against the LaTeX source of the paper with every \\ref
     printed as the number that `numerics/paper_labels.json` gives.
@@ -277,6 +277,6 @@ def test_numerical_statements_are_quoted_from_the_paper(repo_root, record):
     entries = yaml.safe_load((repo_root / "numerics/numerical_statements.yaml").read_text(encoding="utf-8"))
     for entry in entries:
         assert " ".join(entry["quote"].split()) in text, f"{entry['id']}: not found in the paper: {entry['quote']}"
-    assert [e["id"] for e in entries] == ["F1", "FB1", "N1", "N2", "N3", "N4", "N5", "N6", "N7"]
+    assert [e["id"] for e in entries] == ["F1", "FB1", "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8"]
     assert [e["id"] for e in entries if e.get("excluded")] == ["N7"]
     record("statements_quoted", len(entries))

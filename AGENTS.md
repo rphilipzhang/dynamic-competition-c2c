@@ -18,7 +18,7 @@ In the paper and in `theory.md`, unqualified *increasing* and *decreasing* mean 
 - A result by ID: `grep -n '^### P5$' theory.md`. IDs: L1 to L4 (Lemmas 1 to 4), P1 to P9 (Propositions 1 to 9), LA1 and LA2 (Lemmas A.1 and A.2), LB1 (Lemma B.1). Parts are written `P5.c1`. The index at the top of `theory.md` lists all sixteen.
 - The *In the paper* line of each result gives its LaTeX label, for example `prop:pfta`. Look it up in `paper/Manuscript.tex` or `paper/OnlineAppendix.tex`. The corresponding PDF gives its printed number. The numerical checks use `numerics/paper_labels.json`. Part 1 explains how to verify the map from the TeX sources.
 - Figure 1 uses `paper/figure1.eps` through `paper/figure4.eps` in panel order. Figure B.1 uses `paper/yaG.eps`, `paper/ybG.eps`, `paper/piaG.eps` and `paper/pibG.eps`.
-- The numerical statements of the paper (Figures 1 and B.1, and N1 to N7 in the text): `numerics/numerical_statements.yaml`. N7 is listed there with a field `excluded` that gives the reason the repository does not check it.
+- The numerical statements of the paper (Figures 1 and B.1, and N1 to N8 in the text): `numerics/numerical_statements.yaml`. N7 is listed there with a field `excluded` that gives the reason the repository does not check it.
 - The checks of a result: `python numerics/run.py -k P5`, or `pytest numerics -k P5`. Each check's docstring states its points, what it computes, and its pass criterion.
 - The code: `numerics/README.md`.
 
@@ -41,13 +41,13 @@ print(pm.nash_gap(pay_a, pay_b, ya, yb, 1.5 * (mu + sigma)))  # best responses a
 
 ## Verifying the paper
 
-The aim is to decide, for each of the 16 results, whether the statement in `theory.md` is true and proved, and whether the statement as printed in the paper holds, and to decide whether the numerical statements F1, FB1 and N1 to N6 hold. The text that the paper puts around a result (motivation, interpretation, discussion) is out of scope.
+The aim is to decide, for each of the 16 results, whether the statement in `theory.md` is true and proved, and whether the statement as printed in the paper holds, and to decide whether the numerical statements F1, FB1, N1 to N6 and N8 hold. The text that the paper puts around a result (motivation, interpretation, discussion) is out of scope.
 
 `theory.md` and `numerics/` were prepared from the paper by others, so both are themselves under test. A full run has four parts, in this order:
 
 1. **Consistency with the paper**: `theory.md` against the paper, and the code in `numerics/` against the paper. The later parts rely on both, so do this first.
 2. **The results**: the 16 lemmas and propositions.
-3. **The numerical statements**: F1, FB1, N1 to N6, and the reason for excluding N7.
+3. **The numerical statements**: F1, FB1, N1 to N6 and N8, and the reason for excluding N7.
 4. **Overall judgement and summary**: whether the theoretical results and the numerical results are verified, by fixed rules, and a short summary of the run. A run is not complete without it.
 
 When the request is limited to theory, use `scope: theory_only`. Complete Part 1 for the theory and the numerical code, quotations and predicates used to check it. Verify all 16 results in Part 2 and give the theoretical judgement in Part 4. Skip the independent numerical statements in Part 3. State the scope of the code comparison and mark the numerical-results judgement `not_assessed`.
@@ -61,7 +61,7 @@ The section *Verification roadmap* at the top of `theory.md` gives the dependenc
 3. Do not edit `paper/`, `theory.md` or `numerics/` during a verification run. If you believe that a check in `numerics/` is wrong or does not test what it names, report it as a finding with scope `numerics`.
 4. Run one test process at a time. The full set of checks takes about three minutes on one core. If subagents share the work, run `python numerics/run.py -k <ID> --report verification/<run-id>/logs/report_<ID>.md` once for every in-scope ID yourself, one after another, before you hand out the work, and let the subagents read those logs. A subagent runs its own scripts, not the test suite.
 5. A clean record is a valid outcome. Do not manufacture findings. Before you report an error, try to refute it: derive the step a second way, or compute it.
-6. Record each finding once. A finding of Part 1 that concerns one result goes in that result's record, and the entry of `consistency.yaml` names it by ID (`see: P5/F3`). A finding of Part 1 that concerns several results, or none, goes in `consistency.yaml`. A finding of Part 2 that several results share goes in the record of the first of them in the order of `theory.md`, and the other records name it in a step note (`see: P5/F1`).
+6. Record each finding once. A finding of Part 1 that concerns one result goes in that result's record, and the entry of `consistency.yaml` names it in its `findings` with the mapping `- see: P5/F3`. A finding of Part 1 that concerns several results, or none, goes in `consistency.yaml`. Number the findings of `consistency.yaml` C1, C2, ... across the file. Any other entry of `consistency.yaml` or `numerical_statements.yaml` that such a finding concerns names it with `- see: C2`. A finding of Part 2 that several results share goes in the record of the first of them in the order of `theory.md`, and the other records name it in a step note (`see: P5/F1`).
 7. Record a false or missing proof step even when the conclusion holds. A claim that the text asserts without a derivation, or with an incomplete one, is not a missing step: if you derive it under the same hypotheses and quantifiers, its status is `verified` (see *Definitions*). To establish that the issue is immaterial, give a derivation under the same hypotheses and quantifiers, or identify an independent verified argument that bypasses the step. Trace its effect on results that cite it. A finite numerical probe alone cannot establish a general repair.
 
 ### Part 1. Consistency with the paper
@@ -109,7 +109,7 @@ Two results with one joint proof, such as LA1 and LA2: put the steps in the reco
 
 ### Part 3. The numerical statements
 
-For F1, FB1 and N1 to N6: run `python numerics/run.py -k <ID>`, read the checks, and compare what they compute with the quoted statement and with the published figure. For N7, which has a field `excluded`, check the reason and name N7 in the summary under what the run did not check.
+For F1, FB1, N1 to N6 and N8: run `python numerics/run.py -k <ID>`, read the checks, and compare what they compute with the quoted statement and with the published figure. For N7, which has a field `excluded`, check the reason and name N7 in the summary under what the run did not check.
 
 Set `holds` to `"yes"` when the evidence supports every part of the statement, to `"partly"` when every part you could test holds but some part is untested or supported only in a weaker form, and to `"no"` when some part fails.
 
@@ -132,7 +132,7 @@ For a full run, finish Parts 1 to 3 and run all checks once more with `python nu
 | `not_verified` | A result is `error_suspected` or `not_verifiable`, a paper statement `fails` or is `not_verifiable`, or establishing the conclusion requires a new restriction, a change to a substantive claim, or an unresolved essential step. |
 | `verified` | All 16 substantive conclusions are established under the paper's assumptions and quantifiers. This includes `sound_with_gaps` when the record demonstrates the repair. A corrected cross-reference or an explicit restatement of an assumption already in force can preserve the conclusion. Record the evidence in each affected result. |
 
-**Numerical results**, the numerical statements F1, FB1 and N1 to N6:
+**Numerical results**, the numerical statements F1, FB1, N1 to N6 and N8:
 
 | Judgement | Applies when |
 |---|---|
@@ -200,12 +200,12 @@ verification/<run-id>/
   consistency.yaml             Part 1: theory.md and numerics/ against the paper
   numerical_checks.md          the final full or theory-only check report (Part 4)
   proofs/<ID>.yaml             one record per result, 16 files
-  numerical_statements.yaml    full run only, one entry for each of F1, FB1, N1 to N6
+  numerical_statements.yaml    full run only, one entry for each of F1, FB1, N1 to N6 and N8
   scripts/                     your own scripts, if any
   logs/                        the per-ID reports of rule 4, if any
 ```
 
-In every YAML file, quote the values `"yes"`, `"no"` and `"partly"`: unquoted, YAML reads `yes` and `no` as booleans.
+In every YAML file, quote the values `"yes"`, `"no"` and `"partly"`: unquoted, YAML reads `yes` and `no` as booleans. Quote any value that contains `: ` as well, because YAML otherwise rejects it or reads it as a mapping.
 
 A record in `proofs/<ID>.yaml`:
 
@@ -252,7 +252,7 @@ not_checked:
   - Anything the record does not cover, and why.
 ```
 
-An entry of `numerical_statements.yaml` has the fields `id`, `holds` (`"yes"`, `"no"` or `"partly"`), `checks` (direct and supporting, passed of total), `assessment`, and `findings` as above.
+An entry of `numerical_statements.yaml` has the fields `id`, `holds` (`"yes"`, `"no"` or `"partly"`), `checks` (direct and supporting, passed of total), `assessment`, and `findings` as above, or references to findings recorded elsewhere (`- see: C2`).
 
 `consistency.yaml` has one entry for each item of Part 1, that is, for each part of `theory.md` (the model, the assumptions, the implicit conditions, each setup paragraph, and each of the 16 results) and for each piece of code (`primitives.py`, the `claimed_*` functions of `section4.py` and of `section5.py`, the port in `closed_form.py`, `pricing.py` and `figures.py`, the quotations, and the label map `numerics/paper_labels.json`):
 
@@ -262,8 +262,10 @@ An entry of `numerical_statements.yaml` has the fields `id`, `holds` (`"yes"`, `
   method: script                # script | reading
   result: consistent_with_listed_differences   # consistent | consistent_with_listed_differences | consistent_with_findings | inconsistent
   note: What was compared and how. For a result, whether each listed difference is the only change at its place.
-  findings: []                  # as in a proof record, with scope theory.md or numerics, or see: <ID>/<finding>
+  findings: []                  # as in a proof record, with ids C1, C2, ... and scope theory.md or numerics, or references - see: P5/F3 or - see: C2
 ```
+
+A reference is a YAML mapping with the single key `see`, whose value is the finding ID alone: `P5/F3` for a finding of a proof record, `C2` for a finding of `consistency.yaml`. A referenced finding is counted once, where it is recorded, and it enters the result of an item only if its scope is the item's.
 
 The result of an item: `inconsistent` if a finding on it is `critical` or `major`, `consistent_with_findings` if one is `minor`, and otherwise `consistent_with_listed_differences` or `consistent`.
 

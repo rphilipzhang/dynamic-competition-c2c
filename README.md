@@ -10,7 +10,7 @@ Two retailers compete in price and inventory over two periods. Customer-to-custo
 |---|---|
 | [`paper/`](paper/) | The paper and its online appendix, as PDF and LaTeX, with the figure panels and bibliography. The INFORMS class and bibliography style are not included (see [`NOTICE.md`](NOTICE.md)) |
 | [`theory.md`](theory.md) | The model, the assumptions, and the 16 lemmas and propositions with their proofs, each with the IDs that the checks use |
-| [`numerics/`](numerics/) | The model in Python, the authors' MATLAB code and its Python port, 93 numerical checks, the paper's numerical statements, and the [LaTeX label map](numerics/paper_labels.json) |
+| [`numerics/`](numerics/) | The model in Python, the authors' MATLAB code and its Python port, 94 numerical checks, the paper's numerical statements, and the [LaTeX label map](numerics/paper_labels.json) |
 | `verification/` | Reports of verification runs, one folder per run, each written by the AI agent that ran it |
 | [`AGENTS.md`](AGENTS.md) | How an AI agent finds things here, uses the model, and runs a verification |
 

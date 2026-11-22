@@ -7,7 +7,7 @@ Every check names the results of the paper it bears on:
     def test_...():
 
 IDs are those of `theory.md` (L1 to L4, P1 to P9, LA1, LA2, LB1) and of
-`numerics/numerical_statements.yaml` (F1, FB1, N1 to N6, N7 excluded). A part is written after a
+`numerics/numerical_statements.yaml` (F1, FB1, N1 to N8, N7 excluded). A part is written after a
 dot, as in `P5.c1`. Each ID, without its part, is added to the keywords of the check,
 so that
 

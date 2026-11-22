@@ -70,7 +70,7 @@ Check those intermediate claims of the joint proof as part of LA1 and LA2, and n
 | 2 | L4, P1, P2, P3, P4, P5, P6 | Comparative statics of those closed forms under the uniform distribution (A10) and the price condition A11. Do P1 before P2 and P3, and P5 before P6. |
 | 3 | LA1 and LA2 together | One joint proof, the longest in the paper. Section 5 drops A11 and lets prices be chosen. |
 | 4 | P7, P8, P9 | They rest on stage 3. |
-| any | F1, FB1, N1 to N6 | The numerical statements. They do not depend on the proofs. N7 is listed in `numerics/numerical_statements.yaml` and excluded. |
+| any | F1, FB1, N1 to N6, N8 | The numerical statements. They do not depend on the proofs. N7 is listed in `numerics/numerical_statements.yaml` and excluded. |
 | last | none: overall judgement and summary | Part 4 of `AGENTS.md`, once everything above is done. |
 
 Stages 1 and 2 do not use stages 3 and 4, and the reverse holds except that the joint proof of stage 3 refers to the arguments of L2 and L3. After stage 0, two agents can therefore work in parallel, one on stages 1 and 2 and one on stages 3 and 4, with the numerical statements given to either.

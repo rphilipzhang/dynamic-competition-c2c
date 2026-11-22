@@ -83,3 +83,8 @@
     setting of Section 5.3, including the price menu {2, 4}. The repository
     contains neither a solver for endogenous prices with both interactions nor
     the authors' output for those experiments, so N7 cannot be reproduced here.
+
+- id: N8
+  kind: text
+  where: Section 4.2.3 (Profits)
+  quote: However, when strong cross-brand C2C is present, we find that $\Pi^N_{A}$ may decrease in $\theta$ when $\theta$ takes intermediate values.
