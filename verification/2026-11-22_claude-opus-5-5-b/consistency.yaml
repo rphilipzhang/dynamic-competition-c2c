@@ -1,0 +1,739 @@
+# Part 1 of run 2026-11-22_claude-opus-5-5-b: theory.md and numerics/ against the paper.
+# Paths of scripts are relative to verification/2026-11-22_claude-opus-5-5-b/ when they start with verification/2026-11-22_claude-opus-5-5-b/scripts/,
+# and relative to the repository root otherwise. Findings that concern several results or none have IDs C1-C3.
+- item: theory.md Model
+  compared_with: Section 3 of paper/Manuscript.tex
+  method: script
+  result: consistent
+  note: >-
+    verification/2026-11-22_claude-opus-5-5-b/scripts/part1_theory_vs_tex.py compares theory.md with the TeX token by token after removing markup only (math
+    delimiters, environments, labels and tags, alignment marks, spacing, bold/italic, list markers, Markdown headings,
+    citation syntax rewritten as [@key]). 2583 tokens on each side, no differing span; a second pass that keeps
+    braces as tokens differs only in {\bf ...} markup.
+  findings: []
+- item: theory.md Assumptions
+  compared_with: paper/Manuscript.tex and paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    All 19 quoted passages of A1 to A15 (including the footnote of A13) occur in the normalised TeX (part1_theory_vs_tex.py,
+    section "Assumptions"). Scopes read against the paper: A3 as AGENTS.md prescribes (i.i.d. density for the model;
+    interval support and interior-positive density for L1 to L3 and LB1); A10 from Section 3.3 onward; A11 from
+    the opening paragraph of Section 4, extended to LB1 by the listed difference; A12 to A14 from the opening of
+    Section 5; A15 from Appendix B. The A10 scope phrase "all numerical results" is read as the uniform-demand experiments;
+    N6 explicitly departs from it, which the N6 entry states.
+  findings: []
+- item: theory.md Implicit conditions
+  compared_with: the proofs that use them
+  method: reading
+  result: consistent
+  note: >-
+    I1 (0 < c_i < p_{i,t}) is used for interior fractiles in L1 to L3 and stated in the proof of L2 ("when rho >
+    0 and p_{i,t} > c_i"); I2 (positive shares) is needed for every ratio y/alpha; I3 is implied by A11, I1 and
+    I2 for Scenario N and the mixed scenario, as I3 itself says. The per-result checks of the Hypotheses lines are
+    in the result records.
+  findings: []
+- item: theory.md Setup of the Exogenous Price Model
+  compared_with: opening paragraph of Section 4 of paper/Manuscript.tex, with its footnote
+  method: script
+  result: consistent
+  note: 315 tokens on each side, no differing span.
+  findings: []
+- item: theory.md Setup of the Endogenous Price Model
+  compared_with: opening paragraphs of Section 5 of paper/Manuscript.tex, with the footnote
+  method: script
+  result: consistent
+  note: 670 tokens on each side, no differing span.
+  findings: []
+- item: theory.md Notation used in the proofs for Section 5
+  compared_with: opening paragraph of Online Appendix A.2
+  method: script
+  result: consistent
+  note: No differing span; the TeX writes \(D\) where theory.md writes $D$.
+  findings: []
+- item: theory.md Definition of the mixed scenario
+  compared_with: opening paragraph of Online Appendix B
+  method: script
+  result: consistent
+  note: 449 tokens on each side, no differing span.
+  findings: []
+- item: theory.md L1
+  compared_with: Lemma 1 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 120 tokens in theory.md, 120 in the TeX, 0 differing span(s). Proof: 1529 and 1529 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses line
+    A1, A2, A3, A4, A7, A8, A9, A11, I1, I2: each is used (A3 for the general law, A11 for the ordering of the fractiles,
+    I1 for fractiles in (0, 1), I2 for division by the shares); no needed condition is omitted (X_t >= 0 is in force
+    by the meaning of seed demand). Parts L1.eq and L1.unique cover the statement. Hand-typed references in the
+    proof: none besides the heading; (A.1) to (A.3) are \ref-generated and match the build.
+  findings: []
+- item: theory.md L2
+  compared_with: Lemma 2 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 222 tokens in theory.md, 222 in the TeX, 0 differing span(s). Proof: 2955 and 2955 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses line
+    adds A5 and the rho = 1 normalisation of A10 for the displayed statement, noting that the proof keeps rho; correct
+    (the proof's fractile has rho gamma, the statement gamma). No needed condition omitted; I3 is not listed but
+    follows from I1 for these fractiles. Parts first, second, unique, profits cover the statement. Hand-typed "the
+    proof of Lemma 1" points to Lemma 1 (lem:model0 = 1); (A.1), (A.4)-(A.11) match the build.
+  findings: []
+- item: theory.md L3
+  compared_with: Lemma 3 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 337 tokens in theory.md, 337 in the TeX, 0 differing span(s). Proof: 5692 and 5692 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses line
+    (A6, A11, I1, I2, I3, rho = 1 for the displayed statement): each is used, I3 being derived in the proof from
+    A11 and I1; nothing needed is omitted (alpha_{B,t} <= alpha_{A,t} comes from A11's upper bound and beta > 0
+    of A4). Parts cover the statement. Hand-typed "analogous arguments in the proof of Lemma 2" is correct (lem:models
+    = 2); (A.1), (A.5), (A.7), (A.12)-(A.17) are \ref-generated and match the build.
+  findings: []
+- item: theory.md L4
+  compared_with: Lemma 4 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 143 tokens in theory.md, 143 in the TeX, 0 differing span(s). Proof: 382 and 382 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses line
+    lists A1-A11, I1, I2; A10 enters through rho = 1 in the closed forms of Lemmas 2 and 3 that the proof uses (the
+    argument itself holds for any F of A3). Parts a and b cover the statement. Hand-typed "By the proof of Lemma
+    1 / Lemma 2 / Lemma 3" and "part (a)" are correct (lem:model0 = 1, lem:models = 2, lem:modeln = 3).
+  findings: []
+- item: theory.md P1
+  compared_with: Proposition 1 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 120 tokens in theory.md, 120 in the TeX, 0 differing span(s). Proof: 1155 and 1155 tokens, 0 differing
+    spans. The Interpretation paragraph is an editorial note outside Statement and Proof; it was re-derived and
+    is correct. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses
+    lines: each proof uses exactly the listed assumptions (P4 correctly omits A5); I3, used through L3, is implied
+    by A11, I1 and I2. Parts lists paraphrase the statements correctly. The Interpretation paragraphs of P1 (equality
+    cases of the slopes), P5 and P6 (fixed-market reading of the cost cutoffs and of gamma^A, gamma^B, theta^A,
+    theta^B) were re-derived and are correct (verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml step 11, P5.yaml step 14, P6.yaml step 14). Cross-references
+    in the proofs: (A.18), (A.19), (A.20) are \ref-generated and point to the intended displays; the typed references
+    "Lemma 1/2/3", "Proposition 2", "part (b)" (P5), "part (a)" (P6) and "Proposition 5(b)" (P6) point to the intended
+    results. The P1-P6 statements contain no hand-typed equation numbers.
+  findings: []
+- item: theory.md P2
+  compared_with: Proposition 2 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 119 tokens in theory.md, 119 in the TeX, 0 differing span(s). Proof: 952 and 952 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines:
+    each proof uses exactly the listed assumptions (P4 correctly omits A5); I3, used through L3, is implied by A11,
+    I1 and I2. Parts lists paraphrase the statements correctly. The Interpretation paragraphs of P1 (equality cases
+    of the slopes), P5 and P6 (fixed-market reading of the cost cutoffs and of gamma^A, gamma^B, theta^A, theta^B)
+    were re-derived and are correct (verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml step 11, P5.yaml step 14, P6.yaml step 14). Cross-references
+    in the proofs: (A.18), (A.19), (A.20) are \ref-generated and point to the intended displays; the typed references
+    "Lemma 1/2/3", "Proposition 2", "part (b)" (P5), "part (a)" (P6) and "Proposition 5(b)" (P6) point to the intended
+    results. The P1-P6 statements contain no hand-typed equation numbers.
+  findings: []
+- item: theory.md P3
+  compared_with: Proposition 3 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 225 tokens in theory.md, 225 in the TeX, 0 differing span(s). Proof: 711 and 711 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines:
+    each proof uses exactly the listed assumptions (P4 correctly omits A5); I3, used through L3, is implied by A11,
+    I1 and I2. Parts lists paraphrase the statements correctly. The Interpretation paragraphs of P1 (equality cases
+    of the slopes), P5 and P6 (fixed-market reading of the cost cutoffs and of gamma^A, gamma^B, theta^A, theta^B)
+    were re-derived and are correct (verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml step 11, P5.yaml step 14, P6.yaml step 14). Cross-references
+    in the proofs: (A.18), (A.19), (A.20) are \ref-generated and point to the intended displays; the typed references
+    "Lemma 1/2/3", "Proposition 2", "part (b)" (P5), "part (a)" (P6) and "Proposition 5(b)" (P6) point to the intended
+    results. The P1-P6 statements contain no hand-typed equation numbers.
+  findings: []
+- item: theory.md P4
+  compared_with: Proposition 4 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 60 tokens in theory.md, 60 in the TeX, 0 differing span(s). Proof: 442 and 442 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines:
+    each proof uses exactly the listed assumptions (P4 correctly omits A5); I3, used through L3, is implied by A11,
+    I1 and I2. Parts lists paraphrase the statements correctly. The Interpretation paragraphs of P1 (equality cases
+    of the slopes), P5 and P6 (fixed-market reading of the cost cutoffs and of gamma^A, gamma^B, theta^A, theta^B)
+    were re-derived and are correct (verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml step 11, P5.yaml step 14, P6.yaml step 14). Cross-references
+    in the proofs: (A.18), (A.19), (A.20) are \ref-generated and point to the intended displays; the typed references
+    "Lemma 1/2/3", "Proposition 2", "part (b)" (P5), "part (a)" (P6) and "Proposition 5(b)" (P6) point to the intended
+    results. The P1-P6 statements contain no hand-typed equation numbers.
+  findings: []
+- item: theory.md P5
+  compared_with: Proposition 5 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 239 tokens in theory.md, 239 in the TeX, 0 differing span(s). Proof: 1819 and 1819 tokens, 0 differing
+    spans. The Interpretation paragraph is an editorial note outside Statement and Proof; it was re-derived and
+    is correct. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses
+    lines: each proof uses exactly the listed assumptions (P4 correctly omits A5); I3, used through L3, is implied
+    by A11, I1 and I2. Parts lists paraphrase the statements correctly. The Interpretation paragraphs of P1 (equality
+    cases of the slopes), P5 and P6 (fixed-market reading of the cost cutoffs and of gamma^A, gamma^B, theta^A,
+    theta^B) were re-derived and are correct (verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml step 11, P5.yaml step 14, P6.yaml step 14). Cross-references
+    in the proofs: (A.18), (A.19), (A.20) are \ref-generated and point to the intended displays; the typed references
+    "Lemma 1/2/3", "Proposition 2", "part (b)" (P5), "part (a)" (P6) and "Proposition 5(b)" (P6) point to the intended
+    results. The P1-P6 statements contain no hand-typed equation numbers.
+  findings: []
+- item: theory.md P6
+  compared_with: Proposition 6 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 252 tokens in theory.md, 252 in the TeX, 0 differing span(s). Proof: 1431 and 1431 tokens, 0 differing
+    spans. The Interpretation paragraph is an editorial note outside Statement and Proof; it was re-derived and
+    is correct. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses
+    lines: each proof uses exactly the listed assumptions (P4 correctly omits A5); I3, used through L3, is implied
+    by A11, I1 and I2. Parts lists paraphrase the statements correctly. The Interpretation paragraphs of P1 (equality
+    cases of the slopes), P5 and P6 (fixed-market reading of the cost cutoffs and of gamma^A, gamma^B, theta^A,
+    theta^B) were re-derived and are correct (verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml step 11, P5.yaml step 14, P6.yaml step 14). Cross-references
+    in the proofs: (A.18), (A.19), (A.20) are \ref-generated and point to the intended displays; the typed references
+    "Lemma 1/2/3", "Proposition 2", "part (b)" (P5), "part (a)" (P6) and "Proposition 5(b)" (P6) point to the intended
+    results. The P1-P6 statements contain no hand-typed equation numbers.
+  findings: []
+- item: theory.md LA1
+  compared_with: Lemma A.1 in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 267 tokens in theory.md, 267 in the TeX, 0 differing span(s). Proof: 3716 and 3716 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines:
+    every listed assumption is used except A13 for LA1 (editorial, LA1/F3); no result needs an unlisted condition
+    (I2 follows from A12 in Section 5; A14 is correctly absent from P7, which holds for every gamma). Parts lists
+    match the statements; P8.b2's "when gamma (1 - theta) is bounded" abbreviates "0 <= gamma (1 - theta) <= l^D
+    for some l^D > 0". The LA2 Proof dependency line is correct: the joint proof states O_{C^2(p_1;P)}(gamma^-2)
+    for the remainders, uniform in theta by the convention of the notation paragraph (verification/2026-11-22_claude-opus-5-5-b/proofs/LA2.yaml step 3). Hand-typed
+    references: "the condition (A.22) in Appendix A.2" in Proposition 8(b2) matches eq:prop8b2 = A.22 in subsection
+    A.2; "Lemmas 2--3" in the joint proof matches lem:models = 2, lem:modeln = 3; "Proof of Proposition 7/8/9" matches
+    prop:orderprice2 = 7, prop:orderprice1 = 8, prop:price = 9; (A.21) is sys-lem6 and (A.23)-(A.26) are eq:p8region
+    to eq:p8derivative. The label eq:p1FOC sits in an eqnarray* (aux number A.27, nothing printed) and is never
+    referenced.
+  findings:
+  - 'see: LA1/F3'
+- item: theory.md LA2
+  compared_with: Lemma A.2 in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 330 tokens in theory.md, 330 in the TeX, 0 differing span(s). Proof: joint with LA1 (theory.md points
+    to it). The Proof dependency line is an editorial note; it is correct (verification/2026-11-22_claude-opus-5-5-b/proofs/LA2.yaml step 3). Hypotheses line,
+    Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines: every listed assumption
+    is used except A13 for LA1 (editorial, LA1/F3); no result needs an unlisted condition (I2 follows from A12 in
+    Section 5; A14 is correctly absent from P7, which holds for every gamma). Parts lists match the statements;
+    P8.b2's "when gamma (1 - theta) is bounded" abbreviates "0 <= gamma (1 - theta) <= l^D for some l^D > 0". The
+    LA2 Proof dependency line is correct: the joint proof states O_{C^2(p_1;P)}(gamma^-2) for the remainders, uniform
+    in theta by the convention of the notation paragraph (verification/2026-11-22_claude-opus-5-5-b/proofs/LA2.yaml step 3). Hand-typed references: "the condition
+    (A.22) in Appendix A.2" in Proposition 8(b2) matches eq:prop8b2 = A.22 in subsection A.2; "Lemmas 2--3" in the
+    joint proof matches lem:models = 2, lem:modeln = 3; "Proof of Proposition 7/8/9" matches prop:orderprice2 =
+    7, prop:orderprice1 = 8, prop:price = 9; (A.21) is sys-lem6 and (A.23)-(A.26) are eq:p8region to eq:p8derivative.
+    The label eq:p1FOC sits in an eqnarray* (aux number A.27, nothing printed) and is never referenced.
+  findings: []
+- item: theory.md P7
+  compared_with: Proposition 7 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 138 tokens in theory.md, 138 in the TeX, 0 differing span(s). Proof: 1026 and 1026 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines:
+    every listed assumption is used except A13 for LA1 (editorial, LA1/F3); no result needs an unlisted condition
+    (I2 follows from A12 in Section 5; A14 is correctly absent from P7, which holds for every gamma). Parts lists
+    match the statements; P8.b2's "when gamma (1 - theta) is bounded" abbreviates "0 <= gamma (1 - theta) <= l^D
+    for some l^D > 0". The LA2 Proof dependency line is correct: the joint proof states O_{C^2(p_1;P)}(gamma^-2)
+    for the remainders, uniform in theta by the convention of the notation paragraph (verification/2026-11-22_claude-opus-5-5-b/proofs/LA2.yaml step 3). Hand-typed
+    references: "the condition (A.22) in Appendix A.2" in Proposition 8(b2) matches eq:prop8b2 = A.22 in subsection
+    A.2; "Lemmas 2--3" in the joint proof matches lem:models = 2, lem:modeln = 3; "Proof of Proposition 7/8/9" matches
+    prop:orderprice2 = 7, prop:orderprice1 = 8, prop:price = 9; (A.21) is sys-lem6 and (A.23)-(A.26) are eq:p8region
+    to eq:p8derivative. The label eq:p1FOC sits in an eqnarray* (aux number A.27, nothing printed) and is never
+    referenced.
+  findings: []
+- item: theory.md P8
+  compared_with: Proposition 8 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 299 tokens in theory.md, 299 in the TeX, 0 differing span(s). Proof: 1340 and 1340 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines:
+    every listed assumption is used except A13 for LA1 (editorial, LA1/F3); no result needs an unlisted condition
+    (I2 follows from A12 in Section 5; A14 is correctly absent from P7, which holds for every gamma). Parts lists
+    match the statements; P8.b2's "when gamma (1 - theta) is bounded" abbreviates "0 <= gamma (1 - theta) <= l^D
+    for some l^D > 0". The LA2 Proof dependency line is correct: the joint proof states O_{C^2(p_1;P)}(gamma^-2)
+    for the remainders, uniform in theta by the convention of the notation paragraph (verification/2026-11-22_claude-opus-5-5-b/proofs/LA2.yaml step 3). Hand-typed
+    references: "the condition (A.22) in Appendix A.2" in Proposition 8(b2) matches eq:prop8b2 = A.22 in subsection
+    A.2; "Lemmas 2--3" in the joint proof matches lem:models = 2, lem:modeln = 3; "Proof of Proposition 7/8/9" matches
+    prop:orderprice2 = 7, prop:orderprice1 = 8, prop:price = 9; (A.21) is sys-lem6 and (A.23)-(A.26) are eq:p8region
+    to eq:p8derivative. The label eq:p1FOC sits in an eqnarray* (aux number A.27, nothing printed) and is never
+    referenced.
+  findings: []
+- item: theory.md P9
+  compared_with: Proposition 9 in paper/Manuscript.tex and its proof in paper/OnlineAppendix.tex
+  method: script
+  result: consistent
+  note: >-
+    Statement: 206 tokens in theory.md, 206 in the TeX, 0 differing span(s). Proof: 688 and 688 tokens, 0 differing
+    spans. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Hypotheses lines:
+    every listed assumption is used except A13 for LA1 (editorial, LA1/F3); no result needs an unlisted condition
+    (I2 follows from A12 in Section 5; A14 is correctly absent from P7, which holds for every gamma). Parts lists
+    match the statements; P8.b2's "when gamma (1 - theta) is bounded" abbreviates "0 <= gamma (1 - theta) <= l^D
+    for some l^D > 0". The LA2 Proof dependency line is correct: the joint proof states O_{C^2(p_1;P)}(gamma^-2)
+    for the remainders, uniform in theta by the convention of the notation paragraph (verification/2026-11-22_claude-opus-5-5-b/proofs/LA2.yaml step 3). Hand-typed
+    references: "the condition (A.22) in Appendix A.2" in Proposition 8(b2) matches eq:prop8b2 = A.22 in subsection
+    A.2; "Lemmas 2--3" in the joint proof matches lem:models = 2, lem:modeln = 3; "Proof of Proposition 7/8/9" matches
+    prop:orderprice2 = 7, prop:orderprice1 = 8, prop:price = 9; (A.21) is sys-lem6 and (A.23)-(A.26) are eq:p8region
+    to eq:p8derivative. The label eq:p1FOC sits in an eqnarray* (aux number A.27, nothing printed) and is never
+    referenced.
+  findings: []
+- item: theory.md LB1
+  compared_with: Lemma B.1 in paper/OnlineAppendix.tex
+  method: script
+  result: consistent_with_listed_differences
+  note: >-
+    Statement: 396 tokens in theory.md, 356 in the TeX, 1 differing span(s). Proof: 1267 and 1267 tokens, 0 differing
+    spans. The one differing span is listed difference 1 (the A11 price condition added to the statement) and is
+    the only change at its place; it is needed (case 2: A11 is imposed by context for the Exogenous Price Model,
+    and without it the closed form fails at admissible points, verification/2026-11-22_claude-opus-5-5-b/scripts/LB1_without_a11.py), so the printed statement
+    holds as printed. Hypotheses line, Parts list and hand-typed cross-references: see the verifier's note: Listed
+    difference 1 (the statement adds A11) is needed, case 2 of the definition (A11 is imposed by context for the
+    Exogenous Price Model), and its claim that without A11 the closed form is in general not an equilibrium is confirmed
+    from the primitives (verification/2026-11-22_claude-opus-5-5-b/scripts/LB1_without_a11.py; see verification/2026-11-22_claude-opus-5-5-b/proofs/LB1.yaml). The Hypotheses line records rho = 1 correctly.
+    Parts first, second, unique cover the statement (no profits claim). Hand-typed "the proof of Lemma 3" is correct
+    (lem:modeln = 3). The Hypotheses line omits A5 and A6.
+  findings:
+  - 'see: LB1/F1'
+- item: numerics c2c/primitives.py
+  compared_with: >-
+    Section 3 of paper/Manuscript.tex (demand split, C2C-induced demand of Scenarios S and N, the mixed scenario
+    of Online Appendix B, stockout-based substitution, sales, period profits, timing)
+  method: script
+  result: consistent
+  note: >-
+    Read line by line and tested by verification/2026-11-22_claude-opus-5-5-b/scripts/part1_primitives_and_claimed_sec4.py. share is 1/2 + beta (p_j - p_i);
+    sales implements M_i = alpha_i X + Z_i, D_i = M_i + theta (M_j - y_j)^+, R_i = min(D_i, y_i); c2c_demand implements
+    Z^S_i = gamma R_i, Z^N_i = alpha_{i,2} gamma (R_A + R_B) and Z^G = lambda^S Z^S + lambda^N Z^N. These equal
+    an exact rational transcription of Section 3 at 12000 (point, scenario) pairs (max difference 7.1e-15, floating
+    point in the module), including y_i < Z_i and theta in {0, 1}. The expected sales of Uniform (trapezoid on the
+    kinks, exact for piecewise-linear sales) and Quadrature (Gauss-Legendre between kinks and quantiles) agree with
+    scipy quad to 1.8e-15. The module imports only numpy, scipy, dataclasses and __future__, so it uses no result
+    of the paper. It has no period profit or discounting of its own: the period profit p R - c y and the two-period
+    sum (with rho = 1, the normalisation of A10) are formed in section4.Game, whose period-2 payoffs take the sales
+    state (R_{A,1}, R_{B,1}) as given (timing of Section 3.3, with R_{i,0} = 0 in period 1). section4.Game.period1_payoffs
+    uses the continuation pi^0_{i,2} + (p_{i,2} - c_i) Z_{i,2}, which is the second-period claim of Lemmas 2, 3
+    and B.1; its docstring says so and the second-period checks confirm it from the primitives, and the identity
+    is exact (my derivation, L2 step 5). The module has no law with unbounded support (Quadrature refuses one),
+    which A3 allows; my own script covers that case.
+  findings: []
+- item: numerics c2c/section4.py claimed_* (claimed_benchmark, claimed_first_period)
+  compared_with: >-
+    Lemmas 1, 2, 3 and B.1 in paper/Manuscript.tex and paper/OnlineAppendix.tex, and the definitions of gamma_{i,t},
+    gammaC_{i,t} of Online Appendix B
+  method: script
+  result: consistent
+  note: >-
+    claimed_benchmark is Lemma 1 and claimed_first_period is Lemmas 1 (scenario "0"), 2, 3 and B.1 with rho = 1,
+    through the quantile function, for the ordering c_A/P_A <= c_B/P'_B that A11 guarantees; Params.weights gives
+    (gamma, gamma, 0, 0), (a gamma, (1-a) gamma, a gamma, (1-a) gamma) and ((lambda^S + lambda^N a) gamma, (lambda^S
+    + lambda^N (1-a)) gamma, lambda^N gamma a, lambda^N gamma (1-a)), as in the paper. Against my exact transcription
+    of the printed formulas at 1500 rational A11 points (526 with A11 equality in period 1, theta and lambda^S at
+    0 and 1), four scenarios each: max difference 3.6e-16 of mu. The extra mirror branch (B's ratio higher, used
+    for Section 5) equals the printed form with A and B exchanged at 793 pairs (3.6e-16). At A11 equality the code's
+    choice of branch can be decided by rounding; both forms coincide there.
+  findings: []
+- item: numerics c2c/section5.py claimed_* functions and CLAIMED_SLOPE_SIGNS
+  compared_with: >-
+    The notation paragraph of Online Appendix A.2 (p^_{i,2}, nu_i), Lemmas A.1 and A.2 (statements), Proposition
+    8 (statement, (A.22), (A.23)) and Proposition 9 (statement; p^_{i,1} from its proof) in paper/OnlineAppendix.tex
+    and paper/Manuscript.tex
+  method: reading
+  result: consistent
+  note: >-
+    Line by line. claimed_limit_prices gives 1/(2 beta) + (2 c_i + c_j)/3; claimed_nu gives alpha_{i,2}(p^_A, p^_B)(p^_i
+    - c_i) with alpha_{B,2} = 1 - alpha_{A,2}; claimed_orders_s uses first-period shares and zeta_i = F^{-1}(1 -
+    c_i/(p_{i,1} + gamma (p_hi - c_i))) with y_A = (alpha_A + theta alpha_B) zeta_A - theta alpha_B zeta_B, y_B
+    = alpha_B zeta_B (Lemma A.1(a)); claimed_orders_n uses zeta_A = F^{-1}(1 - c_A/(p_{A,1} + gamma nu_A)) and zeta_B
+    with numerator c_B - theta gamma nu_B c_A/(p_{A,1} + gamma nu_A) and denominator p_{B,1} + (1 - theta) gamma
+    nu_B, without the O(gamma^-2) term, as its docstring says (Lemma A.2(a)); claimed_second_period_prices_s = (p_hi,
+    p_hi) (Lemma A.1(b)); claimed_first_period_prices_s = (p_lo, p_lo) and claimed_price_path_s / claimed_price_path_n
+    encode p_lo = p_{i,1} < p_{i,2} = p_hi and p_lo < p_{i,2} < p_{i,1} < p_hi with strict inequalities (Proposition
+    9); claimed_condition_a22 is the ratio of the two sides of (A.22), > 1 exactly when (A.22) holds since beta
+    (mu + sigma) p_lo^2 > 0; claimed_bound_a23 is the square root in (A.23); proof_first_period_limit_prices is
+    p^_{i,1} of the proof of Proposition 9 and is asserted by no test. CLAIMED_SLOPE_SIGNS has the ten signs of
+    Proposition 8 (a: -,+,-,+; b1: A in p_A -, B in p_A +; b2 bounded: A in p_B -, B in p_B +; b2 fixed theta: A
+    in p_B +, B in p_B -); the tests use them as strict signs, stronger than the printed weak monotonicity and matching
+    what the proof establishes. F^{-1} is primitives.Uniform.ppf, mu - sigma + 2 sigma q (A10). draw_market samples
+    A1, A10, A12 (p_lo > c_B, p_lo > p_hi - 1/(2 beta)) and A13 (both bounds) correctly. The transcription check
+    (test_claims_of_section_5_are_transcribed_from_the_paper) passed in all five per-ID reports.
+  findings: []
+- item: numerics c2c/closed_form.py
+  compared_with: >-
+    Lemmas 1 to 3 in paper/Manuscript.tex and Lemma B.1 in paper/OnlineAppendix.tex; the expressions in their proofs
+    in paper/OnlineAppendix.tex (pi^0_{i,t}, L^0_{i,t} and R^0_{i,t} at the end of the proof of Lemma 1; the second-period
+    profits pi^0_{i,2} + (p_{i,2} - c_i) E[Z_{i,2}], (A.8), (A.10), (A.12), (A.14), Pi^S_i, Pi^N_i, the first-order
+    systems of the proofs of Lemma 3 and Lemma B.1); the model of Section 3; and, line by line, numerics/matlab/Figure1_MATLAB/pftaT2Case1.m,
+    pftbT2Case1.m, period2_profit.m, SpftaT1.m, SpftbT1.m, NpftaT1.m, NpftbT1.m and numerics/matlab/Figure2_MATLAB/FindGeneral_exo.m
+  method: script
+  result: consistent
+  note: >-
+    Against the MATLAB, by reading: every function keeps the MATLAB expressions and their order of operations. The
+    only rewrite is the share, (1 + 2 beta d)/2 for MATLAB's 1/2 + beta d; it is exact in rationals and bit-identical
+    in doubles (0 mismatches over 200000 random doubles). _leftover_high and _leftover_low factor the MATLAB's repeated
+    leftover expressions with the same arithmetic. period2_base_profits is the first half of period2_profit.m, including
+    the swap of prices and costs when c_A/p_A2 > c_B/p_B2. first_period_s and first_period_n are the shared bodies
+    of SpftaT1/SpftbT1 and NpftaT1/NpftbT1, with the same branch tests. Against the paper and the model, with verification/2026-11-22_claude-opus-5-5-b/scripts/part1_closed_form_exact.py.
+    Symbolically: pfta_t2_case1 - pi^0_A and pftb_t2_case1 - pi^0_B cancel to 0, with pi^0 from Lemma 1 and the
+    leftovers integrated in the script from the demand system of Section 3. The leftover helpers equal those integrals.
+    The branch tests are the fractile orderings. In Scenario N, zeta^N_A >= zeta^N_B, with Lemma 3's zeta_B, is
+    algebraically equivalent to the code's test. That test is the comparison made in the proof of Lemma 3, and the
+    two branches agree at the tie. In exact rational arithmetic at 240 random points with A11 not imposed (B has
+    the higher fractile at 24 in S and 19 in N), first_period_s, first_period_n, spfta_t1, spftb_t1, npfta_t1 and
+    npftb_t1 reproduce exactly the orders, leftovers, fractiles, branch and total profits that the script derives
+    from the first-order conditions and the model. The residuals of the first-order systems of the proofs, and of
+    their mirror, are 0. period2_profit equals pi^0 + (p_2 - c) Z at 100 points with either second-period ordering.
+    The sales of the proofs, R = y - L, follow because the leftovers agree. find_general_exo equals Lemma B.1 and
+    the model exactly at all 80 points that satisfy A11. As its docstring says, it implements only the A11 ordering.
+    It computes pi^0_{i,2} in the A-high form without testing the second-period ordering, so where c_A/p_A2 > c_B/p_B2
+    its profits differ from the model (9 of 13 such random points). Figure B.1 has equal prices, so A11 holds there,
+    and no check calls the function outside A11. MATLAB against the paper: - rho = 1 and uniform seed demand, as
+    in A10; - continuation pi^0 + (p_2 - c) Z, as in the proofs of Lemmas 2 and 3; - expected leftovers as derived
+    above; - the mirrored branches (B with the higher fractile), which the paper does not print, are the A-B mirror
+    of Lemmas 2 and 3, confirmed from the first-order conditions. No departure found. Comments in pftaT2Case1.m
+    ("Original single-branch expression"), SpftaT1.m ("The main solver verifies this continuation") and NpftaT1.m
+    ("Its continuation margin uses its own cost ca") show that the MATLAB was revised after the authors' first version.
+    The repository does not document the revision. Prior exposure: my context held the user's memory index (repository
+    layout, that a first fresh-agent run had been done, where the final LaTeX is, and that no MATLAB is available)
+    and the parent project's agent instructions, but no content of earlier runs or audits; I read nothing outside
+    the repository root.
+  findings: []
+- item: numerics c2c/pricing.py
+  compared_with: >-
+    numerics/matlab/Figure1_MATLAB/pricing_equilibrium.m with its local functions best_response_interval and pure_equilibria,
+    line by line; the Endogenous Price Model of Section 5 of paper/Manuscript.tex (problem (P) with feedback Nash
+    equilibrium and rho = 1; prices in [p_lower, p_upper] with p_lower > c_B and 0 < beta < 1/[2(p_upper - p_lower)])
+    and Section 5.3 (two discrete price levels)
+  method: script
+  result: consistent
+  note: >-
+    By reading, these parts are the MATLAB's: - the input checks and the sales triangle R_A, R_B >= 0, R_A + R_B
+    <= mu + sigma; - the tolerances 64 eps(max |payoff|) (np.spacing equals MATLAB eps for positive arguments);
+    - the best-response interval, and the "common" and "possible" tests in S and N; - the column-major order of
+    MATLAB's find, and the errors and the warning; - the first-period payoff matrices, and the pure-equilibrium
+    mask that keeps ties. The method agrees with the paper's model: - The second-period payoffs pi^0 + (p_2 - c)
+    Z (proofs of Lemmas 2 and 3) are affine in own sales (S) or in total sales (N), so the endpoint test certifies
+    every state. - The triangle contains every feasible state, because R_A + R_B <= X_1 <= mu + sigma, so the certification
+    is conservative. - Each first-period price deviation gets its own inventory equilibrium under the certified
+    continuation. This is subgame perfect, because that continuation is the unique equilibrium at every state. The
+    paper does not describe the solution method. It is consistent with the feedback equilibrium of (P). verification/2026-11-22_claude-opus-5-5-b/scripts/part1_figures_exact.py
+    re-solves the game in exact arithmetic with its own formulas, with exact integration of the model, the second-period
+    game solved over the whole triangle, and no tolerance, at all 44 points of Figure 1 in both scenarios. Results:
+    - the price paths are the same, and the plotted profits agree within 1.4e-14; - no other second-period pair
+    is an equilibrium at any state; - the smallest second-period equilibrium margin is 6.29 and the smallest first-period
+    margin is 0.84; - 44 of the 352 first-period cells use the mirrored branch, and |kappa_A - kappa_B| >= 0.0059
+    in every cell. No result therefore rests on a tie or on a tolerance. The caption's menu {2, 4} satisfies p_lower
+    > c_B and beta (p_upper - p_lower) = 0.2 < 1/2, which the code enforces. It does not satisfy the footnote's
+    "sufficiently nonrestrictive" upper bound, which requires p_upper > 6.05 at c_A = 0.1 and p_upper > 6.475 at
+    c_A = 0.95. The parameters are the paper's own, so this is not a code departure; the footnote serves the large-gamma
+    analysis (noted for Part 3). Prior exposure: as recorded for c2c/closed_form.py (the user's memory index and
+    the parent project's agent instructions, no earlier results).
+  findings: []
+- item: numerics c2c/figures.py
+  compared_with: >-
+    numerics/matlab/Figure1_MATLAB/Figure1_reproduce.m and numerics/matlab/Figure2_MATLAB/Exoprice2_Figure2.m; the
+    caption and subcaptions of Figure 1 (fig:compare, Section 5.3 of paper/Manuscript.tex) and of Figure B.1 (fig:general,
+    Appendix B of paper/OnlineAppendix.tex); the text of Section 5.3 and Appendix B; the series of the published
+    panels in numerics/figures/published_data.csv
+  method: script
+  result: consistent
+  note: >-
+    Figure 1 parameters: prices {2, 4}, c_B = 1, beta = 0.1, X ~ U[5, 15] (mu = 10, sigma = 5). Panels: (a) retailer
+    A, c_A = 0.1, gamma = 0.7; (b) A, 0.1, 2; (c) B, 0.95, 0.7; (d) B, 0.95, 2. These match the caption and the
+    subcaptions. Figure B.1 parameters: all prices 2, c_B = 1, beta = 0.1, U[5, 15]. Scenarios: GS gamma = 2 with
+    (lambda_S, lambda_N) = (0.8, 0.2); GN gamma = 2 with (0.2, 0.8); benchmark gamma = 0. Panels: (a) y_A1 and (b)
+    y_B1 at c_A = 0.5, (c) Pi_A at c_A = 0.1, (d) Pi_B at c_A = 0.92. The benchmark appears in (b) only. These match
+    the caption, the subcaptions, the text of Appendix B, and the series of the published panels. The paper states
+    neither theta grid. Both, [0.01, 0.1:0.1:0.9, 0.99] and 0:0.1:1, are the MATLAB's and are the nodes of the published
+    panels. matlab_colon reproduces MATLAB's colon on both grids: the fourth node is 0.30000000000000004, and the
+    middle node is 0.5 under either rule MATLAB may use for it. figure1_point, figure1_data and figure1_crossings
+    follow panel_gap and the loop of Figure1_reproduce.m: an error unless there is exactly one equilibrium, the
+    gap N - S, and roots between sign changes, with brentq in place of fzero. figureB1_data follows Exoprice2_Figure2.m
+    and returns the columns of Figure2_reference.csv. Num_pricing1.m (one point) is not ported and nothing needs
+    it. verification/2026-11-22_claude-opus-5-5-b/scripts/part1_figures_exact.py: - the exact recomputation equals figure1_data within 1.4e-14, with identical
+    price paths; - the crossings 0.7697356971 in (a) and 0.5799982575 in (c), and none in (b) and (d), agree to
+    10 decimals; - figureB1_data lies within 7.1e-15 of the exact values and within 5.0e-14 of the MATLAB reference
+    file. Prior exposure: as recorded for c2c/closed_form.py.
+  findings: []
+- item: numerics tests/test_port_matches_paper.py
+  compared_with: >-
+    The LaTeX it quotes in paper/Manuscript.tex and paper/OnlineAppendix.tex, numerics/c2c/closed_form.py, the model
+    of Section 3, and the marker definitions in numerics/tests/conftest.py and numerics/run.py
+  method: reading
+  result: consistent
+  note: >-
+    The file ties the port to the paper's text. Each formula is transcribed a second time beside a verbatim LaTeX
+    quotation and compared with the code in exact rational arithmetic at 25 random points. For rational functions
+    this is a randomized identity test, and it is adequate. The leftover integrals are derived from the model and
+    checked symbolically. Points need not satisfy the assumptions, which does not matter for identities. Coverage
+    is the A11 ordering only, with the branches forced. The mirrored branches and the second-period swap, which
+    the paper does not print, are tied to the model by test_profits_and_price_game.py. Lemma B.1 prints no profit
+    formula, so the file composes the profits by analogy with (A.12) and (A.14). The composition is right: it matches
+    the model exactly in verification/2026-11-22_claude-opus-5-5-b/scripts/part1_closed_form_exact.py. The Scenario N branch check compares c_B(p_A1 + alpha_A2
+    gamma m_A) with c_A(p_B1 + alpha_B2 gamma m_B). This is the comparison of the proof of Lemma 3, and the script
+    shows it is equivalent to the ordering of Lemma 3's fractiles. The predicates are right: exact equality, and
+    a weak inequality at the branch, where both branches agree at the tie. All tests passed (verification/2026-11-22_claude-opus-5-5-b/logs/report_L1.md,
+    report_L2.md, report_L3.md, report_LB1.md). The finding concerns only how the markers count the checks. Prior
+    exposure: as recorded for c2c/closed_form.py.
+  findings:
+  - id: C1
+    severity: editorial
+    scope: numerics
+    locator: >-
+      numerics/tests/test_port_matches_paper.py, the markers of test_branch_conditions_in_the_code_are_the_fractile_orderings,
+      test_scenario_s_code_matches_lemma_2, test_scenario_n_code_matches_lemma_3, test_mixed_scenario_code_matches_lemma_b1
+      and test_mixed_scenario_reduces_to_scenarios_s_and_n
+    description: >-
+      These five checks are marked claims("L2.first"), claims("L3.first") or claims("LB1.first"), so run.py lists
+      them as direct checks of those parts (verification/2026-11-22_claude-opus-5-5-b/logs/report_L2.md, report_L3.md, report_LB1.md). What they test is the
+      port's agreement with the printed formulas, its branch logic at random points outside A11, or its internal
+      consistency (weights (1, 0) and (0, 1)). None tests that the stated first-period orders are an equilibrium.
+      The analogous Lemma 1 check, test_benchmark_profit_polynomials_match_lemma_1, is marked supports("L1.eq").
+      As a result, 2 of the 8 direct checks listed for L2 and for L3, and 2 of the 6 for LB1, are code-fidelity
+      checks for the ".first" part.
+    suggested_fix: >-
+      Mark the ".first" part of these checks `supports`. Keep claims("L2.profits") and claims("L3.profits") on the
+      transcriptions of (A.8) to (A.14), which together with link (b) of test_profits_and_price_game.py directly
+      test the profit formulas.
+    evidence: >-
+      conftest.py defines claims as "results or parts of results that this check tests directly", and run.py says
+      "A direct check tests a part of the result itself." The bodies, at lines 185-199, 223-240, 263-267, 285-290
+      and 303-311, compare closed_form outputs with transcriptions or with each other at random positive rationals
+      that need not satisfy the assumptions. Each part still has genuine direct checks (test_first_period_equilibrium[S/N/G]
+      and the fixed-point scans), so no verdict depends on this.
+- item: numerics tests/test_profits_and_price_game.py
+  compared_with: >-
+    numerics/c2c/closed_form.py, pricing.py and figures.py; the model of Section 3 as computed by numerics/c2c/primitives.py
+    and section4.Game; Lemmas 1 to 3 and B.1 and their proofs; Section 5.3
+  method: reading
+  result: consistent
+  note: >-
+    The file ties the port to the model, including the cases the paper does not print. - Link (a): closed-form orders
+    equal claimed_first_period within 1e-12 mu, at 500 points including 200 without A11, with B's fractile higher
+    at 26 points in N and 33 in S. - Link (b): closed-form expected sales and total profits equal an exact piecewise
+    integration of the model at the same orders. The tolerances are 1e-11 mu for sales and 1e-9 mu (1 + gamma) max
+    p for profits, and both orderings are covered. For G only the A11 ordering is checked, as implemented. - Link
+    (c): period2_profit equals the model's profit at y^0 + Z at random sales states, with the second-period ordering
+    unrestricted. - Figure 1, from the primitives: all 352 payoff cells (within 1e-9, fractiles in [0, 1], mirrored
+    cells present); 96 first-period inventory games at theta = 0.01, 0.5 and 0.99 (gain at most 1e-7, best response
+    within 2e-5); the constant continuation at 10 sales states, including the corners, at 4 values of theta, as
+    the only pair that is an equilibrium at all of them; and 48 second-period inventory games at one state. The
+    predicates and tolerances match what is claimed. Because the payoffs are affine in the state, corner states
+    suffice. The gaps are that only 3 or 4 of the 11 values of theta are sampled and that uniqueness of the continuation
+    at every state is not checked from the primitives. The solver's own certification (warnings as errors) closes
+    those gaps, and so does the exact re-solution in verification/2026-11-22_claude-opus-5-5-b/scripts/part1_figures_exact.py, at all 44 points and over the
+    whole triangle. Every check passed (verification/2026-11-22_claude-opus-5-5-b/logs/report_F1.md and the L-reports). The markers here (claims F1, L2.profits,
+    L3.profits) fit what the checks test. Prior exposure: as recorded for c2c/closed_form.py.
+  findings: []
+- item: numerics checks of L1, L2, L3, L4 and LB1 (Part 1 item 4, predicates)
+  compared_with: the statements of Lemmas 1 to 4 and B.1 and the Parts lists in theory.md
+  method: reading
+  result: consistent
+  note: >-
+    Read every check listed in verification/2026-11-22_claude-opus-5-5-b/logs/report_{L1,L2,L3,L4,LB1}.md. The equilibrium checks (test_equilibria_from_primitives.py)
+    test both retailers, the stated scenario and period, with the ordering of fractiles required (A's higher; 1e-12
+    slack at A11 equality, where both forms coincide), a global deviation search and a best-response distance; the
+    uniqueness scans are scans and say so. The L4 checks use stronger predicates than the weak inequalities of Lemma
+    4 (equality exactly at A11 equality, strictness otherwise, e^N > 0); the stronger forms are true, so they confirm
+    the lemma. The profit parts are tested under the uniform law only. None of the checks uses a law with unbounded
+    support or rho < 1; both are covered by verification/2026-11-22_claude-opus-5-5-b/scripts/shared_eqlemmas_unbounded_support.py. Reported independently
+    by the verifiers of L1-LB1 and of the port; recorded once, as C1.
+  findings:
+  - 'see: C1 (numerics tests/test_port_matches_paper.py)'
+- item: numerics predicates of the checks of P1-P6 (numerics/tests/test_propositions_exogenous.py)
+  compared_with: Statements of Propositions 1-6 in theory.md and paper/Manuscript.tex
+  method: reading
+  result: consistent
+  note: >-
+    Only test_propositions_exogenous.py claims P1-P6 directly (grep of claims/supports markers); the supporting
+    checks are the closed-form-vs-model links of test_profits_and_price_game.py and the sampler admissibility check.
+    Predicates: every "increasing/decreasing" part is tested as strictly monotone, or exactly constant where A11
+    binds (y^0_A: period 1; y^S_A, E[R^S_A], Pi^S_A: both periods). The proof records show these are exactly the
+    equality cases, so the strict predicates are true and test the weak claims. Strict inequalities (P2.b, P3.b,
+    P5.b, P5.c1, P6.b, P6.c1) are tested strictly at every theta node. Retailer, scenario and period match each
+    part. Threshold parts (P1.ii, P3.a, P4, P5, P6) are asserted only at gamma = 1e50 and 1e60, with the lowest
+    passing rung recorded; parts the proofs show for every gamma (P1.ii pattern, P3.a cutoff) are also asserted
+    at all 12 rungs from 1/20. Crossing predicates (_crossing, sign_runs) skip exact zeros, so the strict side of
+    a cutoff (P3.a on (theta', 1], P5.c2 on (theta^A, 1], P6.c2 on [0, theta^B)) is enforced at the end node but
+    not at interior nodes; the docstrings disclose this, and the proofs (single simple root) make it immaterial.
+    P5.c2 selects markets by c_B > c-bar_B, exactly the markets covered by some admissible Delta^A. P6.c2 selects
+    markets by the bracket at the actual share alpha_{A,2}, a superset of those covered by the proof's sufficient
+    condition (bracket at the A11 worst case), which makes the test stronger; its docstring calls this "the cost
+    condition", which is loose but not wrong in effect. P2.c tests theta in {0, 1/2, 9/10, 999/1000} only, as the
+    statement excludes theta = 1. Each check tests the part it names.
+  findings: []
+- item: numerics predicates of the checks of LA1, LA2, P7, P8, P9
+  compared_with: >-
+    The statements of Lemmas A.1, A.2 and Propositions 7, 8, 9 (theory.md, equal to the paper's TeX)
+  method: reading
+  result: consistent
+  note: >-
+    Each direct check tests the part it names with the statement's retailer, scenario, period and inequality, and
+    its gamma ladder probes a "sufficiently large gamma" claim without asserting a threshold. LA1.a: exact closed
+    form via vanishing model marginal profits plus deviation searches, continuation pinned at p_hi (states below
+    the dominance strip, which the proof's domination step covers, are excluded from the iteration probe, as documented).
+    LA1.b: (p_hi, p_hi) is the only pure equilibrium of a grid game plus continuous searches; the inventory sentence
+    at both fractile orderings. LA2.a: order >= 1.75 of the closed-form error (observed 2 at theta = 1, about 3
+    at theta < 1), a separate check with gamma (1 - theta) held at eight levels for uniformity in theta, uniqueness
+    probes restricted to rival orders above a floor d (documented). LA2.b: rate 1/gamma to p^_{i,2} and uniqueness
+    via iterations from the corners. P7: literal shape predicates on 1,501-point grids for both scenarios and retailers,
+    theta = 0 and 1 included, for gamma in [0.05, 50] (the claim holds for every gamma). P8: strict signs of difference
+    quotients; (b1) at theta in {0, 0.5, 0.9, 1}, (b2 fixed) at theta in {0, 0.5, 0.9}, (b2 bounded) at theta =
+    1 and 1 - l/gamma with one small l under (A.22) on a patch built as in (A.24). P9.a: dominance of p_lo on a
+    grid, iteration, and the unique second-period grid equilibrium at three induced states. P9.b: theta = 0.9 theta_drawn
+    (< 1), strict chain over 201 induced states. No check tests the price derivatives of the Lemma A.2 remainder
+    that P8 uses; the run's script LA2_remainder_bounds.py does.
+  findings: []
+- item: numerics quotations in numerical_statements.yaml
+  compared_with: >-
+    paper/Manuscript.tex and paper/OnlineAppendix.tex with TeX comments removed and every \ref printed as in numerics/paper_labels.json;
+    the surrounding text of each quote (Sections 3.3 and 5.3, Online Appendix B)
+  method: script
+  result: consistent
+  note: >-
+    verification/2026-11-22_claude-opus-5-5-b/scripts/part1_quotations.py: each of the 9 quotes occurs exactly once in comment-free text, at the place its
+    `where` field names (F1: caption of fig:compare, Manuscript.tex:417; FB1: caption of fig:general, OnlineAppendix.tex:520;
+    N1-N4: Manuscript.tex:451-455 in Section 5.3; N6: Manuscript.tex:171 in Section 3.3; N5 and N7: OnlineAppendix.tex:515
+    and 517). The numbers that the TeX hard-codes in N5 ("Proposition 5 [Proposition 6]") and N7 ("Proposition 9",
+    "section 5.3") are the printed numbers of prop:pfta, prop:pftb, prop:price and sec:pricing-compare-pft. Each
+    check's predicate against its quote: N1 (equal shares at all 44 points, some price change) matches both halves;
+    N2 (sign at 0.01 and 0.99, one change) matches and for retailer B is stronger than the sentence; N3/N4 (gap
+    > 0 at all 11 values, shares from the N1 check) match; N5 tests the quote and in addition panel (a) and the
+    flatness of y^GS_B and y^0_B, all of which hold; N6 tests weak forms, as its note says. The quotes of N2 and
+    N5 leave out their paragraphs' lead sentences (C3). The repository's quotation check (c2c.paper.text) does not
+    remove TeX comments, so it would also accept a commented-out sentence; no quote is affected.
+  findings:
+  - 'see: C3 (numerics omitted numerical statements)'
+- item: numerics quotations in the checks
+  compared_with: >-
+    the LaTeX source at the place each quotation names, and the Python transcription written beneath it
+  method: script
+  result: consistent
+  note: >-
+    verification/2026-11-22_claude-opus-5-5-b/scripts/part1_quotations.py collects 34 LaTeX strings from the checks (14 in test_port_matches_paper.py, 3 in
+    test_propositions_exogenous.py, 17 in test_section_5_transcription.py); each occurs exactly once in comment-free
+    text and inside the result or proof its label names (e.g. "Lemma 2, proof, (A.8)" at OnlineAppendix.tex:107,
+    label models:A1 = A.8; "Lemma 3, proof, (A.12)" at line 142, modeln:A1 = A.12; the (A.22) and (A.23) strings
+    in the proof of Proposition 8; the Proposition 8 and 9 strings in the statements of prop:orderprice1 and prop:price).
+    The transcriptions read against the strings agree: Lemmas 1, 2, 3 and B.1 (fractiles, orders, (A.8), (A.12)
+    including its unquoted first line, gamma_{i,t} and gamma^C_{i,t}); the Lemma B.1 total profit, which the paper
+    does not print, is derived correctly in the check (first-period margin plus (p_2 - c) E[Z] plus pi^0); the Proposition
+    5 sign expression and Proposition 6 bracket term by term, and their use (expression < 0 iff c_B > c_B-bar, since
+    the divisor p_{A,1}(alpha_{A,1} p_{A,2} - (2 alpha_{A,1} - 1) c_A) is positive; bracket > 0 is the cost condition
+    of the proof); the Section 5 limit prices, nu_i, (A.22), (A.23), the Lemma A.1/A.2 orders, the Proposition 8
+    slope-sign table and the Proposition 9 path predicates. Whether the predicates that use these strings test the
+    full statements belongs to the records of P5, P6, LA1, LA2, P8 and P9.
+  findings: []
+- item: numerics excluded entries (N7)
+  compared_with: >-
+    OnlineAppendix.tex:517 and the code: c2c/pricing.py, c2c/section5.py, c2c/closed_form.py, c2c/section4.py, numerics/matlab/
+  method: reading
+  result: consistent
+  note: >-
+    The reason is true. pricing.pricing_equilibrium accepts only scenarios "S" and "N"; closed_form.period2_profit
+    raises for any other scenario; section5.py has continuation solvers for S and N only (SecondPeriodS, SecondPeriodN);
+    closed_form.find_general_exo covers only the ordering of Lemma B.1 (retailer A's fractile higher), which the
+    price menu {2, 4} breaks in some cells (e.g. c_A = 0.95, (p_A, p_B) = (2, 4): fractiles 0.525 and 0.75 without
+    C2C); the MATLAB folders hold only the Figure 1 (S/N) and Figure B.1 (exogenous prices) code, and no output
+    of the GS/GN pricing experiments is stored. "The price menu {2, 4}" is the file's reading of "the same numerical
+    setting in section 5.3" (the menu is in the caption of Figure 1); gamma is not specified by N7. section4.Game
+    builds scenario G payoffs from the primitives, so a solver could be written; none exists. Context only, not
+    evidence about N7: in that setting the repository's S/N solver gives the rising path (2,2)->(4,4) in S and (4,4)->(4,4)
+    in N at every gamma probed from 0.1 to 1000 (no falling path at the pure-N end; verification/2026-11-22_claude-opus-5-5-b/scripts/N1_gamma_cost_sweep.py),
+    so the falling pattern that N7 reports for GS/GN cannot be anticipated from the endpoints and remains unchecked.
+  findings: []
+- item: numerics omitted numerical statements
+  compared_with: >-
+    every sentence of both TeX files containing "numerical", "experiment", "we find", "robust", "test", "Figure",
+    "shows that" and similar words, against the quotes of numerical_statements.yaml and the 16 results of theory.md
+  method: script
+  result: consistent_with_findings
+  note: >-
+    verification/2026-11-22_claude-opus-5-5-b/scripts/part1_quotations.py lists the uncovered sentences; most cite a proposition or are motivation. Two groups
+    are numerical claims the file does not list (C2, C3). Both were checked and hold.
+  findings:
+  - id: C2
+    severity: minor
+    scope: numerics
+    locator: >-
+      Manuscript.tex:310 (Section 4.2.3): "However, when strong cross-brand C2C is present, we find that $\Pi^N_{A}$
+      may decrease in $\theta$ when $\theta$ takes intermediate values."
+    description: >-
+      numerics/numerical_statements.yaml says that every numerical statement of the paper has an entry, but it omits
+      this claim about the model. No proposition states it, theory.md does not list it, and no check tests it, so
+      a verification driven by the repository never examines it.
+    suggested_fix: >-
+      Add an entry (e.g. N8) with a check that exhibits admissible markets with large gamma where Pi^N_A rises,
+      falls on an interior interval of theta and rises again, or state in the file why the sentence is treated as
+      discussion.
+    evidence: >-
+      verification/2026-11-22_claude-opus-5-5-b/scripts/part1_profit_n_a_nonmonotone.py: among 300 regular markets (A1, A11 strict, I1, I2, uniform demand),
+      Pi^N_A from closed_form.npfta_t1 rises, falls on an interior interval and rises again at 3, 64, 85 and 51
+      markets for gamma = 5, 50, 500, 5000 (e.g. a fall on [0.59, 0.91] at gamma = 50); it falls somewhere at 110,
+      259, 294 and 300 markets. The claim holds.
+  - id: C3
+    severity: editorial
+    scope: numerics
+    locator: >-
+      Manuscript.tex:68 (Introduction) "our numerical analysis shows that the qualitative comparisons of profits
+      across scenarios largely persist even with pricing flexibility, provided that the strength of social interactions
+      is not excessively large"; the Conclusion's "Our earlier profit-comparison patterns largely persist under
+      endogenous pricing, although sufficiently strong C2C interactions may alter them"; Manuscript.tex:453 "Figure
+      1(a)&(c) replicate the results in Propositions 5&6 under a moderate $\gamma$" (lead sentence of N2); OnlineAppendix.tex:515
+      "Figure B.1 shows that our main results for the Exogenous Price Model still hold when both within-brand and
+      cross-brand C2C are present" (lead sentence of N5)
+    description: >-
+      These summary or lead sentences state the broadest form of N2 to N5 and are not quoted. The checks of N2 to
+      N5 test their substance in part (the crossings), but no entry records the claims of the Introduction and the
+      Conclusion, or the "replicate"/"main results still hold" forms.
+    suggested_fix: >-
+      Extend the quotes of N2 and N5 to include their lead sentences, and list the Introduction and Conclusion summaries
+      under N2 to N4 (or as one entry relying on their checks).
+    evidence: >-
+      All checked and supported. verification/2026-11-22_claude-opus-5-5-b/scripts/F1_fine_theta_grid.py and verification/2026-11-22_claude-opus-5-5-b/scripts/FB1_fine_theta_grid.py: panels (a), (c)
+      of Figure 1 also show parts (a) of Propositions 5 and 6, and Figure B.1 shows analogues of Propositions 1(ii),
+      2(b), 5(a), 5(b), 5(c2), 6(a), 6(b), 6(c2). verification/2026-11-22_claude-opus-5-5-b/scripts/N1_gamma_cost_sweep.py (Section 5.3 setting, gamma 0.1
+      to 3.0): the crossing pattern appears for gamma <= 0.7 (retailer A, c_A = 0.1) and 0.4 <= gamma <= 0.7 (retailer
+      B, c_A = 0.95), Scenario N dominates from gamma = 0.9 (A) and 1.5 (B), and Scenario S has two first-period
+      equilibria at theta = 0 or 1 in between. For B at gamma <= 0.3 N dominates, but every equilibrium there is
+      (4,4,4,4), i.e. the exogenous-price outcome, so the comparison "persists" in the paper's sense.
+- item: numerics figure extraction check
+  compared_with: >-
+    tests/test_figures.py::test_published_data_match_a_fresh_extraction_from_the_eps_files and numerics/figures/extract_published_data.py,
+    against the eight EPS panels in paper/ and the PDF conversions in verification/2026-11-22_claude-opus-5-5-b/build/
+  method: script
+  result: consistent
+  note: >-
+    The check runs the extractor on the EPS files into a temporary folder and requires the CSV and the calibration
+    JSON to equal the stored files byte for byte (passed: 8 panels, 187 points). It tests what it names, the reproducibility
+    of the stored data from the published files; the correctness of the extractor (its PostScript interpreter, legend
+    decoding and axis calibration) is not tested by it. verification/2026-11-22_claude-opus-5-5-b/scripts/part1_eps_independent_extraction.py is a separate
+    minimal parser (stroked paths with width >= 2 and at least 5 vertices, tick-label anchors, least-squares axis
+    maps, colours mapped to scenarios from the rendered legends): it recovers all 17 series (187 points) and agrees
+    with published_data.csv within 5.9e-7, with the recomputed Figure 1 values within 5.6e-5 (panels drawn from
+    four-decimal data) and with the recomputed Figure B.1 values within 3.6e-6. The rendered panels (verification/2026-11-22_claude-opus-5-5-b/build/*-eps-converted-to.pdf)
+    show the legend labels Scenario S/GS red dashed, N/GN blue solid, 0 black dash-dot, and axis titles matching
+    figures.py's panel map.
+  findings: []
+- item: numerics paper_labels.json (label map) and the paper build
+  compared_with: >-
+    fresh latexmk build of a copy of paper/ in verification/2026-11-22_claude-opus-5-5-b/build/, and numerics/paper_labels.json
+  method: script
+  result: consistent
+  note: >-
+    The build succeeded with the local informs1.cls and ormsv080.bst (no undefined or multiply defined references
+    in either log). verification/2026-11-22_claude-opus-5-5-b/scripts/part1_label_map.py reads every \newlabel of Manuscript.aux (37 labels) and OnlineAppendix.aux
+    (47 labels), drops the seven labels inside unnumbered environments (eqnarray*, equation*; none of them is referenced
+    by \ref or \eqref), and finds the remaining 37 + 40 labels identical to numerics/paper_labels.json in number
+    and page. Every \ref and \eqref of each source resolves to a label of the same document.
+  findings: []

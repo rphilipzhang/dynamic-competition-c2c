@@ -1,0 +1,173 @@
+id: P6
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml: the user's auto-memory index for this project and the parent project's AGENTS.md were
+    in context (no audit records, findings or verdicts); nothing outside the repository root or other
+    verification/ folders was read; the orchestrator's brief stated the Part 1 results and listed points worth
+    care.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A11, I1, I2. For every admissible market there is gamma^B > 0 such that for every gamma >= gamma^B and
+  every theta in [0,1]: (a) Pi^S_B does not depend on theta and Pi^N_B is nondecreasing in theta (both true for
+  every gamma > 0); (b) Pi^S_B > Pi^0_B and Pi^N_B > Pi^0_B, with gamma^B independent of theta; (c1) if
+  alpha_{B,1} > alpha_{B,2} then Pi^S_B > Pi^N_B, and if alpha_{B,1} < alpha_{B,2} then Pi^S_B < Pi^N_B, with gamma^B
+  independent of theta. (c2), fixed-market reading of AGENTS.md: suppose alpha_{B,1} = alpha_{B,2}. There is a
+  sufficient cost cutoff Delta^B > 0 such that for each admissible market with 0 < Delta c <= Delta^B the bound
+  gamma^B may depend on the costs and applies to every theta, and for each gamma >= gamma^B there is theta^B in
+  [0,1], depending on gamma and the market, with Pi^S_B > Pi^N_B on [0, theta^B) and Pi^S_B <= Pi^N_B on
+  [theta^B, 1]. In the proof Delta^B depends on the remaining primitives (c_B, p_{A,2}, p_{B,2}, beta); it cannot
+  be chosen independently of beta (step 9), which the existential statement allows.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on:
+  - "Proof of P5(b), the asymptotic argument (decomposition and uniform lower bound on sales), cited as 'the same asymptotic argument as in Proposition 5(b)'"
+steps:
+  - id: 1
+    locator: '(a). ... Since $\mathbb{E} [L^k_{B,1}] =\alpha_{B,1} \int_{0}^{\zeta^k_{B,1}} (\zeta^k_{B,1} - z) f(z) dz$, $k = 0, S$, $\Pi^S_B$ is independent of $\theta$.'
+    claim: Pi^S_B does not depend on theta.
+    status: verified
+    method: symbolic
+    note: d Pi^S_B/dtheta of the full closed form is identically 0 (SymPy). The leftover formula is my R_B = alpha_B min(X, z_B) (P3 record, step 7); pi^0_{B,2} is free of theta as well (k = 0).
+  - id: 2
+    locator: '$\frac{\partial \Pi^N_B}{\partial \theta} = \sigma \alpha_{B,1} \alpha_{B,2} \gamma (p_{B,2} - c_B) h^N_B(\gamma) /[(\ldots)^2 [p_{B,1}+\alpha_{B,2} \gamma (1-\theta) (p_{B,2}-c_B)]^2]$, where $h^N_B(\gamma)$ is a quadratic function of $\gamma$ and $h^N_B(\gamma) >0$ if $\gamma > 0$'
+    claim: Factorization of d Pi^N_B/dtheta with h^N_B quadratic in gamma, free of theta, positive.
+    status: verified
+    method: symbolic
+    note: >-
+      My derivation: the theta-dependent part of Pi^N_B is sigma alpha_{B,1}[c_B^2 (P^N_A)^2 - theta J c_A^2
+      (p_{B,1} + J)]/((P^N_A)^2 den) (differences in theta match the full closed form exactly at 8/8 point pairs);
+      its derivative is sigma alpha_{B,1} alpha_{B,2} gamma w h^N_B/((P^N_A)^2 den^2) with
+      h^N_B = (Q1 + gamma Q2)(c_B P^N_A + c_A(p_{B,1} + J)) (SymPy). h^N_B has degree 2 in gamma, does not contain
+      theta, and is > 0 for gamma > 0 (Q1 >= 0, Q2 > 0). Hence Pi^N_B is strictly increasing in theta for every
+      gamma > 0. The printed denominator factors equal (P^N_A)^2 den^2 (SymPy).
+  - id: 3
+    locator: '(b). By the same asymptotic argument as in Proposition 5(b), there exists $\gamma_0^B>0$ such that $\Pi_B^S>\Pi_B^0$ and $\Pi_B^N>\Pi_B^0$ for $\gamma>\gamma_0^B$.'
+    claim: Profit gains of B for large gamma, uniformly in theta.
+    status: verified
+    method: numerical
+    note: >-
+      Exact identities Pi^S_B - Pi^0_B = dFP + gamma w E[R^S_{B,1}] and Pi^N_B - Pi^0_B = dFP + gamma alpha_{B,2} w
+      E[R^N_1] at 8/8 points; E[R_B] = alpha_B(mu - sigma t_B^2) >= alpha_B(mu - sigma) > 0 and
+      E[R^N_1] >= alpha_{A,1}(mu - sigma), first-period terms bounded uniformly (P5 record, steps 2-3). The
+      cross-reference to Proposition 5(b) is the intended argument.
+  - id: 4
+    locator: '(c1-c2). $\Pi^S_B - \Pi^N_B = (p_{B,2}-c_B)\gamma h_B(\theta, \gamma)/[(-\gamma c_B+p_{B,1}+\gamma p_{B,2}) (\ldots)^2 [(1-\alpha_{A,2}) \gamma (1-\theta ) (p_{B,2}-c_B)+p_{B,1}]]$, where $h_B(\theta, \gamma)$ is a linear function of $\theta$'
+    claim: Factorization with a positive denominator; h_B linear in theta.
+    status: verified
+    method: symbolic
+    note: >-
+      Built h_B as an explicit polynomial (shared_profit_polys.py); the identity holds exactly at 8/8 points. Only
+      den^1 appears because the r^2 terms of Pi^N_B combine to -sigma alpha_{B,1} den r^2 (my derivation). h_B has
+      degree 1 in theta and 4 in gamma; the denominator is P^S_B (P^N_A)^2 den > 0.
+  - id: 5
+    locator: 'if $\theta < 1$, $\frac{\partial^4 h_B(\theta, \gamma)}{\partial \gamma^4} = 24 \alpha_{B,2} \alpha_{A,2}^2 (1-\theta ) \mu (\alpha_{B,1}-\alpha_{B,2}) (c_A-p_{A,2})^2 (c_B-p_{B,2})^2$. If $\theta = 1$, $\frac{\partial^3 h_B(1, \gamma)}{\partial \gamma^3} = 6 \alpha_{A,2}^2 \mu p_{B,1} (\alpha_{B,1}-\alpha_{B,2}) (p_{A,2}-c_A)^2 (p_{B,2}-c_B)$.'
+    claim: Leading gamma-coefficients of h_B have the sign of alpha_{B,1} - alpha_{B,2}.
+    status: verified
+    method: symbolic
+    note: Both formulas equal the gamma^4 and (at theta = 1) gamma^3 coefficients of h_B (SymPy); the gamma^4 coefficient vanishes at theta = 1.
+  - id: 6
+    locator: 'Thus, there exists a $\gamma^B_1 > 0$, $h_B(\theta, \gamma)$ has the same sign as $\alpha_{B,1}-\alpha_{B,2}$ for $\alpha_{B,1} \neq \alpha_{B,2}$, if $\gamma \geq \gamma^B_1$.'
+    claim: A threshold gamma^B_1 uniform in theta.
+    status: verified
+    method: re-derivation
+    note: >-
+      The quartic coefficient is proportional to (1 - theta) and vanishes as theta -> 1, so the theta < 1 argument
+      alone does not give a uniform threshold. My derivation: h_B is linear in theta, h_B(theta) = (1-theta)
+      h_B(0) + theta h_B(1); h_B(0) (quartic) and h_B(1) (cubic) both have the sign of alpha_{B,1} - alpha_{B,2}
+      for gamma above the larger of their two root bounds, hence so does every convex combination. This fills
+      the step under the same hypotheses.
+  - id: 7
+    locator: 'In this case, at $\theta = 0$, $\frac{\partial^2 h_B(0, \gamma)}{\partial \gamma^2} = (1-\alpha_{A,1} ) \alpha_{A,1} \sigma [-2 c_B^2 (p_{A,2}-c_A)^2 \alpha_{A,2}^2 -2 c_A^2 (p_{B,2}-c_B)^2 \alpha_{A,2} + 2 c_A^2 (p_{B,2}-c_B)^2]$'
+    claim: With equal shares h_B(0, .) is quadratic with the printed second derivative.
+    status: verified
+    method: symbolic
+    note: With alpha_{A,2} = alpha_{A,1}, h_B(0, .) has degree 2 and 2 LC equals the printed expression (SymPy).
+  - id: 8
+    locator: 'One can check that ... decreases in $\alpha_{A,2}$ for $\alpha_{A,2} \geq \frac{1}{2}$. Furthermore, since $\alpha_{A,2} \leq \frac{1}{2} + \beta (1-\frac{c_A}{c_B})p_{B,2}$, ... ensured by ... at $\alpha_{A,2} = \frac{1}{2} + \beta (1-\frac{c_A}{c_B})p_{B,2}$.'
+    claim: Worst case of the bracket at the largest share A11 allows.
+    status: verified
+    method: symbolic
+    note: >-
+      d bracket/d alpha = -4 c_B^2 v^2 alpha - 2 c_A^2 w^2 < 0 (SymPy), and A11 in period 2 gives
+      alpha_{A,2} <= abar := 1/2 + beta(1 - c_A/c_B) p_{B,2}; holding prices fixed, bracket(alpha_{A,2}) >=
+      bracket(abar), so a positive value at abar is sufficient.
+  - id: 9
+    locator: 'Note that, there exists a $\underline{c}_A$ such that $\frac{\partial^2 h_B(0, \gamma)}{\partial \gamma^2} >0$ if $c_A \geq \underline{c}_A$ ... Choose $\Delta^B>0$ small enough that this second derivative is positive for $0<\Delta c\leq\Delta^B$.'
+    claim: From a lower cutoff on c_A to a cutoff Delta^B on Delta c.
+    status: verified
+    method: symbolic
+    note: >-
+      Asserted without derivation; my derivation. Hold c_B, the prices and beta fixed and set phi(c_A) =
+      bracket(abar(c_A)). SymPy: d phi/d c_A = 2[2 c_A w^2 (1 - abar) + c_A^2 w^2 beta p_{B,2}/c_B + 2 c_B^2 v abar^2
+      + 2 c_B v^2 abar beta p_{B,2}], positive wherever abar <= 1 (c_A < p_{A,2} by I1), while phi < 0 where abar > 1
+      (abar decreases in c_A). So {phi > 0} is an interval [c-underbar_A, ...) in c_A, and Delta^B = c_B -
+      c-underbar_A gives positivity for 0 < Delta c <= Delta^B. When no admissible c_A has phi > 0 (prices with
+      p_{A,t} < p_{B,t} bound Delta c below by A11), any Delta^B below the smallest admissible Delta c works and
+      (c2) is vacuous for those primitives; with equal prices phi -> c_B^2 w^2 / 2 > 0 as c_A -> c_B (abar -> 1/2), so (c2) is
+      non-vacuous there. Delta^B must depend on beta: at the A11 boundary the bracket equals
+      2 c_A^2 w^2 (1 - alpha - alpha^2), negative for alpha > (sqrt5 - 1)/2 = 0.618; the market Delta c = 0.01,
+      p_B = 4, c_B = 2, A11 binding, beta = 10, shares 7/10 has a negative bracket and h_B(0, gamma) < 0 at gamma =
+      1e1, 1e3, 1e6, so Pi^S_B < Pi^N_B at theta = 0 there. Such a market is admissible for every Delta c > 0 with a
+      large beta, so no Delta^B uniform in beta exists; the statement does not claim one.
+  - id: 10
+    locator: 'Fix any such $\Delta c$. There exists a $\gamma_2^B>0$ such that $h_B(0,\gamma)>0$ for all $\gamma\geq\gamma_2^B$.'
+    claim: Positive endpoint at theta = 0 for large gamma.
+    status: verified
+    method: re-derivation
+    note: h_B(0, .) is quadratic with positive leading coefficient (steps 7-9); gamma^B_2 is its largest positive root, market-dependent, free of theta.
+  - id: 11
+    locator: 'When $\theta = 1$, $\frac{\partial^2 h_B(1, \gamma)}{\partial \gamma^2} = 2\alpha_{B,1}\sigma\big[(\alpha_{B,1}c_A(p_{B,2}-c_B))^2-(\alpha_{A,1}c_B(p_{A,2}-c_A))^2\big] < 0$.'
+    claim: Negative endpoint at theta = 1 for large gamma.
+    status: verified
+    method: symbolic
+    note: With equal shares h_B(1, .) has degree 2 and 2 LC equals the printed expression (SymPy); alpha_{A,1} c_B v - alpha_{B,1} c_A w = Q2 > 0 (both terms positive), so the bracket is negative strictly.
+  - id: 12
+    locator: 'By part (a), for each $\gamma \geq \max\{\gamma^B_2,\gamma^B_3\}$, there exists a $\theta^B$ such that $\Pi^S_{B} > \Pi^N_{B}$ for $\theta \in [0, \theta^B)$ and $\Pi^S_{B} \leq \Pi^N_{B}$ for $\theta \in [\theta^B,1]$.'
+    claim: Cutoff in theta.
+    status: verified
+    method: re-derivation
+    note: >-
+      Pi^S_B - Pi^N_B is continuous and strictly decreasing in theta (part (a), step 2), positive at 0 and negative at
+      1; theta^B is its zero in (0,1). (Linearity of h_B gives the same.) Exact probe: 40 equal-share markets with a
+      positive bracket at the actual shares, h_B(0) > 0 > h_B(1) just above max(gamma^B_2, gamma^B_3) and at 10 times
+      it in 80/80 cases; that bound ranged from 0 to 31.9. Of these 40 markets 18 satisfy the proof's sufficient
+      condition at abar.
+  - id: 13
+    locator: 'For (a), (b), and (c1), take $\gamma^B>\gamma_0^B$ and, when $\alpha_{B,1}\ne\alpha_{B,2}$, also $\gamma^B\geq\gamma_1^B$.'
+    claim: Assembly of gamma^B.
+    status: verified
+    method: reading
+    note: 'Same omission as in P5: for (c2) gamma^B must also be at least max(gamma^B_2, gamma^B_3). See: P5/F1.'
+  - id: 14
+    locator: 'Interpretation (editorial note in theory.md): "The proof chooses a sufficient positive cost cutoff $\Delta^B$ small enough ..."'
+    claim: Reading of the quantifiers of (c2).
+    status: verified
+    method: reading
+    note: Agrees with steps 9-12 and the fixed-market interpretation; it does not say what Delta^B depends on (step 9 does).
+findings: []
+numerical:
+  command: python numerics/run.py -k P6   (read from verification/2026-11-22_claude-opus-5-5-b/logs/report_P6.md)
+  direct: "4/4 passed"
+  supporting: "6/6 passed"
+  assessment: >-
+    P6.a: Pi^S_B exactly constant and Pi^N_B strictly increasing at the top rungs (strict increase is true for every
+    gamma, step 2). P6.b: strict gains at every node at the top rungs. P6.c1: 66 points with unequal shares, strict
+    sign at every theta node at the top rungs. P6.c2: points are selected by P6_SIGN_AT_THETA_ZERO > 0, the bracket at
+    the actual share alpha_{A,2}. That set contains every market covered by the proof's sufficient condition (bracket
+    at abar > 0) and more (step 12), so the check tests the conclusion on a superset of the markets the cutoff
+    guarantees; the docstring's phrase "which is the cost condition" is loose on this point but the test is correct.
+    18 sample points plus 90 further points; at the top rungs, positive at 0, negative at 1, pattern "+-" with zeros
+    skipped (the weak "<=" on [theta^B, 1] needs nothing more). The 126 sample points with a negative bracket all
+    show "-", consistent with step 9. Each check tests the part it names.
+  own_checks:
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/shared_profit_polys.py
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/P6_symbolic_steps.py
+not_checked:
+  - A Delta^B common across beta or prices is not claimed and does not exist (step 9); not pursued further.

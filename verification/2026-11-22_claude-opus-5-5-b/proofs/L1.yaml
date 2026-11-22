@@ -1,0 +1,142 @@
+id: L1
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    My context contained the user's global agent instructions and the index of the user's
+    auto-memory (four one-line entries: where the final LaTeX source of the paper lies outside
+    this repository, that the repository and its skill are written in English, that the
+    INFORMS site blocks automated fetches, and that a lean repository dynamic-competition-c2c/
+    already had a first fresh-agent verification run, next to an older full repository and a
+    skill folder). I opened none of those memory files, no other folder of verification/, and
+    nothing outside the repository root; I have no recollection of earlier audits of this paper.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Fix a period t in {1, 2}. Assume no C2C interaction (Z_{i,t} = 0), prices fixed with
+  p_{B,t} >= p_{A,t} >= (c_A/c_B) p_{B,t} (A11), 0 < c_A < c_B, c_i < p_{i,t} (I1), shares
+  alpha_{i,t} = 1/2 + beta (p_{j,t} - p_{i,t}) in (0, 1) (I2), theta in [0, 1], and seed demand
+  X_t >= 0 with cdf F on an interval support (bounded or not) with strictly positive density on
+  its interior (A3). Let zeta^0_{i,t} = F^{-1}(1 - c_i/p_{i,t}). Then the pair
+  y^0_{A,t} = (alpha_{A,t} + theta alpha_{B,t}) zeta^0_{A,t} - theta alpha_{B,t} zeta^0_{B,t},
+  y^0_{B,t} = alpha_{B,t} zeta^0_{B,t} is a Nash equilibrium of the game in which each retailer
+  chooses y_{i,t} >= 0 to maximise p_{i,t} E[min(D_{i,t}, y_{i,t})] - c_i y_{i,t}, and every
+  Nash equilibrium of that game equals this pair.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A7, A8, A9, A11, I1, I2]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: 'max_{y_{A,t}} p_{A,t} E[y_{A,t} \wedge D_{A,t}] - c_A y_{A,t} = (p_{A,t} - c_A) y_{A,t} - p_{A,t} E[y_{A,t} - D_{A,t}]^+'
+    claim: The single-period objective, using min(y, D) = y - (y - D)^+, with D_{A,t} = alpha_{A,t} X_t + theta [alpha_{B,t} X_t - y_{B,t}]^+.
+    status: verified
+    method: re-derivation
+    note: >-
+      Identity checked by hand; the demand is the Section 3 demand with Z = 0. The integrals
+      in (A.1) start at 0, so the proof takes X_t >= 0, which holds by the meaning of seed
+      demand (in force by context, not a new hypothesis).
+  - id: 2
+    locator: 'Retailer A''s profit is concave in y_{A,t} and its derivative w.r.t y_{A,t} is p_{A,t} - c_A - p_{A,t} Prob(D_{A,t} <= y_{A,t})'
+    claim: Concavity and the first-order derivative.
+    status: verified
+    method: re-derivation
+    note: >-
+      d/dy E(y - D)^+ = P(D <= y), which is nondecreasing in y, so the derivative is
+      nonincreasing and the objective concave. D_{A,t} is a strictly increasing continuous
+      function of X_t, so it has no atom and the derivative exists everywhere. Finite
+      differences of the payoff built from the demand system agree with the printed
+      derivative (benchmark case of shared_foc_kink_ordering.py, max error 6.1e-10 of the price).
+  - id: 3
+    locator: '(A.1)'
+    claim: Prob(D_{A,t} <= y_{A,t}) splits at X = y_{B,t}/alpha_{B,t} into the two indicator integrals.
+    status: verified
+    method: re-derivation
+    note: For X <= y_B/alpha_B retailer B is not out of stock and D_A = alpha_A X; beyond it D_A = (alpha_A + theta alpha_B) X - theta y_B. Derived by hand.
+  - id: 4
+    locator: 'If y_{A,t}/alpha_{A,t} >= y_{B,t}/alpha_{B,t}, ... F((y_{A,t}+theta y_{B,t})/(alpha_{A,t}+theta alpha_{B,t})) ... If y_{A,t}/alpha_{A,t} < y_{B,t}/alpha_{B,t}, ... F(y_{A,t}/alpha_{A,t})'
+    claim: The case split of (A.1).
+    status: verified
+    method: re-derivation
+    note: >-
+      w_A = (y_A + theta y_B)/(alpha_A + theta alpha_B) is a weighted mean of y_A/alpha_A and
+      y_B/alpha_B (weights alpha_A, theta alpha_B), so it lies between them for every theta in
+      [0, 1]; the indicator integrals then give F(w_A), respectively F(y_A/alpha_A). Derived by hand.
+  - id: 5
+    locator: '(A.2)'
+    claim: Best response of A, (alpha_A + theta alpha_B) zeta^0_A - theta y_B if y_B <= alpha_B zeta^0_A, else alpha_A zeta^0_A.
+    status: verified
+    method: re-derivation
+    note: >-
+      The cdf of D_A at y_A is continuous in y_A and equals F(y_B/alpha_B) at the kink. If
+      F(y_B/alpha_B) <= 1 - c_A/p_A, which under A3 is y_B <= alpha_B zeta^0_A (also when
+      y_B/alpha_B is outside the support), the root lies on the upper branch, w_A = zeta^0_A;
+      otherwise on the lower branch. zeta^0_A is interior to the support because
+      1 - c_A/p_A is in (0, 1) (I1), so F is strictly increasing there and the maximiser is
+      unique; it is >= alpha_A zeta^0_A >= 0. The two branches agree at y_B = alpha_B zeta^0_A.
+  - id: 6
+    locator: '(A.3) By analogous arguments, the best response of retailer B is'
+    claim: Best response of B, the mirror image of (A.2).
+    status: verified
+    method: re-derivation
+    note: Exchange the roles of A and B in steps 1 to 5.
+  - id: 7
+    locator: 'Since p_{B,t} c_A/c_B <= p_{A,t}, we have zeta^0_{A,t} >= zeta^0_{B,t}'
+    claim: A11 orders the fractiles.
+    status: verified
+    method: re-derivation
+    note: c_A/p_A <= c_B/p_B is the lower bound of A11; F^{-1} is increasing. Equality exactly when A11 binds.
+  - id: 8
+    locator: 'By combining (A.2) and (A.3), for each period t, there exists a unique Nash equilibrium'
+    claim: The best responses cross exactly once, at the stated pair.
+    status: verified
+    method: re-derivation
+    note: >-
+      Derivation mine. Existence: y_B = alpha_B zeta_B <= alpha_B zeta_A puts A on the upper
+      branch, giving the stated y_A >= alpha_A zeta_A >= alpha_A zeta_B, so B's best response is
+      alpha_B zeta_B (both branches of (A.3) give this when y_A = alpha_A zeta_B, which happens
+      only if zeta_A = zeta_B). Uniqueness: if y_B > alpha_B zeta_A, A plays alpha_A zeta_A >=
+      alpha_A zeta_B, and then B's response alpha_B zeta_B <= alpha_B zeta_A contradicts the case
+      (also at the boundary y_A = alpha_A zeta_B); if y_B <= alpha_B zeta_A, A's response is on
+      the upper branch and B's response returns the stated pair. Holds at A11 with equality,
+      theta = 0 and theta = 1.
+  - id: 9
+    locator: 'pi^0_{A,t} := (p_{A,t}-c_A) y^0_{A,t} - p_{A,t} E[L^0_{A,t}] ... L^0_{B,t} := [...]^+'
+    claim: Equilibrium profits, leftovers and sales.
+    status: verified
+    method: re-derivation
+    note: L^0_{i,t} = (y^0_{i,t} - D_{i,t})^+ at the equilibrium orders; substituted by hand. Not part of the statement.
+findings: []
+numerical:
+  command: python numerics/run.py -k L1 --report verification/2026-11-22_claude-opus-5-5-b/logs/report_L1.md
+  direct: "3/3 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    test_benchmark_equilibrium_of_lemma_1 (L1.eq) evaluates the claimed pair of
+    section4.claimed_benchmark (the printed formula; it checks that A's fractile is the higher one,
+    up to 1e-12 at A11 equality, where the two forms coincide) against payoffs built from
+    primitives.py with a global deviation search for both retailers, at 199 games under four
+    bounded laws including edge points (A11 equality, p_A = p_B, theta 0 and 1). The predicate
+    (no deviation gains more than 1e-8 mu, best response within 2e-5) is the numerical form of
+    "is a Nash equilibrium", for both retailers. The two scans (L1.unique) look for further fixed
+    points of BR_B o BR_A in the first-period and second-period benchmark games; they are scans,
+    as their docstrings say. The checks test the parts they name. Not covered by the checks:
+    laws with unbounded support, which A3 allows; my own script covers them.
+  own_checks:
+    - script: verification/2026-11-22_claude-opus-5-5-b/scripts/shared_eqlemmas_unbounded_support.py
+      result: >-
+        Benchmark (scenario 0) under exponential, lognormal and gamma laws (support [0, inf)),
+        36 games at random and edge points: largest relative gain from deviating 1.7e-16,
+        best responses within 2.5e-8 of the mean demand of the claim.
+    - script: verification/2026-11-22_claude-opus-5-5-b/scripts/shared_foc_kink_ordering.py
+      result: Finite differences of the benchmark payoff equal the derivative used in (A.1)-(A.3) (both regions), max error 6.1e-10 of the price, with the other scenarios.
+    - script: verification/2026-11-22_claude-opus-5-5-b/scripts/part1_primitives_and_claimed_sec4.py
+      result: claimed_benchmark equals the printed Lemma 1 at 3000 (point, period) pairs, 1500 rational A11 points (max difference 3.6e-16 of mu).
+not_checked:
+  - >-
+    The sentence after the lemma in Section 4 ("zeta^0_{A,t} > zeta^0_{B,t} because c_A < c_B") is
+    discussion text and out of scope; as an observation, its strict inequality fails where A11
+    binds (then the fractiles are equal), while the lemma's own claims hold there.

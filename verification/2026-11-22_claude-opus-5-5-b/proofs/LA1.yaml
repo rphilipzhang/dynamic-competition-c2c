@@ -1,0 +1,422 @@
+id: LA1
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    No earlier audit of this paper was read, and no other folder of verification/ was opened. The session
+    context contained the user's general working instructions (an AGENTS.md outside the repository) and a
+    four-line auto-memory index naming where the paper's LaTeX source is kept outside the repository, that the
+    repository and its skill are written in English, that the INFORMS site blocks automated fetches, and that a
+    first fresh-agent verification run had been done on this repository layout (no findings or results). The
+    orchestrator's brief for this run listed points to examine (not conclusions).
+verdict: sound_with_gaps
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A5, A7-A10, A12 and I1 (Scenario S, uniform seed demand on [mu - sigma, mu + sigma], rho = 1,
+  prices in [p_lo, p_hi] with p_lo > c_B and beta < 1/(2(p_hi - p_lo))). (a) There is gamma_0 < oo, depending
+  on the market but not on the first-period prices p_1 in P = [p_lo, p_hi]^2 or on theta in [0, 1], such that for
+  every gamma > gamma_0, every p_1 in P and every theta in [0, 1], and for every selection of second-period
+  equilibria at the sales states, the first-period inventory subgame has exactly one pure Nash equilibrium,
+  y_A = (alpha_A + theta alpha_B) zeta_A - theta alpha_B zeta_B and y_B = alpha_B zeta_B with
+  zeta_i = F^{-1}(1 - c_i/(p_{i,1} + gamma (p_hi - c_i))). (b) For every sales state with R_A > 0 and R_B > 0
+  there is gamma_1(R) such that for gamma > gamma_1(R) the second-period price game has exactly one equilibrium,
+  (p_hi, p_hi); and for every gamma > 0, every second-period price pair in P and every sales state, the
+  second-period inventory subgame has exactly one equilibrium, y_i = y^0_{i,2} + gamma R_i.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A7, A8, A9, A10, A12, A14, I1]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: 'Following analogous arguments in Lemmas 2--3 for both p_{A,2} >= (c_A/c_B) p_{B,2} and p_{A,2} < (c_A/c_B) p_{B,2}'
+    claim: In each scenario the second-period inventory subgame has a unique equilibrium, the benchmark orders shifted by the C2C demand Z_i; orders below Z_i are excluded because p_{i,2} > c_i.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation. With ybar_i = y_i - Z_i, y_i ^ D_i = Z_i + ybar_i ^ (alpha_i X + theta(alpha_j X - ybar_j)^+),
+      so the payoff is the benchmark payoff in ybar_i plus (p_i - c_i) Z_i; for ybar_i < 0 the marginal profit is
+      p_i - c_i > 0, so such orders are dominated. The benchmark game is symmetric in the labels, so Lemma 1 and its
+      mirror image give the unique equilibrium for either fractile ordering (A11 is not needed). The fractiles are
+      interior because p_{i,2} >= p_lo > c_B > c_i > 0. Checks test_second_period_inventory_equilibrium_at_any_price_pair[S]
+      and [N] pass, with 25 of 100 points at which retailer B has the higher fractile.
+  - id: 2
+    locator: 'The second-period profit''s derivative is \partial \pi^0_{i,2}/\partial p_{i,2} + \gamma R^S_{i,1}'
+    claim: In Scenario S the second-period payoff of retailer i is pi^0_i(p_2) + (p_{i,2} - c_i) gamma R_i, with own-price derivative as stated.
+    status: verified
+    method: re-derivation
+    note: >-
+      From step 1 with Z_i = gamma R_i. The derivative exists everywhere on the box: pi^0_i is C^1 across the
+      fractile switch c_A/p_A = c_B/p_B (envelope argument: at the switch the rival-order effect dPi_i/dy_j vanishes
+      because retailer i stocks out whenever the rival's own demand exceeds the rival's stock). Script
+      LA1_joint_proof_steps.py section E: one-sided first derivatives agree to 2.5e-8 (finite-difference level) at 40
+      switch points, while one-sided second derivatives differ by up to 0.096.
+  - id: 3
+    locator: 'V_i(R_{A,1},R_{B,1}) is bounded between \gamma(\overline{p}-c_i)R^S_{i,1} and \gamma(\overline{p}-c_i)R^S_{i,1}+C, uniformly over sales states and first-period equilibrium selections'
+    claim: Uniform two-sided bound on the second-period equilibrium profit over all sales states.
+    status: gap
+    method: re-derivation
+    note: >-
+      The bound itself holds for any second-period equilibrium, mixed included: deviating to p_hi gives at least
+      pi^0_i(p_hi, .) + gamma (p_hi - c_i) R_i >= gamma (p_hi - c_i) R_i because pi^0_i >= 0, and every payoff is at most
+      sup pi^0_i + gamma (p_hi - c_i) R_i. The proof does not say that a second-period price equilibrium exists at
+      sales states where gamma R_i is small, where the price game need not have a pure equilibrium, and the
+      selection that matters is that of second-period equilibria, not first-period ones. See finding F1.
+    repair: >-
+      The second-period payoffs pi^0_i(p_i, p_j) + (p_i - c_i) Z_i are continuous on the compact box (the two forms of
+      Lemma 1 coincide at the switch, so the benchmark orders and profits are continuous), so Glicksberg's theorem
+      gives a mixed equilibrium at every sales state. The bound holds for every such equilibrium and every
+      (measurable) selection, which is all that steps 4, 17 and 20 use.
+  - id: 4
+    locator: 'let \delta :=[1/2-\beta(\overline{p}-\underline{p})](\mu-\sigma)/2>0. Then, y_{i,1} below \delta is dominated by 2\delta'
+    claim: An order below delta is strictly dominated by 2 delta for gamma large, uniformly in the rival's order.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation. delta > 0 by A12 and mu > sigma. Every first-period demand is at least alpha_{i,1}(mu - sigma)
+      >= 2 delta (script section B: smallest ratio 1.0003 over 20,000 points), so all units up to 2 delta sell and
+      R_i = y_i for y_i <= 2 delta. By step 3 the gain from 2 delta over y_i < delta is at least
+      [p_{i,1} - c_i + gamma (p_hi - c_i)](2 delta - y_i) - C > [p_{i,1} - c_i + gamma (p_hi - c_i)] delta - C > 0 once
+      gamma > C/((p_hi - c_i) delta), a threshold uniform in p_1, theta and the rival's order.
+  - id: 5
+    locator: 'Moreover, y_{i,1} above \mu+\sigma is also dominated.'
+    claim: Orders above mu + sigma are strictly dominated by mu + sigma.
+    status: verified
+    method: re-derivation
+    note: D_i <= X <= mu + sigma, so above mu + sigma both retailers' sales are unchanged and only the cost rises.
+  - id: 6
+    locator: 'Therefore, on [\delta,\mu+\sigma]^2, all R^S_{i,1}\geq\delta>0, making ... so (\overline{p},\overline{p}) is the unique second-period pricing equilibrium.'
+    claim: On the square every realized sales state has R_i >= delta, and p_hi is then strictly dominant for both retailers in period 2.
+    status: verified
+    method: re-derivation
+    note: >-
+      R_i >= min(alpha_i X, y_i) >= min(2 delta, delta). With L_i = max over the box of the negative part of
+      d pi^0_i/d p_i (finite, step 2), gamma delta > L_i makes the payoff strictly increasing in p_i for every rival
+      price, so (p_hi, p_hi) is the unique equilibrium, mixed equilibria included. The threshold is uniform. The same
+      argument with delta replaced by min(R_A, R_B) gives the first sentence of Lemma A.1(b) for any given R > 0.
+      Check test_lemma_a1b_upper_bound_is_the_unique_second_period_price_equilibrium passes (all 30 markets from gamma = 10).
+  - id: 7
+    locator: 'for sufficiently large \gamma we have \gamma\overline p(c_B-c_A)\ge c_A\overline p-c_B\underline p\ge c_Ap_{B,1}-c_Bp_{A,1}'
+    claim: For gamma >= (c_A p_hi - c_B p_lo)/(p_hi (c_B - c_A)) the Scenario S critical ratios satisfy zeta^S_A >= zeta^S_B on all of P.
+    status: verified
+    method: symbolic
+    note: >-
+      Cross-multiplying c_A/(p_A + gamma(p_hi - c_A)) <= c_B/(p_B + gamma(p_hi - c_B)) gives exactly
+      c_A p_B - c_B p_A <= gamma p_hi (c_B - c_A); the second inequality uses p_B <= p_hi, p_A >= p_lo. This replaces
+      A11 where Lemma 2's equilibrium form is used (roadmap point 1). Script section C: no violation above the
+      threshold on 5,000 markets x 21 x 21 prices; at 0.99 times the threshold the ordering fails at the corner
+      (p_lo, p_hi) in all 2,240 markets with a positive threshold, so the threshold is sharp.
+  - id: 8
+    locator: 'The analysis for the first-period inventory subgame follows analogous arguments in Lemma 2.'
+    claim: The first-period inventory subgame of Scenario S has the unique pure equilibrium of Lemma 2 with p_{i,2} = p_hi and rho = 1.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation. On [delta, mu + sigma]^2 the continuation is exactly pi^0_i(p_hi, p_hi) + gamma (p_hi - c_i) R_i at
+      every realization (step 6), so each payoff is (A.8)/(A.10) with p_{i,2} = p_hi. Lemma 2's best replies (A.9),
+      (A.11) lie in (alpha_i(mu - sigma), mu + sigma], inside the square, and orders outside the square are strictly
+      dominated (steps 4, 5), so they are the true best replies to rival orders in the square. With step 7 in place of
+      A11 the best replies cross once, at the stated pair, and every equilibrium lies in the square. Lemma 2 is applied
+      with its hypotheses other than A11 satisfied (I1 margins: p_{i,1} >= p_lo > c_i). Checks
+      test_lemma_a1a_first_period_inventory_equilibrium_of_scenario_s and the iteration probe pass.
+  - id: 9
+    locator: 'Retailer i''s 2nd-period profit is \pi_{i,2}^0+\gamma R_1\alpha_{i,2}(p_{i,2}-c_i)'
+    claim: Scenario N second-period payoff.
+    status: verified
+    method: re-derivation
+    note: Step 1 with Z_i = alpha_{i,2} gamma R_1.
+  - id: 10
+    locator: 'because R_1 is lower bounded by 2 \delta'
+    claim: Total first-period sales are bounded away from zero on the relevant states, so gamma R_1 is large.
+    status: verified
+    method: re-derivation
+    note: >-
+      A forward reference. Steps 20 and 21 show that every candidate equilibrium has y_j > alpha_j(mu - sigma) >= 2 delta
+      for both retailers, so at every state reachable by a unilateral deviation R_1 >= R_j >= 2 delta; the strict
+      concavity argument (step 24) uses only R_1 >= delta. Either constant serves.
+  - id: 11
+    locator: 'The derivative \partial \pi_{i,2}^0/ \partial p_{i,2} is M-Lipschitz continuous'
+    claim: The price gradient of pi^0_i is Lipschitz on the box.
+    status: verified
+    method: numerical
+    note: >-
+      Asserted without derivation; my derivation: pi^0_i is a rational function of the prices on each side of the
+      fractile switch (uniform demand, kinks inside the support), and C^1 across it (step 2), so its gradient is
+      piecewise smooth and continuous, hence Lipschitz in (p_A, p_B) jointly; the cross bound is needed for step 13.
+      Script section E shows the second derivative jumps at the switch, so the function is C^{1,1} and not C^2 there.
+  - id: 12
+    locator: 'for sufficiently large \gamma R_1, the profit ... has decreasing margin in p_{i,2}, which ensures the existence and uniqueness of the retailer''s best response'
+    claim: For gamma R_1 > M/(2 beta) the payoff is strictly concave in the own price.
+    status: verified
+    method: re-derivation
+    note: The second own-price derivative of gamma R_1 alpha_i (p_i - c_i) is -2 beta gamma R_1; with step 11 the marginal payoff is strictly decreasing.
+  - id: 13
+    locator: 'B_{i,2}(p_{j,2}) is also shown to be Lipschitz with bound \frac{\beta \gamma R_1 + M}{2\beta \gamma R_1 - M} < 1 for large \gamma R_1. Therefore, Banach''s theorem'
+    claim: The constrained best replies are contractions, so the price equilibrium is unique.
+    status: verified
+    method: re-derivation
+    note: >-
+      The cross derivative of gamma R_1 alpha_i(p_i - c_i) is beta gamma R_1; with |d2 pi^0| <= M the constrained maximiser
+      of a payoff whose marginal is strongly decreasing (modulus 2 beta gamma R_1 - M) and Lipschitz in the rival price
+      (constant beta gamma R_1 + M) is Lipschitz with their ratio, which is < 1 iff beta gamma R_1 > 2M. Banach on the box
+      in the max norm gives one pure equilibrium; strict concavity makes every best reply to a mixed strategy pure, so
+      there is no other equilibrium.
+  - id: 14
+    locator: 'Divided by \gamma R_1, the second-period profit converges uniformly to \alpha_{i,2} (p_{i,2} - c_i), whose unique equilibrium (\widehat{p}_{A,2},\widehat{p}_{B,2}) is interior'
+    claim: The limit game has the unique interior equilibrium p^_{i,2} = 1/(2 beta) + (2 c_i + c_j)/3; the actual equilibrium lies near it and satisfies the stated first-order equalities.
+    status: verified
+    method: symbolic
+    note: >-
+      The FOC 1/2 + beta(p_j - 2 p_i + c_i) = 0 gives p^_{i,2}. Interiority uses A13: p_lo < p^_{A,2} < p^_{B,2} < p^_{B,1} < p_hi
+      (script section A: all 50,000 edge-sampled admissible markets; SymPy p^_{i,1} - p^_{i,2} = sigma(2c_i + c_j)/(3 mu) > 0).
+      The limit game has slope-1/2 best replies, so its equilibrium is unique; uniform convergence of the scaled payoffs
+      (uniform in theta) and compactness give convergence of the unique equilibrium, hence interiority and the FOCs.
+  - id: 15
+    locator: 'where c_A/\widehat p_{A,2}<c_B/\widehat p_{B,2}. Furthermore, ... nonsingular Jacobian \beta(-2 1; 1 -2), the analytic implicit function theorem gives p_{i,2}^N=\widehat p_{i,2}+O((\gamma R_{1})^{-1})'
+    claim: Price expansion of the second-period equilibrium of Scenario N.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy: c_A p^_B - c_B p^_A = (c_A - c_B)(2 beta c_A + 2 beta c_B + 3)/(6 beta) < 0, so p^ lies strictly inside the
+      region where retailer A has the higher benchmark fractile; there pi^0 is a rational, hence analytic, function of the
+      prices, which is what the analytic implicit function theorem needs. The Jacobian has determinant 3 beta^2. The
+      remainder is uniform in theta because the Jacobian does not depend on theta and pi^0 is analytic jointly in
+      (p, theta). Check test_lemma_a2b_second_period_prices_approach_the_limit_prices_at_rate_one_over_gamma: observed order 1.00.
+  - id: 16
+    locator: 'V_i(R_{1})=\gamma\nu_i R_{1}+K_i(\theta)+e_i(R_{1}), ... e_i(R_1) = O_{C^4(R_1;[r_0,\mu+\sigma])}(\gamma^{-1})'
+    claim: Expansion of the second-period equilibrium profit in the state, with a remainder small in C^4.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation. With s = 1/(gamma R_1), V_i = gamma R_1 g_i(p*(s)) + pi^0_i(p*(s)) with g_i = alpha_i(p_i - c_i),
+      g_i(p^) = nu_i, and p*(s) analytic near s = 0. Hence V_i = gamma nu_i R_1 + K_i + E_i(s) with
+      K_i = pi^0_i(p^) + grad g_i(p^) . p*'(0) (independent of R_1 and p_1) and E_i(s) = O(s) analytic. Every derivative of
+      s(R_1) = 1/(gamma R_1) is O(1/gamma) on [r_0, mu + sigma], so by Faa di Bruno every derivative of e_i(R_1) = E_i(s(R_1))
+      up to any order is O(1/gamma), uniformly in theta. Script P9_profit_expansion_fixed_theta.py reads K_i from the
+      model's tabulated price game and confirms g_i(0) = nu_i to 1e-9.
+  - id: 17
+    locator: 'When \gamma R_1 is bounded, compactness of the price set bounds both the static payoff and \gamma \nu_i R_1; hence, |V_i(R_{1}) - \gamma\nu_i R_{1}| \leq C'
+    claim: Uniform bound on V_i - gamma nu_i R_1 over all states.
+    status: verified
+    method: re-derivation
+    note: >-
+      For gamma R_1 >= K_0 (the analytic regime) it follows from step 16; for gamma R_1 < K_0 every payoff is between 0 and
+      sup pi^0 + K_0 max alpha(p - c), and gamma nu_i R_1 < nu_i K_0. As in step 3 this presupposes a (possibly mixed)
+      second-period equilibrium at states with small gamma R_1 (see F1).
+  - id: 18
+    locator: '\partial V_i(R_{1}) = \gamma\nu_i + O(\gamma^{-1}) > 0 and |\partial^2 V_i(R_{1})| \leq C_{r_0} /\gamma > 0'
+    claim: Derivative bounds on V_i for R_1 >= r_0.
+    status: verified
+    method: re-derivation
+    note: From step 16. The trailing '> 0' after C_{r_0}/gamma is a slip (finding F2).
+  - id: 19
+    locator: 'Retailer i''s total profit is p_{i,1}\mathbb{E} R_{i,1}-c_i y_{i,1}+\mathbb{E} V_i(R_1). Inventories above \mu + \sigma are dominated.'
+    claim: First-period payoff in Scenario N; large orders dominated.
+    status: verified
+    method: re-derivation
+    note: As step 5.
+  - id: 20
+    locator: 'we still can prove at least one y_{i,1} \geq \delta by contradiction'
+    claim: No equilibrium has both orders below delta.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation. If both y < delta, both retailers stock out at every demand, R_1 = y_A + y_B. Raising y_i to 2 delta
+      raises R_i by 2 delta - y_i > delta and leaves R_j = y_j, so the gain is at least
+      (p_{i,1} - c_i + gamma nu_i) delta - 2C > 0 for gamma large by step 17. The domination is weaker than in Scenario S
+      (one more unit of i can displace rival sales when theta = 1), which is why only one order is bounded first.
+  - id: 21
+    locator: 'by \partial V_i(R_{1}) = \gamma\nu_i + O(\gamma^{-1}) > 0, we can exclude y_{i,1}\leq\alpha_{i,1} (\mu - \sigma)'
+    claim: Each retailer's best reply to a rival order of at least delta exceeds alpha_{i,1}(mu - sigma).
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation. If y_j >= delta then R_1 >= delta at every demand. For y_i < alpha_i(mu - sigma) every unit sells and
+      dR_1/dy_i = 1 - theta Prob(j not stocked out) in [0, 1], so the marginal profit is at least p_{i,1} - c_i > 0 (I1/A12).
+      Applied to the retailer with y_j >= delta (step 20) and then to the other, it gives both orders above
+      alpha_i(mu - sigma) >= 2 delta.
+  - id: 22
+    locator: 'the density f_{D_{i,1}}(x) is at least 1/(2\sigma) on its support. Consequently, ... \leq - \frac{p_{i,1}}{2 \sigma}'
+    claim: Strong concavity of first-period revenue in the own order on the support of D_i.
+    status: verified
+    method: re-derivation
+    note: D_i is increasing piecewise linear in X with slope alpha_i or alpha_i + theta alpha_j <= 1, so its density is at least 1/(2 sigma).
+  - id: 23
+    locator: 'R_1=\min\{X,y_{A,1}+y_{B,1},(\alpha_{A,1}+\theta\alpha_{B,1})X+(1-\theta)y_{B,1}, (\alpha_{B,1}+\theta\alpha_{A,1})X+(1-\theta)y_{A,1}\}'
+    claim: Min formula for total sales; concave, nondecreasing, slopes in [0, 1].
+    status: verified
+    method: numerical
+    note: >-
+      Script section D, 400,000 random points: max deviation from primitives.sales 7.1e-15. Concavity and slopes are immediate from the formula; derivation of the four cases by hand.
+  - id: 24
+    locator: 'on each affine piece of R_1 the second derivative of V_i(R_1) is ... \le C_\delta/\gamma. At each kink the slope of V_i(R_1) can only jump downward ... Hence V_i(R_1)-C_\delta y_{i,1}^2/(2\gamma) is concave'
+    claim: Approximate concavity of the continuation term in the own order.
+    status: verified
+    method: re-derivation
+    note: With R_1 >= R_j >= delta for a rival order in [delta, mu + sigma], step 18 bounds V_i'' and V_i' > 0; R_1 concave in y_i gives downward slope jumps.
+  - id: 25
+    locator: 'Taking expectations and using -p_{i,1}/(2\sigma)+C_\delta/\gamma<0 gives strict concavity ... the marginal total profit is positive below this support and equals - c_i above it. Hence, each retailer''s best response is unique'
+    claim: Unique best replies in the first-period inventory subgame.
+    status: verified
+    method: re-derivation
+    note: Below the support all units sell and dR_1/dy_i is in [0, 1] with V' > 0; above it nothing changes but the cost. Threshold gamma > 2 sigma C_delta / p_lo, uniform.
+  - id: 26
+    locator: 'Brouwer''s theorem gives the existence of the inventory equilibrium; the preceding bounds exclude equilibria outside this square.'
+    claim: Existence of an inventory equilibrium, all equilibria in the square.
+    status: verified
+    method: re-derivation
+    note: Best replies map [delta, mu + sigma] into (alpha_i(mu - sigma), mu + sigma]; they are continuous by Berge's theorem (unique maximiser of a jointly continuous payoff). Steps 19-21 locate every equilibrium in the square.
+  - id: 27
+    locator: 'We can also prove every equilibrium satisfies y_{A,1}/\alpha_{A,1} > y_{B,1}/\alpha_{B,1}. ... \to c_B\nu_A/\nu_B>c_A >0'
+    claim: The ordering of the first-period orders (the analogue of the fractile ordering) holds at every equilibrium.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation (roadmap point 1). If y_A/alpha_A <= y_B/alpha_B, z_B is a weighted average of the two ratios; B stocks
+      out exactly when X > z_B, and then A stocks out on its own demand, so one more unit of B raises R_1 by one exactly
+      when X > z_B. B's payoff is differentiable at its interior optimum (also at y_A/alpha_A = y_B/alpha_B, where the
+      intermediate interval has measure zero), so c_B = (p_B + V_B'(Q)) Prob(X > z_B) holds with equality. A's right
+      derivative is at least (p_A + V_A'(Q)) Prob(X > z_B) - c_A (on y_A/alpha_A < X < z_B its extra unit adds
+      p_A + (1 - theta) V_A' >= 0), which equals c_B (p_A + V_A')/(p_B + V_B') - c_A -> c_B nu_A/nu_B - c_A > 0
+      uniformly (c_A/nu_A < c_B/nu_B, step 14 notation). A's order is then not optimal.
+  - id: 28
+    locator: 'Differentiating firms'' profits \Pi_A and \Pi_B generates two equations'
+    claim: The exact first-order conditions in the region mu - sigma < s < z < mu + sigma.
+    status: verified
+    method: numerical
+    note: >-
+      Derived by hand (A stocks out iff X > z; B's extra unit raises R_1 by 1 - theta on (s, z) and by 1 above z) and
+      compared with the model's marginal profits (section5.marginal_profits, built from primitives.sales): script section G,
+      14 order pairs, relative difference at most 1.3e-18. 'Every equilibrium satisfies mu - sigma < s < z < mu + sigma'
+      follows from steps 21, 27 and the negative marginal profit -c_A as z -> mu + sigma.
+  - id: 29
+    locator: '(A.21)'
+    claim: Change of variables to q, t and the remainder r with the integral over lambda.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy (script section F): R_1 = (alpha_A + theta alpha_B) x + (1 - theta) y_B equals s at x = s (because
+      alpha_A + alpha_B = 1) and Q at x = z; substituting x = s + lambda (z - s) gives the lambda integral exactly; B's FOC
+      equals theta gamma nu_B q + [p_B + gamma (1 - theta) nu_B] t + r - c_B identically.
+  - id: 30
+    locator: 'Using (A.21), q=O(\gamma^{-1}) and t=O([1+\gamma(1-\theta)]^{-1})'
+    claim: Size of the stockout probabilities.
+    status: verified
+    method: re-derivation
+    note: From the first line q = c_A/(p_A + gamma nu_A + e_A') ; in the second theta gamma nu_B q and r are O(1) and p_B + gamma(1 - theta) nu_B >= min(p_lo, nu_B)(1 + gamma(1 - theta)).
+  - id: 31
+    locator: 'Its diagonal entries are at least \nu_A and \min\{\underline{p},\nu_B\}, so its inverse is uniformly bounded.'
+    claim: Jacobian of the linear part in (u, v) and a uniform bound on its inverse.
+    status: verified
+    method: symbolic
+    note: SymPy reproduces the lower-triangular Jacobian; (p_B + G nu_B)/(1 + G) is a weighted average of p_B and nu_B, so it is at least min(p_lo, nu_B); the off-diagonal entry is at most nu_B.
+  - id: 32
+    locator: 'both two error terms in (A.21), together with their second-order partial derivatives in (u, v, p_{A, 1}, p_{B,1}) are O (\gamma^{-2}) on a convex region containing all candidate equilibria'
+    claim: The remainders of (A.21) are O(gamma^-2) in C^2 in (u, v, p), uniformly in theta.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation (roadmap point 4). With q = u/gamma, t = v/(1 + gamma(1 - theta)): dQ/du = O(1/gamma), dQ/dv = O(1/gamma)
+      because (1 - theta)/(1 + gamma(1 - theta)) <= 1/gamma, dQ/dp = -beta(1 - theta)(z - s) = O(1/gamma); ds/dv is O(1)
+      when gamma(1 - theta) is bounded, but it multiplies (1 - theta)(t - q) = O(1/gamma), whose own (u, v) derivatives are
+      O(1/gamma). With e_B' in O_{C^3}(1/gamma) (from step 16) each term of E_A = (u/gamma) e_A'(Q) and of r is a product
+      of two O(1/gamma) factors with bounded derivatives up to order two. All candidates satisfy u = u^0 + O(gamma^-2)
+      directly from the first line and then v = v^0 + O(gamma^-2); the O(gamma^-2) box around (u^0, v^0) is convex and
+      keeps t - q > 0, because t^0 - q^0 >= c/(p_hi + gamma nu_B).
+  - id: 33
+    locator: '\| (u - \tilde{u}, v - \tilde{v}) \| \leq \frac{C}{\gamma^2} \| (u - \tilde{u}, v - \tilde{v}) \|'
+    claim: Uniqueness of the first-period inventory equilibrium of Scenario N.
+    status: verified
+    method: re-derivation
+    note: Subtracting the two systems, J (w - w~) = -(E(w) - E(w~)); the mean value inequality on the convex box and step 31 give the display.
+  - id: 34
+    locator: 'q^0=\frac{c_A}{p_{A,1}+\gamma\nu_A} and t^0 = ... ; u - u^0 = ... and v - v^0 = ...'
+    claim: The approximate solution and the exact residual formulas.
+    status: verified
+    method: symbolic
+    note: SymPy solves the linear system (script section F); the two residual formulas follow by subtracting it from (A.21), by hand.
+  - id: 35
+    locator: 'permits implicit differentiation and shows that these terms remain O_{C^2(p_1;\mathcal{P})}(\gamma^{-2})'
+    claim: u - u^0 and v - v^0 are O(gamma^-2) together with their first two price derivatives, uniformly in theta.
+    status: verified
+    method: numerical
+    note: >-
+      Derivation: differentiating J(p) dw = -E(w(p), p) in p, with dw = O(gamma^-2), dE = O(gamma^-2), dJ/dp bounded and
+      dw^0/dp bounded uniformly in theta, gives the first and, once more, the second derivatives. Script
+      LA2_remainder_bounds.py: gamma^2 times the inventory remainder and its first price differences stay bounded on
+      gamma = 1e2, 1e3, 1e4 at theta = 0, 0.5, 1 - 10/gamma, 1 - 1/gamma, 1 (largest 0.0081; growth of the max over theta
+      from 1e3 to 1e4 between 0.98 and 1.33); gamma^2 times the second difference in p_B grows by 0.99 to 1.02 from 1e3 to
+      3e3 where it is above its rounding floor.
+  - id: 36
+    locator: '\Pi_i^N(p_{A,1},p_{B,1}) =\gamma\nu_i\mu+K_i(\theta)+\alpha_{i,1}(\mu p_{i,1}-c_i(\mu + \sigma))+O_{C^2(p_1;\mathcal{P})}(\gamma^{-1}), for each fixed \theta<1'
+    claim: Expansion of the reduced first-period payoff of Scenario N, used by Proposition 9.
+    status: verified
+    method: numerical
+    note: >-
+      My derivation. E R_1 = mu - (1 - theta) alpha_B sigma t^2 - (alpha_A + theta alpha_B) sigma q^2 (script section H,
+      error 4e-16), so gamma nu_i E R_1 = gamma nu_i mu - O(1/(1 + gamma(1 - theta))) - O(1/gamma); p_i E R_i - c_i y_i
+      tends to alpha_i(mu p_i - c_i(mu + sigma)) at rate O(t) = O(1/(1 + gamma(1 - theta))); E e_i = O(1/gamma); the price
+      derivatives behave alike. The rate is O(1/gamma) only for fixed theta < 1, as the text says. Script
+      P9_profit_expansion_fixed_theta.py: gamma times the remainder stays between 0.66 and 21.4 in absolute value (and
+      gamma times the own-price derivative gap between 3.3 and 6.3) for theta = 0.5 at gamma = 1e2, 1e3, 1e4, while at theta = 1 and 1 - 1/gamma it
+      grows tenfold per decade (O(1) remainder), so the restriction to fixed theta < 1 is needed.
+findings:
+  - id: F1
+    severity: minor
+    scope: proof
+    locator: 'uniformly over sales states and first-period equilibrium selections; When \gamma R_1 is bounded, ... |V_i(R_{1}) - \gamma\nu_i R_{1}| \leq C'
+    description: >-
+      The joint proof bounds the continuation value V_i at every first-period sales state, including states where gamma R_i
+      (Scenario S) or gamma R_1 (Scenario N) is small, but does not show that the second-period price game has an
+      equilibrium there; at those states the payoff need not be quasi-concave and a pure equilibrium is not guaranteed.
+      The selection that the bound must be uniform over is that of second-period equilibria, while the text says
+      first-period equilibrium selections. The first-period subgames, and the equilibrium profile of Proposition 9, are
+      defined only once such continuation equilibria exist.
+    suggested_fix: >-
+      Add one sentence: the second-period price game has continuous payoffs on the compact box, so it has a (possibly mixed)
+      equilibrium at every sales state (Glicksberg); the bounds hold for every such equilibrium and every measurable
+      selection. Replace 'first-period equilibrium selections' by 'second-period equilibrium selections'.
+    evidence: >-
+      Steps 3 and 17. pi^0_i is continuous on the box, including at the fractile switch where both forms of Lemma 1 give
+      y_i = alpha_i zeta (script section E shows it is even C^1 there). For a mixed equilibrium, deviating to p_hi gives
+      V_i >= gamma (p_hi - c_i) R_i in Scenario S and V_i >= 0 in Scenario N, and V_i <= sup pi^0_i + gamma (p_hi - c_i) R_i,
+      resp. sup pi^0_i + gamma R_1 max alpha(p - c); the domination arguments of steps 4 and 20 use nothing else. On the
+      states that the equilibria and their unilateral deviations reach, the continuation equilibrium is unique (steps 6, 13).
+  - id: F2
+    severity: editorial
+    scope: proof
+    locator: '|\partial^2 V_i(R_{1})| \leq C_{r_0} /\gamma > 0'
+    description: The trailing '> 0' attaches a positivity claim to a bound on the absolute value of the second derivative.
+    suggested_fix: Write |d^2 V_i(R_1)/dR_1^2| <= C_{r_0}/gamma for R_1 >= r_0 > 0.
+    evidence: Step 18; the intended statement is the bound, and it is what step 24 uses.
+  - id: F3
+    severity: editorial
+    scope: theory.md
+    locator: theory.md LA1, Hypotheses line
+    description: >-
+      The Hypotheses line of LA1 lists A13, which the Scenario S part of the joint proof does not use (the domination
+      constant uses A12, the ordering threshold uses A1 and I1; A13 enters only the Scenario N limit prices).
+    suggested_fix: Drop A13 from LA1's Hypotheses line, or note that it is listed because the proof is joint with LA2.
+    evidence: Steps 2-8 use no price-bound condition beyond A12; A13 is used in step 14 only.
+numerical:
+  command: python numerics/run.py -k LA1 --report verification/2026-11-22_claude-opus-5-5-b/logs/report_LA1.md
+  direct: "4/4 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    The four direct checks test what they name with the statement's predicates. LA1.a: at 30 markets the claimed pair is
+    confirmed by a deviation search over each whole order interval, by vanishing model marginal profits (the form is
+    exact), and with the continuation pinned at p_hi; it holds at all markets from gamma = 100 and fails at gamma = 1 at
+    some, and a best-response iteration from 60 starts returns to it. LA1.b: (p_hi, p_hi) is the only pure equilibrium of
+    a 61 x 61 grid game and survives continuous searches and iterations from five starts, from gamma = 10 at all 30
+    markets; the second-period inventory claim is checked at 100 price pairs, 25 of them with retailer B's fractile higher.
+    Both direct checks of (a) restrict starting and rival orders to the region where the continuation is pinned, which
+    the proof's domination argument covers. The checks probe a ladder of gamma and cannot establish a threshold.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/LA1_joint_proof_steps.py: notation facts, delta, the S ordering threshold, the R_1 formula, C^1 of pi^0 at the switch, (A.21) in SymPy, the FOC display against the model, E R_1 formula"
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/LA2_remainder_bounds.py: O(gamma^-2) remainders with first and second price derivatives, uniform in theta (step 35)"
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/P9_profit_expansion_fixed_theta.py: the final expansion of Pi_i^N and its theta dependence (step 36)"
+not_checked:
+  - The uniform-in-theta constants of steps 15, 16 and 32 are derived by a compactness and analyticity argument in outline, not written out with explicit constants.
+  - Measurability of the second-period equilibrium selection at states with small gamma R is assumed, not proved.

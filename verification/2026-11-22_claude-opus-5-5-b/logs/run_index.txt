@@ -1,0 +1,25 @@
+L1 exit=0 seconds=17
+L2 exit=0 seconds=26
+L3 exit=0 seconds=25
+LB1 exit=0 seconds=26
+L4 exit=0 seconds=39
+P1 exit=0 seconds=38
+P2 exit=0 seconds=46
+P3 exit=0 seconds=39
+P4 exit=0 seconds=38
+P5 exit=0 seconds=40
+P6 exit=0 seconds=40
+LA1 exit=0 seconds=10
+LA2 exit=0 seconds=18
+P7 exit=0 seconds=4
+P8 exit=0 seconds=9
+P9 exit=0 seconds=27
+F1 exit=0 seconds=3
+FB1 exit=0 seconds=3
+N1 exit=0 seconds=1
+N2 exit=0 seconds=2
+N3 exit=0 seconds=1
+N4 exit=0 seconds=2
+N5 exit=0 seconds=2
+N6 exit=0 seconds=26
+DONE

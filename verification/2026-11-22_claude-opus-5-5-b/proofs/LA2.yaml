@@ -1,0 +1,82 @@
+id: LA2
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/LA1.yaml: no earlier audit read and no other folder of verification/ opened; the context contained the
+    user's general instructions and a four-line auto-memory index about where the paper source is kept, the language of
+    the repository, an INFORMS fetch restriction and that a first fresh-agent run had been done (no results); the
+    orchestrator's brief listed points to examine.
+verdict: sound_with_gaps
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A4, A6-A10, A12, A13 and I1 (Scenario N). (a) There is gamma_0 < oo, depending on the market but not on
+  p_1 in P or theta in [0, 1], such that for every gamma > gamma_0 the first-period inventory subgame has exactly one
+  pure equilibrium, and y_A - [(alpha_A + theta alpha_B) zeta^N_A - theta alpha_B zeta^N_B] and y_B - alpha_B zeta^N_B are
+  bounded by C/gamma^2 with C independent of p_1 and theta, where zeta^N_A = F^{-1}(1 - c_A/(p_{A,1} + gamma nu_A)) and
+  zeta^N_B = F^{-1}(1 - [c_B - theta gamma nu_B c_A/(p_{A,1} + gamma nu_A)]/[p_{B,1} + (1 - theta) gamma nu_B]); the joint
+  proof also bounds the first two price derivatives of these remainders by C/gamma^2. (b) For every R_1 > 0 there is
+  gamma_1(R_1) such that for gamma > gamma_1 the second-period price game has exactly one equilibrium and
+  |p^N_{i,2}(R_1) - p^_{i,2}| <= C/(gamma R_1); for every gamma, every second-period price pair and every sales state the
+  second-period inventory subgame has exactly one equilibrium, y_i = y^0_{i,2} + gamma alpha_{i,2} R_1.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A6, A7, A8, A9, A10, A12, A13, A14, I1]
+unstated_hypotheses: []
+relies_on: []
+steps_in: LA1
+steps:
+  - id: 1
+    locator: 'Lemma A.2(a): y_{A,1}^N=(\alpha_{A,1}+\theta\alpha_{B,1})\zeta_{A,1}^N -\theta\alpha_{B,1}\zeta_{B,1}^N + O({\gamma^{-2}})'
+    claim: The (u, v) remainders of the joint proof translate into the O(gamma^-2) inventory remainders of the statement.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation. y_B = alpha_B s = alpha_B(mu + sigma - 2 sigma t), so y_B - alpha_B zeta^N_B = -2 sigma alpha_B (v - v^0)/(1 + gamma(1 - theta));
+      y_A + theta y_B = (alpha_A + theta alpha_B) z, so y_A - claim_A = -2 sigma (alpha_A + theta alpha_B)(u - u^0)/gamma - theta (y_B - claim_B).
+      With LA1 joint-proof steps 33-35 both are O_{C^2(p_1; P)}(gamma^-2) uniformly in theta, and O(gamma^-3) for fixed
+      theta < 1. Check test_lemma_a2a_first_period_inventory_equilibrium_of_scenario_n observes order 2.00 at theta = 1 and
+      2.7 to 3.0 at theta < 1; LA2_remainder_bounds.py gives the same picture with price derivatives.
+  - id: 2
+    locator: 'Lemma A.2(b): p^N_{i,2}(R^N_1)=\widehat p_{i,2}+O(\gamma^{-1})'
+    claim: Part (b) follows from the Scenario N price-subgame paragraph for a fixed R_1 > 0.
+    status: verified
+    method: re-derivation
+    note: LA1 steps 12-15 give uniqueness once gamma R_1 > 2M/beta and the expansion O(1/(gamma R_1)), which is O(1/gamma) for fixed R_1 > 0. The inventory sentence is LA1 step 1.
+  - id: 3
+    locator: 'theory.md LA2, Proof dependency line'
+    claim: The joint proof bounds the first-period inventory remainders and their first two price derivatives by O(gamma^-2) on P, uniformly in theta in [0, 1]; P8 uses this.
+    status: verified
+    method: reading
+    note: >-
+      The editorial note is correct. The proof states that u - u^0 and v - v^0 'remain O_{C^2(p_1;P)}(gamma^-2)', the
+      notation paragraph makes bounds uniform in p and theta unless specified otherwise, and step 1 transfers the bound
+      to the inventory remainders. The derivation is checked in LA1 steps 32-35. P8 uses the first-derivative part only.
+  - id: 4
+    locator: 'When \gamma R_1 is bounded, compactness of the price set bounds both the static payoff and \gamma \nu_i R_1'
+    claim: The uniform bound on V_i - gamma nu_i R_1, used to bound the first-period orders away from zero in Scenario N.
+    status: gap
+    method: re-derivation
+    note: 'see: LA1/F1. The bound presupposes a (possibly mixed) second-period equilibrium at states with small gamma R_1; LA1 steps 17 and 20 give the repair (Glicksberg), which is all this part of LA2 needs.'
+    repair: 'see: LA1/F1'
+findings: []
+numerical:
+  command: python numerics/run.py -k LA2 --report verification/2026-11-22_claude-opus-5-5-b/logs/report_LA2.md
+  direct: "5/5 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    The direct checks test the parts they name. LA2.a: the distance between the closed form and the model's equilibrium
+    (solved from the model's FOCs, confirmed by deviation searches) shrinks with observed order at least 1.99 from
+    gamma = 100, at theta = 0, 1 and 0.9 theta; a separate check holds gamma (1 - theta) fixed at eight levels up to 30 and
+    finds gamma^2 times the error flat in gamma (growth 0.97-1.01 per step), which tests the uniformity in theta that P8
+    needs; uniqueness is probed by iteration and by a fixed-point residual scan with one sign change, both restricted to
+    rival orders above a small floor d. LA2.b: the price equilibrium is unique on the ladder and approaches p^_{i,2} at
+    observed rate 1.00; the notation facts nu_A > nu_B > 0, c_A/nu_A < c_B/nu_B and interior limit prices are checked at
+    2,000 markets. The checks do not test derivatives of the remainder; LA2_remainder_bounds.py does.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/LA2_remainder_bounds.py: gamma^2 times the remainder and its first and second price differences, theta = 0, 0.5, 1 - 10/gamma, 1 - 1/gamma, 1"
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/LA1_joint_proof_steps.py: the joint-proof steps (see verification/2026-11-22_claude-opus-5-5-b/proofs/LA1.yaml)"
+not_checked:
+  - As in verification/2026-11-22_claude-opus-5-5-b/proofs/LA1.yaml, the uniform constants are derived in outline.

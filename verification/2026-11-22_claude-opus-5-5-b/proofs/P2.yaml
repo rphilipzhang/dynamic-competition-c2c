@@ -1,0 +1,110 @@
+id: P2
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml: the user's auto-memory index for this project and the parent project's AGENTS.md were
+    in context (no audit records, findings or verdicts); nothing outside the repository root or other
+    verification/ folders was read; the orchestrator's brief stated the Part 1 results and listed points worth
+    care.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A11, I1, I2. (a) For every admissible market and every gamma > 0, y^N_{B,1} is a nonincreasing
+  function of theta on [0,1], and y^0_{B,1}, y^S_{B,1} do not depend on theta. (b) For every admissible market,
+  every gamma > 0 and every theta in [0,1], y^0_{B,1} < y^N_{B,1} < y^S_{B,1}. (c) For every admissible market
+  and every theta in [0,1), there is gamma* > 0 (depending on theta and the market) such that
+  gamma -> y^S_{B,1} - y^N_{B,1} is nondecreasing on (0, gamma*] and nonincreasing on [gamma*, infinity).
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on:
+  - "Proof of P1, displays (A.18) and (A.19) (the theta-derivative of zeta^N_{B,1} and the sign of the derivative of its ratio)"
+steps:
+  - id: 1
+    locator: '(a). By Lemmas 1&2, $y^{0}_{B,1} = \alpha_{B,1} \zeta^0_{B,1}$ and $y^{S}_{B,1} = \alpha_{B,1} \zeta^S_{B,1}$ are both independent of $\theta$.'
+    claim: The benchmark and Scenario S orders of B do not contain theta.
+    status: verified
+    method: symbolic
+    note: d/dtheta of both closed forms is identically 0 (SymPy).
+  - id: 2
+    locator: 'By (A.18) and (A.19), we have $\frac{\partial y^{N}_{B,1}}{\partial \theta} = \alpha_{B,1} \frac{\partial \zeta^N_{B,1}}{\partial \theta} \leq 0$'
+    claim: y^N_{B,1} is nonincreasing in theta.
+    status: verified
+    method: symbolic
+    note: >-
+      d y^N_{B,1}/dtheta = -2 sigma alpha_{B,1} dr/dtheta (SymPy), and dr/dtheta = J (Q1 + gamma Q2)/(P^N_A den^2) > 0
+      (P1 record, step 4), so y^N_{B,1} is in fact strictly decreasing. The cited displays (A.18), (A.19) are the
+      intended ones (\ref-generated labels ineq:derybn, ineq:sbn).
+  - id: 3
+    locator: '(b). When $\gamma > 0$, $y^{0}_{B,1} < y^{N}_{B,1} < y^{S}_{B,1}$ holds if and only if (A.20)'
+    claim: The ordering of orders is equivalent to the reversed ordering of the ratios c_B/p_{B,1} > r(theta) > c_B/P^S_B.
+    status: verified
+    method: re-derivation
+    note: Each order is alpha_{B,1}(mu + sigma - 2 sigma t) with t the tail ratio; alpha_{B,1} > 0 (I2) and sigma > 0, so the orders are strictly decreasing in t.
+  - id: 4
+    locator: 'By (A.19), we have $\frac{c_B - \rho \alpha_{B,2} \gamma (p_{B,2}-c_B) \frac{c_A}{\ldots}}{p_{B,1} } \geq \ldots \geq \frac{c_B }{p_{B,1} + \rho \alpha_{B,2} \gamma (p_{B,2} -c_B)}$'
+    claim: r(1) >= r(theta) >= r(0).
+    status: verified
+    method: symbolic
+    note: r(0) = c_B/(p_{B,1} + J) and r(1) = (c_B - K)/p_{B,1} with K = J c_A/P^N_A, checked in SymPy; monotonicity of r from (A.19). In particular r(theta) >= r(0) > 0.
+  - id: 5
+    locator: 'since $\frac{c_B }{p_{B,1} } > \ldots$ and $\frac{c_B }{p_{B,1} + \rho \alpha_{B,2} \gamma (p_{B,2} -c_B)} > \frac{c_B}{p_{B,1} + \rho \gamma (p_{B,2} -c_B)}$'
+    claim: The outer inequalities are strict, so (A.20) holds for all theta.
+    status: verified
+    method: symbolic
+    note: c_B/p_{B,1} - r(1) = K/p_{B,1} > 0 and r(0) - c_B/P^S_B = c_B alpha_{A,2} gamma (p_{B,2}-c_B)/[(p_{B,1} + J) P^S_B] > 0 for gamma > 0 (SymPy identities).
+  - id: 6
+    locator: '(c). ... $\frac{\partial }{\partial \gamma}( y^{S}_{B,1} - y^{N}_{B,1} ) = 2(p_{B,2}-c_B)\alpha_{B,1} \sigma g_B^{SN}(\gamma)/[\ldots]$'
+    claim: Factorization of the gamma-derivative with a positive prefactor and a polynomial g_B^SN.
+    status: verified
+    method: symbolic
+    note: >-
+      I built g_B^SN as an explicit polynomial (quotient rule on r = Nr/(P^N_A den), division by p_{B,2} - c_B exact)
+      and checked the printed identity in exact rational arithmetic at 40 random admissible points (full symbolic
+      cancellation is slow). The third printed factor equals -(p_{B,1} + alpha_{B,2} gamma (1-theta)(p_{B,2}-c_B))
+      (SymPy), so the squared denominator is positive. g_B^SN has degree 4 in gamma.
+  - id: 7
+    locator: '$g_B^{SN}(\gamma) = \sum_{j=0}^4 a^{SN}_j \gamma^j$ with $a^{SN}_4 \leq 0$, $a^{SN}_3 \leq 0$, $a^{SN}_1 \geq 0$, and $a^{SN}_0 \geq 0$'
+    claim: Coefficient signs of g_B^SN.
+    status: verified
+    method: symbolic
+    note: >-
+      My sign-revealing forms, each equal to the coefficient (SymPy expand): with v = p_{A,2}-c_A, w = p_{B,2}-c_B,
+      B0 = alpha_{A,2} c_B p_{A,1} + theta alpha_{B,2} Q1 > 0 and
+      B1 = alpha_{A,2}^2 c_B v + theta alpha_{B,2}(alpha_{A,2} c_B v - c_A w) (linear in theta, equal to
+      alpha_{A,2}^2 c_B v > 0 at theta = 0 and to Q2 > 0 at theta = 1, hence > 0 on [0,1]):
+      a0 = p_{A,1} p_{B,1}^2 B0 > 0, a1 = 2 p_{A,1} p_{B,1}^2 B1 > 0,
+      a3 = -2 alpha_{A,2} alpha_{B,2} (1-theta) v w^2 B0, a4 = -alpha_{A,2} alpha_{B,2} (1-theta) v w^2 B1.
+      For theta < 1 the claimed weak signs hold strictly.
+  - id: 8
+    locator: 'For $\theta<1$, the difference ... is positive by (b) and tends to zero as $\gamma\downarrow0$ and $\gamma\to\infty$ (Lemmas 2 and 3). Its interior maximum gives a positive root of $g_B^{SN}(\gamma)$, unique by Descartes'' Rule of Signs.'
+    claim: The gap rises and then falls in gamma.
+    status: verified
+    method: re-derivation
+    note: >-
+      The gap is 0 at gamma = 0 (SymPy) and tends to 0 as gamma -> infinity for theta < 1 because
+      r(theta) <= c_B/(p_{B,1} + J(1-theta)) -> 0 and c_B/P^S_B -> 0 (one point computed: limit 0 at theta = 1/2,
+      limit 0.384 > 0 at theta = 1, which is why theta = 1 is excluded). For theta < 1 the sign sequence
+      (a4, a3, a2, a1, a0) = (-, -, ?, +, +) has exactly one change whatever a2 is, so Descartes gives exactly one
+      positive root, which is simple; hence the derivative is positive before it and negative after it. Exact root
+      isolation on 900 curves (300 points x theta in {0, 1/2, 99/100}): exactly one positive root on every curve.
+findings: []
+numerical:
+  command: python numerics/run.py -k P2   (read from verification/2026-11-22_claude-opus-5-5-b/logs/report_P2.md)
+  direct: "3/3 passed"
+  supporting: "4/4 passed"
+  assessment: >-
+    test_proposition_2a (210 exact points, all 12 gamma rungs): y^N_{B,1} strictly decreasing and y^0_{B,1},
+    y^S_{B,1} exactly constant on the theta grid; strict decrease is true (step 2), so this is a stronger, correct
+    test of the weak claim. test_proposition_2b: both strict inequalities at every node, point and rung, matching
+    the printed strict inequalities. test_proposition_2c: 480 curves (theta in {0, 1/2, 9/10, 999/1000}), gamma
+    from 1e-6 to 1e60 with local refinement, increments must have sign pattern "+-"; this tests the part with
+    theta < 1 as stated. All three test the parts they name.
+  own_checks:
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/P2_symbolic_steps.py
+not_checked:
+  - theta = 1 in part (c) is excluded by the statement (the gap has a positive limit there); not examined further.

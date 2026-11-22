@@ -1,0 +1,154 @@
+id: L2
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    My context contained the user's global agent instructions and the index of the user's
+    auto-memory (four one-line entries: where the final LaTeX source of the paper lies outside
+    this repository, that the repository and its skill are written in English, that the
+    INFORMS site blocks automated fetches, and that a lean repository dynamic-competition-c2c/
+    already had a first fresh-agent verification run, next to an older full repository and a
+    skill folder). I opened none of those memory files, no other folder of verification/, and
+    nothing outside the repository root; I have no recollection of earlier audits of this paper.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Scenario S (Z_{i,2} = gamma R_{i,1}, gamma > 0), prices fixed with A11 in both periods, I1, I2,
+  theta in [0, 1], seed demand i.i.d. X_t >= 0 with cdf F as in A3, rho = 1. (i) For every
+  first-period sales state (R_{A,1}, R_{B,1}) the second-period inventory subgame has exactly one
+  Nash equilibrium, y^S_{i,2} = y^0_{i,2} + gamma R_{i,1} for i = A, B, with y^0_{i,2} of Lemma 1 at
+  the second-period prices. (ii) With these continuation values, the first-period game in which
+  each retailer chooses y_{i,1} >= 0 to maximise its expected two-period profit has exactly one
+  Nash equilibrium, y^S_{A,1} = (alpha_{A,1} + theta alpha_{B,1}) zeta^S_{A,1} - theta alpha_{B,1}
+  zeta^S_{B,1} and y^S_{B,1} = alpha_{B,1} zeta^S_{B,1}, where zeta^S_{i,1} = F^{-1}(1 - c_i/(p_{i,1}
+  + gamma (p_{i,2} - c_i))). So the feedback Nash equilibrium exists and is unique. (iii) Its sales
+  and total profits are the expressions at the end of the proof. The proof establishes the same
+  with any rho in (0, 1], with rho gamma in place of gamma in zeta^S_{i,1}.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A7, A8, A9, A10, A11, I1, I2]
+unstated_hypotheses: []
+relies_on:
+  - "L1 proof: the probability (A.1), its case split and the best-response form (A.2)-(A.3), reused for periods 2 and 1"
+steps:
+  - id: 1
+    locator: '(A.4)'
+    claim: With ybar_{i,2} = y_{i,2} - gamma R_{i,1}, A's second-period profit is the benchmark profit in ybar plus (p_{A,2} - c_A) gamma R_{A,1}.
+    status: verified
+    method: re-derivation
+    note: >-
+      D_{A,2} - gamma R_{A,1} = alpha_{A,2} X_2 + theta (alpha_{B,2} X_2 - ybar_{B,2})^+, so
+      y_{A,2} - D_{A,2} = ybar_{A,2} - alpha_{A,2} X_2 - theta (alpha_{B,2} X_2 - ybar_{B,2})^+ and
+      (p - c) y = (p - c) ybar + (p - c) gamma R_{A,1}. Derived by hand. The state is fixed in the
+      subgame, so conditioning on X_1 only fixes R_{i,1}.
+  - id: 2
+    locator: 'Note that the profit function in (A.4) is concave in ybar_{A,2}. By analogous arguments in the proof of Lemma 1, ... (A.5)'
+    claim: Concavity and A's second-period best response in ybar.
+    status: verified
+    method: re-derivation
+    note: >-
+      The objective is the benchmark objective in ybar, so steps 2-5 of L1 apply. They also hold
+      for ybar_{B,2} < 0 (an order below the C2C demand): then the upper branch applies with F
+      evaluated at w_A, since F vanishes below the support. The best response is >= 0, so the
+      constraint y_{A,2} >= 0 (ybar_{A,2} >= -gamma R_{A,1}) never binds.
+  - id: 3
+    locator: '(A.6), (A.7)'
+    claim: The same for retailer B.
+    status: verified
+    method: re-derivation
+    note: Mirror image of steps 1 and 2.
+  - id: 4
+    locator: 'By combining (A.5) and (A.7), there exists a unique Nash equilibrium in the second period'
+    claim: ybar^S_{i,2} = y^0_{i,2}, hence y^S_{i,2} = y^0_{i,2} + gamma R_{i,1}.
+    status: verified
+    method: re-derivation
+    note: Step 8 of L1 at the second-period prices, which satisfy A11. Numerically confirmed at random sales states, also for unbounded laws (own script).
+  - id: 5
+    locator: 'retailer A''s second-period profit equals pi^0_{A,2} + (p_{A,2} -c_A) gamma E[R_{A,1} | X_1]'
+    claim: The continuation value is affine in own first-period sales.
+    status: verified
+    method: re-derivation
+    note: >-
+      Pathwise: at y = y^0 + Z, R_{A,2} = Z_{A,2} + min(D^0_{A,2}, y^0_{A,2}), so p R - c y =
+      pi^0-integrand + (p - c) Z. Derived by hand; the repository check and my script confirm
+      it from the primitives (max relative error 4.5e-16).
+  - id: 6
+    locator: '(A.8)'
+    claim: A's two-period objective is a newsvendor objective with price p_{A,1} + rho (p_{A,2} - c_A) gamma and cost c_A, plus rho pi^0_{A,2}.
+    status: verified
+    method: re-derivation
+    note: Algebra of p_{A,1} E R - c_A y + rho (p_{A,2} - c_A) gamma E R + rho pi^0 with E R = y - E(y - D)^+; done by hand.
+  - id: 7
+    locator: 'Note that profit function in (A.8) is concave in y_{A,1} and its derivative ... (A.9)'
+    claim: Concavity, the derivative and A's first-period best response with zeta^S_{A,1}.
+    status: verified
+    method: re-derivation
+    note: Step 2-5 of L1 with the modified price; finite differences of the payoff agree with the derivative (shared_foc_kink_ordering.py, scenario S, max error 6.1e-10 of the price, rho = 1 and random rho).
+  - id: 8
+    locator: '(A.10), (A.11)'
+    claim: The same for retailer B with zeta^S_{B,1}.
+    status: verified
+    method: re-derivation
+    note: Mirror image.
+  - id: 9
+    locator: 'Note that zeta^S_{i,1} > zeta^0_{i,1} for gamma > 0, when rho > 0 and p_{i,t} > c_i.'
+    claim: Strict increase of the fractile.
+    status: verified
+    method: re-derivation
+    note: c_i/(p_{i,1} + rho gamma (p_{i,2} - c_i)) < c_i/p_{i,1}; F^{-1} is strictly increasing on (0, 1) because F is continuous (A3). Not used in the statement.
+  - id: 10
+    locator: 'Since p_{B,t} c_A/c_B <= p_{A,t}, t= 1,2, we have c_A/(p_{A,1}+rho gamma (p_{A,2}-c_A)) <= c_B/(p_{B,1}+rho gamma (p_{B,2}-c_B)) and thus zeta^S_{A,1} >= zeta^S_{B,1}'
+    claim: A11 orders the first-period fractiles.
+    status: verified
+    method: re-derivation
+    note: >-
+      c_A p_{B,1} <= c_B p_{A,1} and c_A (p_{B,2} - c_B) <= c_B (p_{A,2} - c_A) (the second is
+      c_A p_{B,2} <= c_B p_{A,2}); add with weight rho gamma. Equality iff A11 binds in both
+      periods. Checked in exact rational arithmetic at 4000 random and edge points (own script).
+  - id: 11
+    locator: 'By combining (A.9) and (A.11), there exists a unique Nash equilibrium (y^S_{A,1},y^S_{B,1})'
+    claim: Unique first-period equilibrium with the stated orders.
+    status: verified
+    method: re-derivation
+    note: Step 8 of L1 with zeta^S in place of zeta^0. Together with step 4 this gives the unique feedback equilibrium.
+  - id: 12
+    locator: 'Pi^S_A = [p_{A,1} -c_A + rho (p_{A,2} -c_A) gamma] y^S_{A,1} - ... where L^S_{A,1} := ...'
+    claim: Equilibrium profits, leftovers, sales and second-period orders (L2.profits).
+    status: verified
+    method: re-derivation
+    note: Substitution of the equilibrium into (A.8) and (A.10); L^S_{i,1} = (y^S_{i,1} - D_{i,1})^+ at the equilibrium. Done by hand; the repository checks confirm the uniform-law closed forms against the model.
+findings: []
+numerical:
+  command: python numerics/run.py -k L2 --report verification/2026-11-22_claude-opus-5-5-b/logs/report_L2.md
+  direct: "8/8 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    test_second_period_equilibrium_and_continuation_value[S] (L2.second) and
+    test_first_period_equilibrium[S] (L2.first) test the claims against payoffs built from the
+    primitives, both retailers, under four bounded laws and edge points; the first-period payoffs
+    use the continuation pi^0 + (p - c) Z, which the second-period check confirms from the
+    primitives (the identity is exact, step 5). The two scans test L2.unique as scans.
+    test_closed_form_sales_and_profits_equal_the_model[S] and
+    test_second_period_profit_function_equals_the_model[S] test L2.profits for the uniform law.
+    Two of the eight "direct" checks do not test the claim against the model:
+    test_branch_conditions_in_the_code_are_the_fractile_orderings compares a branch flag of
+    closed_form.py with the fractile ordering, and test_scenario_s_code_matches_lemma_2 compares
+    closed_form.py with the printed formulas; they are checks of the port, recorded in
+    verification/2026-11-22_claude-opus-5-5-b/consistency.yaml (see the verification/2026-11-22_claude-opus-5-5-b/consistency.yaml item 'numerics checks of L1, L2, L3, L4 and LB1' and its finding C1). Not covered: unbounded
+    support and rho < 1, both covered by my script.
+  own_checks:
+    - script: verification/2026-11-22_claude-opus-5-5-b/scripts/shared_eqlemmas_unbounded_support.py
+      result: >-
+        Scenario S under exponential, lognormal and gamma laws, rho = 1 and rho = 0.6 (72 games,
+        random and edge points: theta 0/1, A11 equality, p_A = p_B, equal shares, gamma 0.01 and
+        100): largest relative gain 1.6e-16, best responses within 9.3e-9 of the mean; second
+        period at random states, y^0 + gamma R is an equilibrium and the profit is pi^0 + (p - c) Z
+        to 4.5e-16.
+    - script: verification/2026-11-22_claude-opus-5-5-b/scripts/shared_foc_kink_ordering.py
+      result: Derivative formula of (A.8) checked by finite differences; fractile ordering of step 10 holds exactly at 4000 rational points, with equality exactly at the 781 points where A11 binds in both periods.
+not_checked:
+  - >-
+    The discussion after the lemma ("zeta^S_{A,1} > zeta^S_{B,1} due to the cost asymmetry") is out
+    of scope; as an observation, that strict inequality fails when A11 binds in both periods.

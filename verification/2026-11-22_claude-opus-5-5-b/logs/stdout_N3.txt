@@ -1,0 +1,6 @@
+..                                                                       [100%]
+2 passed, 91 deselected in 1.24s
+
+Numerical statements
+  N3  direct    1/1   supporting    1/1
+wrote verification/2026-11-22_claude-opus-5-5-b/logs/report_N3.md

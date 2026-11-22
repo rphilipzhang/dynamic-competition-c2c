@@ -1,0 +1,156 @@
+id: P7
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/LA1.yaml: no earlier audit read and no other folder of verification/ opened; the context contained the
+    user's general instructions and a four-line auto-memory index (paper source location, repository language, an
+    INFORMS fetch restriction, a first fresh-agent run done, no results); the orchestrator's brief listed points to examine.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A10, A12, A13 and I1. For every gamma > 0, theta in [0, 1], every first-period sales state (R_A, R_B) with
+  R_i >= 0, each scenario k in {S, N} and each retailer i, let y^k_{i,2}(p_A, p_B) be the equilibrium order of the
+  second-period inventory subgame at second-period prices (p_A, p_B) in [p_lo, p_hi]^2. (a) For every fixed rival price
+  p_j in [p_lo, p_hi], the map p_i -> y^k_{i,2} on [p_lo, p_hi] is nonincreasing, or has one or two local maxima in the
+  open interval (p_lo, p_hi). (b) For every fixed p_i in [p_lo, p_hi], the map p_j -> y^k_{i,2} is nondecreasing, or
+  first decreases and then increases.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A12, A13, I1]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: 'Conditional on first-period sales, Lemmas A.1 and A.2 imply that y_{i,2}^S=y_{i,2}^0+\gamma R_{i,1}^S and y_{i,2}^N=y_{i,2}^0+\alpha_{i,2}\gamma R_1^N'
+    claim: The second-period orders are the benchmark orders plus the C2C demand.
+    status: verified
+    method: re-derivation
+    note: >-
+      Only the last sentence of Lemmas A.1(b) and A.2(b) is used, which holds for every gamma and every price pair (LA1
+      step 1), including pairs at which retailer B has the higher fractile; no large-gamma part is used, so the
+      proposition holds for every gamma as the roadmap says. The benchmark order is Lemma 1 or its mirror image.
+  - id: 2
+    locator: 'Hence, the price comparative statics of y_{i,2}^S are identical to those of the benchmark quantity y_{i,2}^0'
+    claim: In Scenario S the shift gamma R_{i,1} does not depend on second-period prices.
+    status: verified
+    method: reading
+    note: Immediate.
+  - id: 3
+    locator: '\frac{\partial y^N_{i,2}}{\partial p_{i,2}} = \frac{\partial y^0_{i,2}}{\partial p_{i,2}} - \beta \gamma R^N_1 and ... + \beta \gamma R^N_1'
+    claim: In Scenario N the shift alpha_{i,2} gamma R_1 adds -beta gamma R_1 to the own-price slope and +beta gamma R_1 to the rival-price slope.
+    status: verified
+    method: re-derivation
+    note: d alpha_i/d p_i = -beta, d alpha_i/d p_j = beta.
+  - id: 4
+    locator: 'If p_{A,2} \leq \frac{c_A}{c_B}p_{B,2}, we have \overline{y}^S_{A,2} = ( \frac{1}{2}+\beta p_{B,2}-\beta p_{A,2}) (-\frac{2 c_A \sigma }{p_{A,2}}+\mu +\sigma ) and ...'
+    claim: First piece of the own-price curve (retailer A has the lower fractile) and its derivative.
+    status: verified
+    method: symbolic
+    note: SymPy (script P7_piecewise_slopes.py, part 1) reproduces the printed derivative (difference 0); its p_A-derivative is -2 c_A sigma (2 beta p_B + 1)/p_A^3 < 0, so the piece decreases, increases then decreases, or increases.
+  - id: 5
+    locator: 'If p_{A,2} > \frac{c_A}{c_B}p_{B,2}, we have \frac{\partial \overline{y}^S_{A,2}}{\partial p_{A,2}} = -\beta (\mu +\sigma )+\frac{c_A \sigma (1+\theta +2 \beta (1-\theta) p_{B,2})}{p_{A,2}^2}+\frac{2 \beta c_B \theta \sigma }{p_{B,2}}'
+    claim: Second piece of the own-price curve and its derivative.
+    status: verified
+    method: symbolic
+    note: SymPy reproduces it (difference 0); its p_A-derivative is 2 c_A sigma (2 beta p_B theta - 2 beta p_B - theta - 1)/p_A^3 < 0.
+  - id: 6
+    locator: '\partial_{p_{A,2}} \overline{y}^S_{A,2} \leq -\frac{\beta(\mu^2 - \mu \sigma + \sigma^2)}{\mu + \sigma} < 0 at p_{A,2} = \overline{p}'
+    claim: The own-price slope at the upper price bound is bounded away from zero.
+    status: verified
+    method: numerical
+    note: >-
+      Asserted without derivation; my derivation. Let x = 1/(2 beta) and W = (mu + sigma)(c_A + 2 c_B)/(3 mu). A13 gives
+      p_hi > x + W, A12 gives p_B >= p_lo > p_hi - x > W, and (x + W)^2 >= 4 x W. The slope is affine in theta. At theta = 1
+      the positive terms are 2 sigma c_A/p_hi^2 + 2 beta sigma c_B/p_B < beta sigma c_A/W + 2 beta sigma c_B/W
+      = 3 beta mu sigma/(mu + sigma); at theta = 0 they are at most sigma c_A/p_hi^2 + 2 beta sigma c_A/p_hi
+      < 2.5 beta sigma c_A/W < 3 beta mu sigma/(mu + sigma). Subtracting from beta(mu + sigma) gives the bound, strictly.
+      Script part 2: over 132,259 edge-sampled admissible markets, 41 rival prices, theta in {0, 1}, the largest value of
+      slope/bound + 1 is -4.5e-7, so the bound holds and is sharp (approached when 1/(2 beta) = W and p_lo -> p_hi - 1/(2 beta)).
+  - id: 7
+    locator: 'Thus, the second piece of \overline{y}^S_{A,2} decreases or first increases then decreases in p_{A,2}.'
+    claim: Shape of the second piece.
+    status: verified
+    method: re-derivation
+    note: The second piece always contains p_hi (c_A < c_B, p_B <= p_hi); its slope is strictly decreasing (step 5) and negative at p_hi (step 6).
+  - id: 8
+    locator: 'Thus, \overline{y}^S_{A,2} exhibits four possible patterns'
+    claim: The combination of the two pieces gives decreasing, increasing-decreasing, decreasing-increasing-decreasing, or two interior local maxima.
+    status: verified
+    method: re-derivation
+    note: >-
+      My enumeration of the 3 x 2 combinations of piece shapes gives exactly these patterns, each with zero, one or two
+      interior local maxima and ending decreasing; y is continuous at the switch (SymPy: difference 0). SymPy also shows the
+      slope jumps upward at the switch by 2 theta sigma c_B^2 alpha_B/(c_A p_B^2) >= 0 (alpha_B > 0 by A12), so the kink is
+      never a local maximum; the enumeration does not need this. When the switch lies outside [p_lo, p_hi] only the second
+      piece is present.
+  - id: 9
+    locator: 'By analogous arguments, \overline{y}^S_{B,2} exhibits the same patterns.'
+    claim: The same shapes for retailer B in its own price.
+    status: verified
+    method: numerical
+    note: >-
+      SymPy: both pieces of B's own-price slope are strictly decreasing in p_B. At p_B = p_hi either piece can be present
+      (p_hi <= (c_B/c_A) p_A or not); in both the slope is below -beta(mu^2 - mu sigma + sigma^2)/(mu + sigma) by the same
+      bounds as step 6 (low piece: sigma c_B(1 + 2 beta p_A)/p_hi^2 < 3 beta mu sigma/(mu + sigma); high piece at theta = 1:
+      2 sigma c_B/p_hi^2 + 2 beta sigma c_A/p_A < beta sigma (c_B + 2 c_A)/W). Script part 2 includes retailer B.
+  - id: 10
+    locator: 'If p_{B,2} < \frac{c_B}{c_A}p_{A,2}, \frac{\partial \overline{y}^S_{A,2}}{\partial p_{B,2}} = ...'
+    claim: First piece of the rival-price curve and its derivative.
+    status: verified
+    method: symbolic
+    note: SymPy reproduces it (difference 0); its p_B-derivative is 2 c_B sigma theta (2 beta p_A + 1)/p_B^3 >= 0, so the slope is nondecreasing.
+  - id: 11
+    locator: 'If p_{B,2} \geq \frac{c_B}{c_A}p_{A,2}, \frac{\partial \overline{y}^S_{A,2}}{\partial p_{B,2}} = \beta (-\frac{2 c_A \sigma }{p_{A,2}}+\mu +\sigma ) >0'
+    claim: Second piece of the rival-price curve increases.
+    status: verified
+    method: symbolic
+    note: The slope is beta zeta_A > beta(mu - sigma) > 0.
+  - id: 12
+    locator: '\partial_{p_{B,2}} \overline{y}^S_{A,2} \geq \frac{\beta(\mu^2 - \mu \sigma + \sigma^2)}{\mu + \sigma} > 0 at p_{B,2} = \overline{p}'
+    claim: The rival-price slope at the upper bound is bounded below, on whichever piece contains p_hi.
+    status: verified
+    method: numerical
+    note: >-
+      My derivation. Second piece: c_A/p_A < c_A/W < mu/(mu + sigma). First piece: at theta = 0, 2 beta sigma c_A/p_A
+      < 2 beta mu sigma/(mu + sigma); at theta = 1, sigma c_B(1 + 2 beta p_A)/p_hi^2 <= (w/p_hi)(1 + x/p_hi) times
+      3 beta mu sigma/(mu + sigma) with w = 2(mu + sigma) c_B/(3 mu) <= W, and (w/p)(1 + x/p) < 1 for p > x + w.
+      Script part 2: smallest value of slope/bound - 1 is 5.0e-4 over the same sample, for both retailers. The text puts
+      the bound after the second piece, but it is needed when the first piece reaches p_hi.
+  - id: 13
+    locator: 'So, by the property of \overline{y}^S_{A,2} on the two pieces, \overline{y}^S_{A,2} either increases or first decreases then increases in p_{B,2}. By analogous arguments, \overline{y}^S_{B,2} ...'
+    claim: Part (b) for both retailers.
+    status: verified
+    method: re-derivation
+    note: >-
+      The slope is nondecreasing on the first piece, jumps upward at the switch (SymPy: by 2 theta sigma c_A^2 alpha_B/(c_B p_A^2) >= 0)
+      and is positive on the second piece, and it is positive at p_hi (step 12), so the curve increases or decreases then
+      increases. For retailer B in p_A the piece with zeta_B > zeta_A comes first, with nondecreasing slope (SymPy), and
+      the upper piece has slope beta zeta_B > 0 and contains p_hi.
+  - id: 14
+    locator: 'Therefore, we proved part (a). ... We have proved part (b).'
+    claim: Both parts hold in Scenario N as well.
+    status: verified
+    method: re-derivation
+    note: >-
+      The proof analyses Scenario S and states the slope shifts of step 3 without drawing the conclusion for N. My
+      derivation: adding the constant -beta gamma R_1 to the own-price slope keeps it strictly decreasing on each piece,
+      negative at p_hi and the kink jump unchanged; adding +beta gamma R_1 to the rival-price slope keeps it nondecreasing
+      and positive at p_hi. The shapes therefore carry over.
+findings: []
+numerical:
+  command: python numerics/run.py -k P7 --report verification/2026-11-22_claude-opus-5-5-b/logs/report_P7.md
+  direct: "2/2 passed"
+  supporting: "1/1 passed"
+  assessment: >-
+    The two direct checks read the statement literally: 16,000 own-price curves must have no positive step or turn from
+    positive to negative exactly once or twice (15,332 decreasing, 666 with one, 2 with two interior maxima, none ending
+    with a positive step), and 16,000 rival-price curves must have no negative step or one sign change from negative to
+    positive. Both scenarios and retailers, theta = 0 and 1 included, gamma in [0.05, 50]. The supporting check confirms
+    from the primitives that the orders used are the inventory equilibrium, for both fractile orderings. A sampled search
+    on a 1,501-point grid can miss narrow features; the proof covers them.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/P7_piecewise_slopes.py: SymPy derivative formulas, monotonicity of the slopes, kink jumps, and the two bounds at p_hi on 132,259 edge-sampled admissible markets"
+not_checked: []

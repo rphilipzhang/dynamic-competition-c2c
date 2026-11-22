@@ -1,0 +1,128 @@
+id: P9
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/LA1.yaml: no earlier audit read and no other folder of verification/ opened; the context contained the
+    user's general instructions and a four-line auto-memory index (paper source location, repository language, an
+    INFORMS fetch restriction, a first fresh-agent run done, no results); the orchestrator's brief listed points to examine.
+verdict: sound_with_gaps
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A10, A12, A13, A14 and I1. For every theta in [0, 1) there is gamma^P(theta) >= 0 such that for every
+  gamma > gamma^P the two-period price-inventory game of each scenario has a (feedback) equilibrium, and in it:
+  (a) Scenario S: both first-period prices equal p_lo, both second-period prices equal p_hi at every sales state the
+  equilibrium induces, and p_lo < p_hi; (b) Scenario N: for i = A, B, p_lo < p^N_{i,2} < p^N_{i,1} < p_hi, where
+  p^N_{i,2} is the second-period price at any sales state the equilibrium induces.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A12, A13, A14, I1]
+unstated_hypotheses: []
+relies_on:
+  - "LA1/LA2 joint proof, last paragraph: Pi_i^N(p_1) = gamma nu_i mu + K_i(theta) + alpha_{i,1}(mu p_{i,1} - c_i(mu + sigma)) + O_{C^2(p_1; P)}(gamma^-1) for each fixed theta < 1 (used in part (b))"
+  - "LA1/LA2 joint proof, Scenario S paragraph: every first-period equilibrium order is at least delta, so the second-period prices are (p_hi, p_hi) at every induced state (used in part (a))"
+steps:
+  - id: 1
+    locator: 'By Lemma A.1, the retailer i''s total payoff is exactly \Pi_i^S(p_1) =[p_{i,1}+\gamma(\overline{p}-c_i)]\mathbb{E} R_{i,1}^S-c_i y_{i,1}^S +\pi_{i,2}^0(\overline{p},\overline{p}).'
+    claim: Reduced first-period payoff of Scenario S.
+    status: verified
+    method: numerical
+    note: >-
+      At the unique inventory equilibrium of Lemma A.1(a) every sales state has R_i >= alpha_i(mu - sigma) > 0, so Lemma A.1(b)
+      with a threshold uniform in p_1 gives (p_hi, p_hi) in period 2. Script P9_price_path_steps.py part 1a: the closed forms
+      E R_A = (a_A + th a_B) m(zeta_A) - th a_B m(zeta_B), E R_B = a_B m(zeta_B), m(z) = E min(X, z), agree with the model's
+      expected sales to 3.6e-16 (mu + sigma) at 3,000 points.
+  - id: 2
+    locator: 'Consequently, \frac{\partial\Pi_i^S}{\partial p_{i,1}} =-\gamma(\overline{p}-c_i)\beta\mu+O(1)<0 uniformly on the price box for large \gamma.'
+    claim: Own-price derivative of the reduced Scenario S payoff.
+    status: verified
+    method: symbolic
+    note: >-
+      Asserted without derivation; my derivation. With P_i = p_i + gamma(pbar - c_i), Pi_A = (a_A + th a_B)[P_A m(zeta_A) - c_A zeta_A]
+      - th a_B [P_A m(zeta_B) - c_A zeta_B] + const, and the critical-ratio condition P_A(1 - F(zeta_A)) = c_A removes the zeta_A'
+      term; the leading part of dPi_A/dp_A is -beta[(1 - th) + th] P_A mu. SymPy: lim gamma^-1 dPi_i/dp_i = -beta mu (pbar - c_i);
+      sup of |dPi_i/dp_i + gamma(pbar - c_i) beta mu| / (pbar (mu + sigma)) over 300 markets, 11 x 11 prices and theta in {0, 0.5, 1}
+      is 0.434 at every gamma from 1e2 to 1e6, so the O(1) term is uniform in p_1 and theta.
+  - id: 3
+    locator: 'Thus \underline{p} is each retailer''s unique first-period best response to every rival price. Therefore, there exists a unique first-period price equilibrium (\underline{p},\underline{p})'
+    claim: p_lo is strictly dominant, so (p_lo, p_lo) is the unique first-period price equilibrium.
+    status: verified
+    method: re-derivation
+    note: Strictly decreasing payoff on [p_lo, p_hi] for every rival price; strict dominance also excludes mixed equilibria. p_lo < p_hi by A13 (p_lo < p^_{A,2} < p^_{B,1} < p_hi).
+  - id: 4
+    locator: 'Lemma A.1 gives the unique second-period prices (\overline{p},\overline{p}) at all induced states, proving part (a).'
+    claim: Second-period prices in Scenario S, and with them an equilibrium profile of the whole game.
+    status: gap
+    method: re-derivation
+    note: >-
+      The on-path prices are right (step 1). The statement asserts that an equilibrium profile exists, which also needs
+      second-period equilibria at the sales states that only deviations reach, in both scenarios; the proof does not
+      address them. See: LA1/F1.
+    repair: >-
+      As in LA1/F1: at every sales state the second-period price game has continuous payoffs on a compact box, so a (possibly
+      mixed) equilibrium exists (Glicksberg); the bounds of the joint proof hold for any selection, so the first-period
+      analysis and steps 1-9 are unchanged.
+  - id: 5
+    locator: 'Fix \theta<1 and use \Pi_i^N(p_{A,1},p_{B,1}) = ... in the proof of Lemma A.2, we have \partial_{p_{i,1}} \Pi_i^N = ..., \partial^2_{p_{i,1}}\Pi_i^N =-2\beta\mu+O(\gamma^{-1})<0, \partial_{p_{i,1}}\partial_{p_{j,1}}\Pi_i^N =\beta\mu+O(\gamma^{-1})'
+    claim: First and second price derivatives of the reduced Scenario N payoff.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy: the derivatives of alpha_i(mu p_i - c_i(mu + sigma)) are the printed leading terms (difference 0), -2 beta mu and
+      beta mu. The O(1/gamma) remainders need the C^2 form of the expansion (relies_on; checked in LA1 step 36). Script
+      P9_profit_expansion_fixed_theta.py: at theta = 0.5, gamma times the gap between the model's dPi_i/dp_i and the leading
+      term stays between 3.3 and 6.3 in absolute value for gamma = 1e2, 1e3, 1e4; at theta = 1 it grows tenfold per decade,
+      which is why the proposition fixes theta < 1 and lets gamma^P depend on theta.
+  - id: 6
+    locator: 'The constrained price best responses are therefore single-valued and Lipschitz with a constant at most (\beta\mu+C/\gamma)/(2\beta\mu-C/\gamma)<1. Therefore, there exists a unique fixed point; the strict own-price concavity also excludes nondegenerate mixed equilibria'
+    claim: Uniqueness of the first-period price equilibrium of the reduced game of Scenario N.
+    status: verified
+    method: re-derivation
+    note: Strong concavity with modulus 2 beta mu - C/gamma and cross Lipschitz constant beta mu + C/gamma; the ratio is < 1 iff C/gamma < beta mu/2 (SymPy). Banach on the box; strictly concave payoffs make every best reply to a mixed strategy pure.
+  - id: 7
+    locator: 'This limiting price game has a unique equilibrium \widehat p_{i,1} = \frac1{2\beta} +\frac{(\mu+\sigma)(2c_i+c_j)}{3\mu}, which is interior in [\underline{p},\overline{p}] by the definitions.'
+    claim: Limit first-period prices and their interiority.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy solves the limit FOCs (difference 0). Interiority uses A13: p_lo < p^_{A,2} < p^_{A,1} < p^_{B,1} < p_hi
+      (p^_{i,1} - p^_{i,2} = sigma(2 c_i + c_j)/(3 mu) > 0); script LA1_joint_proof_steps.py section A confirms it on 50,000
+      edge-sampled admissible markets, with smallest margin (p_hi - p^_{B,1})/p_hi = 1.35e-9 where p_hi is close to its A13 bound.
+  - id: 8
+    locator: 'Compactness and uniform payoff convergence place the actual equilibrium in its interior neighborhood for large \gamma. The limiting first-order Jacobian \beta\mu(-2 1; 1 -2) is nonsingular, so ... p_{i,1}^N=\widehat p_{i,1}+O(\gamma^{-1})'
+    claim: The first-period equilibrium prices converge to the interior limit prices at rate 1/gamma.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy: determinant 3 beta^2 mu^2. The FOC perturbation is O(1/gamma) in C^1 (step 5), so the implicit function theorem gives the rate. Interior for large gamma because the limit is interior.
+  - id: 9
+    locator: 'Moreover, p^N_{i,1}-p^N_{i,2} =\frac{\sigma(2c_i+c_j)}{3\mu} + O(\gamma^{-1})>0 for sufficiently large \gamma, proving part (b).'
+    claim: The price path falls, and both second-period prices are interior.
+    status: verified
+    method: re-derivation
+    note: >-
+      On the path every sales state has R_1 in [mu - sigma, mu + sigma] (no stockout for X < s with s > mu - sigma), so
+      p^N_{i,2} = p^_{i,2} + O(1/(gamma R_1)) = p^_{i,2} + O(1/gamma) uniformly over induced states (Lemma A.2(b) with the
+      threshold of LA1 step 13). With step 8 and A13 (p^_{i,2} > p_lo strictly) this gives p_lo < p^N_{i,2} < p^N_{i,1} < p_hi.
+      As in step 4, off-path second-period equilibria exist by LA1/F1's repair.
+findings: []
+numerical:
+  command: python numerics/run.py -k P9 --report verification/2026-11-22_claude-opus-5-5-b/logs/report_P9.md
+  direct: "2/2 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    P9.a: at 20 markets the reduced payoffs are built from the model with the Lemma A.1(a) orders (confirmed at every grid
+    pair by vanishing marginal profits and a pinned continuation); p_lo is the best reply to every rival grid price,
+    iterations end at (p_lo, p_lo), and the second-period grid game at three induced states has (p_hi, p_hi) as its only
+    pure equilibrium; it holds at all markets from gamma = 1e3, and the advantage of p_lo grows tenfold per decade, as
+    step 2 predicts. P9.b: at 5 markets with theta scaled to 0.9 theta (fixed theta < 1), the first-period price equilibrium
+    of the reduced game is located by best-response iteration from two corners and confirmed by searches; the strict chain
+    p_lo < min p_{i,2}, max p_{i,2} < p_{i,1} < p_hi holds over 201 induced states from gamma = 100; the gap settles to the
+    limit sigma(2c_i + c_j)/(3 mu) within 0.5% at gamma = 1e4. The predicates are the strict inequalities of the statement.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/P9_price_path_steps.py: closed-form Scenario S sales and the O(1) own-price derivative bound; limit game, Jacobian, Lipschitz condition and the price gap (SymPy)"
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/P9_profit_expansion_fixed_theta.py: the expansion of Pi_i^N and its own-price derivative from the model, at theta = 0.5, 1 - 1/gamma and 1"
+not_checked:
+  - The existence part of the statement for off-path states relies on the repair recorded in LA1/F1 rather than on an argument in the paper.

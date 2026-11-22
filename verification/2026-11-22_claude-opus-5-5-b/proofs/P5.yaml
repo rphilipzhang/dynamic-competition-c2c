@@ -1,0 +1,187 @@
+id: P5
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml: the user's auto-memory index for this project and the parent project's AGENTS.md were
+    in context (no audit records, findings or verdicts); nothing outside the repository root or other
+    verification/ folders was read; the orchestrator's brief stated the Part 1 results and listed points worth
+    care.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A11, I1, I2. For every admissible market there is gamma^A > 0 such that for every gamma >= gamma^A and
+  every theta in [0,1]: (a) Pi^S_A is nondecreasing in theta (true for every gamma > 0); (b) Pi^S_A > Pi^0_A and
+  Pi^N_A > Pi^0_A, with gamma^A independent of theta; (c1) if alpha_{A,1} < alpha_{A,2} then Pi^S_A < Pi^N_A, and if
+  alpha_{A,1} > alpha_{A,2} then Pi^S_A > Pi^N_A, with gamma^A independent of theta. (c2), fixed-market reading of
+  AGENTS.md: suppose alpha_{A,1} = alpha_{A,2}. There is a cost cutoff Delta^A > 0 (a sufficient one; it may depend
+  on c_A, the four prices and the shares, through c-bar_B) such that for each admissible market with
+  Delta c >= Delta^A the bound gamma^A may depend on the costs and applies to every theta in [0,1], and for each
+  gamma >= gamma^A there is theta^A in [0,1], depending on gamma and the market, with Pi^S_A >= Pi^N_A on
+  [0, theta^A] and Pi^S_A < Pi^N_A on (theta^A, 1]. Threshold dependence found in the proof: gamma^A_1 arbitrary;
+  gamma^A_2 and gamma^A_3 depend on the market primitives but not on theta; c-bar_B and Delta^A on c_A, prices
+  and shares; gamma^A_4 on the market including c_B, not on theta; theta^A on gamma and the market.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: '(a). ... $\frac{\partial \Pi^S_A}{\partial\theta} =\frac{\alpha_{B,1}[p_{A,1}+\gamma(p_{A,2}-c_A)]}{4\sigma} (\zeta^S_{A,1}-\zeta^S_{B,1})^2 +\frac{\alpha_{B,2}p_{A,2}}{4\sigma}(\zeta^0_{A,2}-\zeta^0_{B,2})^2\geq 0$'
+    claim: Theta-derivative of Pi^S_A; any gamma^A_1 > 0 suffices.
+    status: verified
+    method: symbolic
+    note: >-
+      My derivation: with Pi = P E[R_A] - c_A y_A per period and P t_A = c_A, d/dtheta = alpha_B sigma P (t_B - t_A)^2
+      = alpha_B P (zeta_A - zeta_B)^2/(4 sigma) (generic SymPy identity); applied to period 1 (P = P^S_A) and to
+      pi^0_{A,2} (P = p_{A,2}). The printed formula equals d Pi^S_A/dtheta of the full closed form exactly at 10/10
+      points. Zero exactly when A11 binds in both periods (weak claim allows it).
+  - id: 2
+    locator: '(b). ... $\Pi_A^S-\Pi_A^0 = O(1)+\gamma(p_{A,2}-c_A)E[R_{A,1}^S]$, and $\Pi_A^N-\Pi_A^0 = O(1)+\gamma\alpha_{A,2}(p_{A,2}-c_A)E[R_1^N]$'
+    claim: Decomposition of the profit gains into first-period differences plus the C2C terms.
+    status: verified
+    method: numerical
+    note: >-
+      Exact identities Pi^S_A - Pi^0_A = (FP^S - FP^0) + gamma v E[R^S_{A,1}] and Pi^N_A - Pi^0_A = (FP^N - FP^0)
+      + gamma alpha_{A,2} v E[R^N_1], with FP = p_{A,1} E[R_{A,1}] - c_A y_{A,1}, checked at 12/12 random exact points;
+      they also follow by inspection of the profits in the proofs of L2 and L3 (my derivation). FP is bounded by
+      p_{A,1}(mu + sigma) + c_A(mu + sigma) uniformly in theta and gamma.
+  - id: 3
+    locator: 'Moreover, these equilibrium sales are bounded away from zero uniformly over $\theta \in [0,1]$ for sufficiently large $\gamma$.'
+    claim: Uniform positive lower bound on the sales, hence both gains -> +infinity uniformly in theta.
+    status: verified
+    method: symbolic
+    note: >-
+      Asserted without derivation; my derivation (SymPy identity): E[R_A] - alpha_A(mu - sigma) =
+      sigma[alpha_A(1 - t_A^2) + theta alpha_B (t_B^2 - t_A^2)] >= 0, so E[R^S_{A,1}] >= alpha_{A,1}(mu - sigma) > 0
+      and E[R^N_1] >= E[R^N_{A,1}] >= alpha_{A,1}(mu - sigma) for every gamma > 0 and theta (A10: mu > sigma).
+      With the bounded FP terms this gives an explicit gamma^A_2 independent of theta. The following sentence
+      ("Hence ... strictly positive limits") is not needed for the conclusion.
+  - id: 4
+    locator: '(c1-c2). Note that $\Pi^S_A - \Pi^N_A = \gamma h_A(\theta,\gamma)/[(-\gamma c_A+p_{A,1}+\gamma p_{A,2}) (\ldots)^2 (\ldots)^2 (\ldots)^2]$, where $h_A(\theta,\gamma)$ is a polynomial of degree at most three in $\theta$'
+    claim: Factorization with a positive denominator; h_A polynomial of degree <= 3 in theta.
+    status: verified
+    method: symbolic
+    note: >-
+      The printed denominator equals P^S_A (P^S_B)^2 (P^N_A)^2 den^2 > 0 (SymPy). I built h_A as an explicit polynomial
+      from my compact profit forms (shared_profit_polys.py) and checked Pi^S_A - Pi^N_A = gamma h_A / denominator
+      against the full closed forms exactly at 8/8 random points. Degree 3 in theta, 7 in gamma.
+  - id: 5
+    locator: 'For (c1), Lemma 2 gives $E[R^S_{A,1}]=\alpha_{A,1}\mu+O(\gamma^{-2})$ uniformly ... $\mu-E[R_1^N] =\sigma(\alpha_{A,1}+\theta\alpha_{B,1})[1-F(\zeta^N_{A,1})]^2 +\sigma(1-\theta)\alpha_{B,1}[1-F(\zeta^N_{B,1})]^2$'
+    claim: Sales expansions uniform in theta.
+    status: verified
+    method: symbolic
+    note: >-
+      Both identities follow from the sales identity of the P3 record (SymPy; also step 1 of the P4 record). The tails
+      c_A/P^S_A, c_B/P^S_B, c_A/P^N_A are O(1/gamma) uniformly, and (1-theta) r(theta) <= c_B/J (my bound:
+      (1-theta)(c_B - K theta)/(p_{B,1} + J(1-theta)) <= c_B/J; exact check at 2000 samples, no violation), so
+      mu - E[R^N_1] <= sigma t_A^2 + alpha_{B,1} sigma c_B/J = O(1/gamma) uniformly.
+  - id: 6
+    locator: 'By part (b), $\frac{\Pi^S_A-\Pi^N_A}{\gamma} =\mu(p_{A,2}-c_A)(\alpha_{A,1}-\alpha_{A,2})+O(\gamma^{-1})$ uniformly on this interval.'
+    claim: Uniform expansion, giving gamma^A_3 for unequal shares.
+    status: verified
+    method: numerical
+    note: >-
+      Exact decomposition Pi^S_A - Pi^N_A = (FP^S - FP^N) + gamma v (E[R^S_{A,1}] - alpha_{A,2} E[R^N_1]) (12/12
+      points); with step 5 the remainder is O(1/gamma) uniformly (my derivation). "By part (b)" points to the intended
+      decomposition. Probe: sup over 21 theta nodes of gamma |(Pi^S-Pi^N)/gamma - mu v (alpha_{A,1}-alpha_{A,2})| at
+      gamma = 1e1..1e5 stays between 0.048 and 1.40 at three random markets.
+  - id: 7
+    locator: 'At $\theta=0$, factoring out a positive term from $h_A(0,\gamma)$ leaves a quadratic in $\gamma$ with a positive leading coefficient.'
+    claim: h_A(0, gamma) > 0 for large gamma when alpha_{A,1} = alpha_{A,2}.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy factorization with equal shares: h_A(0,gamma) = [v alpha_{B,1} alpha_{A,1} sigma P^N_A (P^S_B)^2] * (-q(gamma)),
+      q quadratic with leading coefficient (alpha_{B,1} c_A w)^2 - alpha_{A,1}(c_B v)^2. Since alpha_{A,1} c_B v
+      > alpha_{B,1} c_A w (Q2 > 0) and alpha_{A,1} <= 1, alpha_{A,1}(c_B v)^2 >= (alpha_{A,1} c_B v)^2 >
+      (alpha_{B,1} c_A w)^2, so -q has a positive leading coefficient (my derivation of the sign).
+  - id: 8
+    locator: 'at $\theta = 1$, $h_A(1,\gamma)$ is a quartic function of $\gamma$ and $\frac{\partial^4 h_A(1,\gamma)}{\partial \gamma^4}$ has the same sign as $-2 \alpha_{A,1} c_{A}^2 p_{B,1}+\ldots - c_B p_{A,1} (\alpha_{A,1} p_{A,2}-(2 \alpha_{A,1} -1) c_A)$'
+    claim: Leading coefficient of h_A(1, .) has the sign of the printed expression E.
+    status: verified
+    method: symbolic
+    note: h_A(1, .) has degree 4 (equal shares); LC / E = sigma alpha_{B,1} v w^2 Q2 > 0 (SymPy).
+  - id: 9
+    locator: 'we have $\frac{\partial^4 h_A(1,\gamma)}{\partial \gamma^4} <0$ if $c_B > \overline{c}_B := [\ldots]/[p_{A,1} (\alpha_{A,1} p_{A,2}-(2 \alpha_{A,1} -1) c_A)]$. Choose $\Delta^A>0$ such that $c_A+\Delta^A>\overline{c}_B$.'
+    claim: Cost cutoff and choice of Delta^A.
+    status: verified
+    method: symbolic
+    note: >-
+      E = p_{A,1}(alpha_{A,1} p_{A,2} - (2 alpha_{A,1} - 1) c_A)(c-bar_B - c_B) and the factor equals
+      alpha_{A,1}(p_{A,2}-c_A) + (1-alpha_{A,1}) c_A > 0 (SymPy). c-bar_B depends on c_A, prices and shares, not on
+      c_B, so Delta c >= Delta^A gives c_B > c-bar_B including equality at the cutoff (Interpretation correct).
+      Admissible markets with Delta c >= Delta^A exist: all prices 10, c_A = 2, shares 1/2 give c-bar_B = 26/5, so
+      c_B = 6 (E = -40) is admissible; in general with equal prices c-bar_B < p iff c_A < p/2 (my derivation).
+      For other markets the condition can be empty (c-bar_B >= min p_{B,t}); the statement then holds vacuously.
+  - id: 10
+    locator: 'For each $\Delta c\geq\Delta^A$, there exists a $\gamma^A_4>0$ such that $h_A(0,\gamma)>0>h_A(1,\gamma)$ for all $\gamma\geq\gamma^A_4$.'
+    claim: Opposite endpoint signs from a market-dependent gamma^A_4 on.
+    status: verified
+    method: re-derivation
+    note: >-
+      From steps 7-9: gamma^A_4 is the larger of the largest positive roots of -q and of h_A(1, .); it depends on
+      the market (including c_B) and not on theta. Over 25 random equal-share markets with c_B > c-bar_B it ranged
+      from 0 to 527; the supporting check test_threshold_gamma_a4 shows it can grow without bound as c_B -> p_{B,2},
+      consistent with the fixed-market reading.
+  - id: 11
+    locator: '$\frac{\partial^3 h_A(\theta, \gamma)}{\partial \theta^3} = 6 \alpha_{B,1}^3 \gamma \sigma (p_{B,2}-c_B)^2 (\alpha_{A,1} \gamma (p_{A,2}-c_A)+p_{A,1})^2 (c_B (p_{A,1}+\gamma p_{A,2})-c_A (p_{B,1}+\gamma p_{B,2}))^2 \geq 0$'
+    claim: Nonnegative cubic coefficient (equal shares).
+    status: verified
+    method: symbolic
+    note: SymPy equality with equal shares. For general shares the theta^3 coefficient is gamma sigma alpha_{B,1} alpha_{B,2}^2 w^2 (P^N_A)^2 (Q1 + gamma(c_B p_{A,2} - c_A p_{B,2}))^2 >= 0.
+  - id: 12
+    locator: 'The root is unique: otherwise, the opposite endpoint signs and degree at most three imply three roots, counting multiplicity, in $(0,1)$; the nonnegative cubic coefficient must then be positive, which would imply $h_A(0,\gamma)<0$, a contradiction.'
+    claim: Unique root theta^A in (0,1) and the sign pattern.
+    status: verified
+    method: re-derivation
+    note: >-
+      With h(0) > 0 > h(1) the number of roots in (0,1) with multiplicity is odd; three roots force
+      h = a3 (theta - r1)(theta - r2)(theta - r3) with a3 > 0 and h(0) = -a3 r1 r2 r3 < 0. A triple root is excluded
+      the same way, so the root is simple and the sign pattern follows. Exact root isolation at 25 markets x 2 gammas
+      (just above gamma^A_4 and 10 times it): h_A(0) > 0 > h_A(1) and exactly one root in (0,1) in 50/50 cases.
+  - id: 13
+    locator: 'For (a), (b), and (c1), take $\gamma^A>\max\{\gamma^A_1,\gamma^A_2\}$ and, when $\alpha_{A,1}\ne\alpha_{A,2}$, also $\gamma^A\geq\gamma^A_3$.'
+    claim: Assembly of the single threshold gamma^A.
+    status: verified
+    method: reading
+    note: Correct for (a), (b), (c1); for (c2) gamma^A must also be at least gamma^A_4, which the sentence omits (F1). Under the fixed-market reading this is a routine maximum.
+  - id: 14
+    locator: 'Interpretation (editorial note in theory.md): "The proof chooses a sufficient positive cost cutoff $\Delta^A$ with $c_A+\Delta^A>\overline{c}_B$ ..."'
+    claim: Reading of the quantifiers of (c2).
+    status: verified
+    method: reading
+    note: Agrees with steps 9-12 and with the fixed-market interpretation of AGENTS.md (gamma^A_4 independent of theta, theta^A depending on gamma and the fixed costs).
+findings:
+  - id: F1
+    severity: editorial
+    scope: proof
+    locator: 'Last paragraph of the proof: "For (a), (b), and (c1), take $\gamma^A>\max\{\gamma^A_1,\gamma^A_2\}$ ..."'
+    description: >-
+      The statement asserts one gamma^A for all parts, including (c2), but the closing assembly takes the maximum only
+      over the thresholds of (a), (b) and (c1); the threshold gamma^A_4 of (c2), which depends on the market's costs,
+      is not included.
+    suggested_fix: Add "and, when alpha_{A,1} = alpha_{A,2} and Delta c >= Delta^A, also gamma^A >= gamma^A_4 (which may depend on the costs)".
+    evidence: Proof of Proposition 5 in paper/OnlineAppendix.tex; steps 10 and 13 of this record. The conclusion is unaffected.
+numerical:
+  command: python numerics/run.py -k P5   (read from verification/2026-11-22_claude-opus-5-5-b/logs/report_P5.md)
+  direct: "4/4 passed"
+  supporting: "7/7 passed"
+  assessment: >-
+    P5.a and P5.b are asserted at gamma = 1e50, 1e60 at 210 exact points (strictly increasing or exactly constant
+    where A11 binds in both periods, the exact equality case of step 1; strict profit gains at every node). P5.c1:
+    66 points with unequal shares, strict sign at every theta node at the top rungs, which probes the uniformity in
+    theta. P5.c2: the condition used to select points, P5_SIGN_AT_THETA_ONE < 0, is exactly c_B > c-bar_B, i.e. the
+    set of markets covered by some admissible choice of Delta^A; 47 sample points plus 90 further points; at the
+    top rungs the difference must be positive at 0, negative at 1, with sign pattern "+-" (zeros skipped). The
+    zero-skipping leaves the strict "<" on (theta^A, 1] unchecked at interior nodes; my exact root count (step 12)
+    covers it. The 97 sample points below the cost cutoff all show "+" (no crossing), so the cost condition matters.
+    Each check tests the part it names with the right retailer, scenario and period.
+  own_checks:
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/shared_profit_polys.py (compact profit forms equal the full closed forms at 10/10 points; builds h_A, h_B)
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/P5_symbolic_steps.py
+not_checked:
+  - A common gamma^A across markets in (c2) is not claimed under the fixed-market reading and was not probed.

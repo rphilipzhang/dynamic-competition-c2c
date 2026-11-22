@@ -1,0 +1,67 @@
+run_id: 2026-11-22_claude-opus-5-5-b
+model: claude-opus-5-5
+date: '2026-11-22'
+repo_version: d8dc9401a3e16f89fdd8c8bca35ea4a6eca55b3e
+scope: full
+judgement:
+  theoretical_results: verified
+  numerical_results: verified_with_qualifications
+  consistency:
+    theory_md: consistent
+    numerics: consistent_with_findings
+results:
+  verdict:
+    sound: 13
+    sound_with_gaps: 3
+    error_suspected: 0
+    not_verifiable: 0
+  paper_statement:
+    holds_as_printed: 16
+    holds_with_listed_differences: 0
+    fails: 0
+    not_verifiable: 0
+numerical_statements:
+  "yes": 7
+  "partly": 1
+  "no": 0
+findings:
+  critical: 0
+  major: 0
+  minor: 2
+  editorial: 7
+checks:
+  passed: 93
+  total: 93
+corrections:
+- id: LA1
+  severity: minor
+  correction: >-
+    In the joint proof of Lemmas A.1-A.2, state that the second-period price game has a (possibly mixed) equilibrium
+    at every sales state (continuous payoffs on a compact price box, Glicksberg's theorem) before bounding V_i,
+    and read 'second-period equilibrium selections'; this also covers LA2 and the existence claim of P9.
+- id: P5
+  severity: editorial
+  correction: >-
+    Include the (c2) threshold gamma^A_4 in the final choice of gamma^A; likewise gamma^B_2 and gamma^B_3 in the
+    proof of Proposition 6.
+- id: P1
+  severity: editorial
+  correction: >-
+    Write y^0_{A,1} in the statement and use one symbol for the threshold (underline-theta^{SN} in the statement,
+    theta^{SN} in the proof).
+- id: LA1
+  severity: editorial
+  correction: Delete the stray '> 0' after |d^2 V_i(R_1)| <= C_{r_0}/gamma.
+summary: >-
+  Theoretical results: verified. All 16 lemmas and propositions are established under the paper's assumptions and
+  quantifiers, and all 16 printed statements hold as printed. Numerical results: verified with qualifications. F1,
+  FB1 and N1 to N5 hold; N6 (results unchanged under other distributions) is supported only for weak forms of Propositions
+  1 to 6 and for Proposition 2(c). Verdicts: 13 sound, 3 sound with gaps (LA1, LA2, P9), none error suspected or
+  not verifiable. Corrections: LA1 (minor, also covering LA2 and P9): before bounding the continuation values, state
+  that the second-period price game has a possibly mixed equilibrium at every sales state (Glicksberg's theorem),
+  and read "second-period equilibrium selections"; editorial: P5 and P6 should include the (c2) thresholds in the
+  final choice of gamma; P1 notation; a stray "> 0" in LA1. theory.md is consistent with the paper (two editorial
+  slips in Hypotheses lines). numerics/ is consistent with findings: numerical_statements.yaml omits the Section
+  4.2.3 claim that Pi^N_A may fall in theta at intermediate values, which this run found to hold. Not checked: N7,
+  for which the repository has no solver. One model family did all the work, and the uniform-in-theta constants
+  of the Lemma A.1-A.2 proof were derived in outline.

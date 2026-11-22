@@ -1,0 +1,6 @@
+.................                                                        [100%]
+17 passed, 76 deselected in 2.68s
+
+Numerical statements
+  F1  direct    9/9   supporting    8/8
+wrote verification/2026-11-22_claude-opus-5-5-b/logs/report_F1.md

@@ -1,0 +1,6 @@
+.......                                                                  [100%]
+7 passed, 86 deselected in 9.80s
+
+Results of theory.md
+  LA1 direct    4/4   supporting    3/3
+wrote verification/2026-11-22_claude-opus-5-5-b/logs/report_LA1.md

@@ -1,0 +1,6 @@
+........                                                                 [100%]
+8 passed, 85 deselected in 25.10s
+
+Results of theory.md
+  LB1 direct    6/6   supporting    2/2
+wrote verification/2026-11-22_claude-opus-5-5-b/logs/report_LB1.md

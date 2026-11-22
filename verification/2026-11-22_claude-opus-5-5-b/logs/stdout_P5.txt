@@ -1,0 +1,6 @@
+...........                                                              [100%]
+11 passed, 82 deselected in 39.43s
+
+Results of theory.md
+  P5  direct    4/4   supporting    7/7
+wrote verification/2026-11-22_claude-opus-5-5-b/logs/report_P5.md

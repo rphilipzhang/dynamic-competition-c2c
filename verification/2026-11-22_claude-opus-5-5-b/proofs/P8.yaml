@@ -1,0 +1,141 @@
+id: P8
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/LA1.yaml: no earlier audit read and no other folder of verification/ opened; the context contained the
+    user's general instructions and a four-line auto-memory index (paper source location, repository language, an
+    INFORMS fetch restriction, a first fresh-agent run done, no results); the orchestrator's brief listed points to examine.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A10, A12, A13, A14 and I1, and write y^k_{i,1}(p_1) for the unique first-period equilibrium orders of
+  Lemmas A.1(a), A.2(a). (a) There is gamma^a such that for all gamma > gamma^a, theta in [0, 1] and p_1 in P:
+  dy^S_{i,1}/dp_{i,1} < 0 and dy^S_{i,1}/dp_{j,1} > 0, i = A, B. (b1) There is gamma^b such that for all gamma > gamma^b,
+  theta in [0, 1] and p_1 in P: dy^N_{A,1}/dp_{A,1} < 0 and dy^N_{B,1}/dp_{A,1} > 0. (b2) If (A.22) holds, there are an
+  open set U of first-period price pairs (a neighbourhood of any chosen pair of (A.23)), l^D > 0 and gamma^D < oo such that
+  for all gamma > gamma^D, all theta with 0 <= gamma (1 - theta) <= l^D and all p_1 in U: dy^N_{A,1}/dp_{B,1} < 0 and
+  dy^N_{B,1}/dp_{B,1} > 0; and for every fixed theta < 1 there is gamma(theta) such that for gamma > gamma(theta) and all
+  p_1 in P: dy^N_{A,1}/dp_{B,1} > 0 and dy^N_{B,1}/dp_{B,1} < 0. Strict signs give the printed weak monotonicity.
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A12, A13, A14, I1]
+unstated_hypotheses: []
+relies_on:
+  - "LA1/LA2 joint proof: the first-period inventory remainders of Lemma A.2(a) are O_{C^2(p_1; P)}(gamma^-2) uniformly in theta in [0, 1] (the price-derivative part is used in (b1) and (b2))"
+steps:
+  - id: 1
+    locator: 'Lemma A.1 gives y_{i,1}^S=\alpha_{i,1}(\mu+\sigma)+ O_{C^1(p_1;\mathcal{P})}(\gamma^{-1}), uniformly in \theta\in[0,1] and first-period prices.'
+    claim: The exact closed form of Lemma A.1(a) is alpha_i(mu + sigma) plus a remainder that is O(1/gamma) with its first price derivatives.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy (script P8_expansion_steps.py, part 1): the four price derivatives of the closed form tend to -beta(mu + sigma)
+      and +beta(mu + sigma), and gamma times the gap tends to finite limits that are bounded in theta (for example
+      -2 beta c_B sigma/(c_B - pbar) for dy_B/dp_B); since the critical ratios are c_i/(p_i + gamma(pbar - c_i)) with
+      pbar - c_i >= pbar - c_B > 0, the remainder is uniform in p_1 and theta.
+  - id: 2
+    locator: 'Differentiation yields own- and cross-price derivatives -\beta(\mu+\sigma)+O(\gamma^{-1}) and \beta(\mu+\sigma)+O(\gamma^{-1}) ... part (a) holds'
+    claim: Strict signs for gamma large, uniformly.
+    status: verified
+    method: re-derivation
+    note: Immediate from step 1.
+  - id: 3
+    locator: 'Lemma A.2 gives \frac{\partial y_{B,1}^N}{\partial p_{A,1}} =\beta\zeta_{B,1}^{N}+O(\gamma^{-1}) and \frac{\partial y_{A,1}^N}{\partial p_{A,1}} =-\beta\big[(1-\theta)\zeta_{A,1}^{N}+\theta\zeta_{B,1}^{N}\big]+O(\gamma^{-1})'
+    claim: Leading terms of the p_{A,1}-derivatives in Scenario N.
+    status: verified
+    method: symbolic
+    note: >-
+      Two parts. The remainder of Lemma A.2(a) is O(gamma^-2) with its price derivatives (relies_on; checked in LA1 steps
+      32-35 and LA2 step 1), which a statement-level O(gamma^-2) alone would not give (roadmap point 4). For the closed form,
+      SymPy (part 2) shows gamma times the gap has finite limits (0 at theta = 0 and 1/2), and its absolute value is at most
+      0.889 beta(mu + sigma) over 200 markets, 21 values of theta and gamma from 1e2 to 1e6: uniform in theta.
+  - id: 4
+    locator: 'For sufficiently large \gamma, part (b1) holds.'
+    claim: Signs in (b1).
+    status: verified
+    method: re-derivation
+    note: zeta^N_A, zeta^N_B > mu - sigma > 0, so beta zeta_B > 0 and -beta[(1 - theta) zeta_A + theta zeta_B] < 0 by margins bounded away from zero.
+  - id: 5
+    locator: 'It is equivalent to the existence of an interior price pair satisfying (A.23). Indeed, the numerator of the square root is strictly increasing in p_{A,1}'
+    claim: (A.22) holds iff (A.23) has an interior point.
+    status: verified
+    method: numerical
+    note: >-
+      c_B - c_A nu_B/nu_A > 0 (c_A/nu_A < c_B/nu_B), so the bound S(p_A) is strictly increasing; an interior pair exists iff
+      sup_{p_A < pbar} S(p_A) = S(pbar) > p_lo^2, by continuity, which is (A.22). Script part 4: on 20,000 markets of
+      draw_market the criterion and a 2,001-point search agree except at 2 markets with |ratio - 1| <= 3.8e-5, within the
+      grid resolution.
+  - id: 6
+    locator: '(A.24) ... Such choices exist by the strict inequality in (A.23).'
+    claim: A closed price rectangle and l^D with the stated margin exist.
+    status: verified
+    method: re-derivation
+    note: Continuity of the square root in p_A and strict inequality at the chosen pair.
+  - id: 7
+    locator: '(A.25), first line: The first expansion follows by replacing \theta\gamma\nu_Bc_A/(p_{A,1}+\gamma\nu_A) by c_A\nu_B/\nu_A, with O_{C^1(p_1;\mathcal{P})}(\gamma^{-1}) error.'
+    claim: Expansion of y_B for gamma (1 - theta) <= l^D.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy (part 3), with theta = 1 - L/gamma: the replacement error equals -c_A nu_B (L nu_A + p_A)/(nu_A (gamma nu_A + p_A)),
+      O(1/gamma) with its p-derivatives for L in [0, l^D]; it is divided by p_B + L nu_B >= p_lo. The Lemma A.2 remainder
+      adds O_{C^1}(gamma^-2) (relies_on).
+  - id: 8
+    locator: '(A.25), second line: y_{A,1}^N+y_{B,1}^N =\mu+\sigma+O_{C^1(p_1;\mathcal{P})}(\gamma^{-1})'
+    claim: The total stock is mu + sigma up to O(1/gamma) in C^1 when gamma (1 - theta) is bounded.
+    status: verified
+    method: symbolic
+    note: y_A + y_B = (alpha_A + theta alpha_B) zeta_A + (1 - theta) alpha_B zeta_B + O(gamma^-2); SymPy gives mu + sigma for the leading term, zeta_A = mu + sigma + O_{C^1}(1/gamma) and 1 - theta <= l^D/gamma.
+  - id: 9
+    locator: '(A.26)'
+    claim: The p_{B,1}-derivative of the first line of (A.25).
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy (part 3): the derivative of the leading term minus the printed leading term is 0.
+  - id: 10
+    locator: 'its leading term is bounded below by ... >0, where positivity follows from (A.24). This bound is independent of \gamma and \theta in the specified range.'
+    claim: A uniform positive lower bound on dy_B/dp_B on the closed rectangle.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy: the leading term is increasing in p_A (derivative 2 beta sigma (c_B nu_A - c_A nu_B)/(nu_A (p_B + L nu_B)^2) > 0)
+      and decreasing in L; dropping 2 beta L nu_B >= 0 in the numerator and bounding the denominator by
+      (p_B^o + epsilon + l^D nu_B)^2 gives the printed bound, positive by (A.24). The O(1/gamma) remainder is uniform on P
+      and in theta, so gamma^D exists (quantifiers: U and l^D are fixed before gamma^D).
+  - id: 11
+    locator: '\frac{\partial y_{A,1}^N}{\partial p_{B,1}} =-\frac{\partial y_{B,1}^N}{\partial p_{B,1}}+O(\gamma^{-1})<0 after increasing the common threshold \gamma^D if necessary'
+    claim: The sign for y_A in (b2).
+    status: verified
+    method: re-derivation
+    note: From step 8 and step 10.
+  - id: 12
+    locator: 'Finally, for any fixed \theta<1, Lemma A.2 gives y_{i,1}^N=\alpha_{i,1}(\mu+\sigma)+O_{C^1(p_1;\mathcal{P})}(\gamma^{-1}). ... The corresponding large-\gamma threshold may depend on the fixed \theta.'
+    claim: The reversed signs for fixed theta < 1.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy (part 5): gamma times (closed form - alpha_i(mu + sigma)) and gamma times the gap of its p_B-derivative have finite
+      limits at theta = 0, 1/2, 9/10, with coefficients growing like 1/(1 - theta) (e.g. 20 beta c_B sigma/nu_B at 9/10),
+      so the threshold depends on theta, as the text says and the statement allows ('for a fixed theta < 1'). The derivatives
+      converge to -beta(mu + sigma) for y_B and +beta(mu + sigma) for y_A.
+findings: []
+numerical:
+  command: python numerics/run.py -k P8 --report verification/2026-11-22_claude-opus-5-5-b/logs/report_P8.md
+  direct: "3/3 passed"
+  supporting: "3/3 passed"
+  assessment: >-
+    The checks test each part with strict signs of difference quotients of the model's equilibrium orders, which is
+    stronger than the printed weak monotonicity. (a): 20 markets, 9 x 9 grids covering the box, all four slopes, from
+    gamma = 1e3; slopes approach +-beta(mu + sigma) tenfold per decade. (b1) at theta = 0, 0.5, 0.9, 1 and (b2, fixed theta)
+    at theta = 0, 0.5, 0.9 on 7 x 7 grids, from gamma = 10. (b2, bounded): 8 markets satisfying (A.22), a 3 x 3 patch built
+    as in (A.24), theta = 1 and 1 - l/gamma with one small l (gamma (1 - theta) <= 0.0096), from gamma = 100, and the
+    reversal at theta = 0.5; the gap to (A.26) is 6e-6 beta(mu + sigma) at gamma = 1e5. Only very small l^D is exercised,
+    which the existential l^D of the statement permits.
+  own_checks:
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/P8_expansion_steps.py: limits of the derivatives of both closed forms, the replacement in (A.25), (A.26), the sign properties used in the lower bound, and (A.22) <=> (A.23)"
+    - "verification/2026-11-22_claude-opus-5-5-b/scripts/LA2_remainder_bounds.py: the derivative bound on the Lemma A.2 remainder that steps 3 and 7 rely on"
+not_checked: []

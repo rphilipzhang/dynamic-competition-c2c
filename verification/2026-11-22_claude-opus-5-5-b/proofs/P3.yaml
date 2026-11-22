@@ -1,0 +1,112 @@
+id: P3
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    As in verification/2026-11-22_claude-opus-5-5-b/proofs/P1.yaml: the user's auto-memory index for this project and the parent project's AGENTS.md were
+    in context (no audit records, findings or verdicts); nothing outside the repository root or other
+    verification/ folders was read; the orchestrator's brief stated the Part 1 results and listed points worth
+    care.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A11, I1, I2. (a) For every admissible market there is a gamma-bar such that for every gamma >= gamma-bar
+  both E[R^S_{A,1}] and E[R^N_{A,1}] are nondecreasing in theta on [0,1] (the proof gives this for every gamma > 0,
+  so gamma-bar can be any positive number). For every admissible market and every gamma > 0 (the "Moreover"
+  sentence carries no gamma qualifier; the proof covers every gamma > 0, so either reading holds) there is
+  theta' in [0,1], depending on gamma and the market, with E[R^S_{A,1}] >= E[R^N_{A,1}] for all theta in
+  [0, theta'] and E[R^S_{A,1}] < E[R^N_{A,1}] for all theta in (theta', 1]; for gamma large, theta' lies in (0,1).
+  (b) For every admissible market and every gamma > 0, E[R^N_{B,1}] is nonincreasing in theta, E[R^S_{B,1}] does
+  not depend on theta, and E[R^N_{B,1}] < E[R^S_{B,1}] for every theta in [0,1].
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on:
+  - "Proof of P1, display (A.19) (the theta-derivative of the ratio r in zeta^N_{B,1} is nonnegative), used through P2 and the convexity step"
+steps:
+  - id: 1
+    locator: 'By Lemma 2 and the uniform distribution of $X_1$, $\frac{\partial \mathbb{E}[R^S_{A,1}]}{\partial\theta} =\alpha_{B,1}\sigma\left[(1-F(\zeta^S_{B,1}))^2-(1-F(\zeta^S_{A,1}))^2\right]\geq 0$'
+    claim: Theta-derivative of A's expected sales in Scenario S.
+    status: verified
+    method: symbolic
+    note: >-
+      My identity for the period game under the uniform law with z_A >= z_B, proved in SymPy for symbolic critical
+      ratios: E[R_A] = alpha_A mu - sigma[(alpha_A + theta alpha_B) t_A^2 - theta alpha_B t_B^2],
+      E[R_B] = alpha_B (mu - sigma t_B^2), with tails t = 1 - F(zeta). The compact forms equal the full closed
+      forms exactly at 10 random points. The derivative follows (SymPy) and is >= 0 since t_A <= t_B.
+  - id: 2
+    locator: 'At $\theta=0$, the same calculation using Lemma 3 gives a nonnegative right derivative in Scenario N, since $\zeta^N_{A,1}\geq\zeta^N_{B,1}$.'
+    claim: The right derivative of E[R^N_{A,1}] at theta = 0 is nonnegative.
+    status: verified
+    method: symbolic
+    note: dE[R^N_A]/dtheta = alpha_{B,1} sigma (r^2 - t_A^2) + 2 sigma alpha_{B,1} theta r r' (SymPy); at theta = 0 this is alpha_{B,1} sigma (r(0)^2 - t_A^2) with r(0) - t_A = (Q1 + gamma Q2)/[(p_{B,1} + J) P^N_A] > 0, so it is even strictly positive.
+  - id: 3
+    locator: 'direct differentiation of the closed form of $\mathbb{E}[R_{A,1}^N]$ gives $\frac{\partial^2 \mathbb{E}[R_{A,1}^N]}{\partial \theta^2} \geq 0$'
+    claim: E[R^N_{A,1}] is convex in theta; together with step 2 it is nondecreasing.
+    status: verified
+    method: symbolic
+    note: >-
+      My derivation, checked in SymPy: d^2/dtheta^2 = sigma alpha_{B,1}(4 r r' + 2 theta r'^2 + 2 theta r r'') with
+      r > 0, r' = J(Q1 + gamma Q2)/(P^N_A den^2) >= 0 and r'' = 2 J r'/den >= 0. A convex function with
+      nonnegative right derivative at 0 is nondecreasing, for every gamma > 0. No exact-arithmetic probe (150
+      points x 4 gammas incl. 1/20, 41 nodes) found a decrease.
+  - id: 4
+    locator: 'If $\theta = 0$, we have $\mathbb{E}[R^S_{A,1}] - \mathbb{E}[R^N_{A,1}] = \frac{\alpha_{A,1} \alpha_{B,2} \gamma c_{A}^2 \sigma \ldots}{\ldots}> 0$'
+    claim: Closed form and positivity of the sales difference at theta = 0.
+    status: verified
+    method: symbolic
+    note: SymPy equality with the printed expression; every factor is positive for gamma > 0.
+  - id: 5
+    locator: 'If $\theta = 1$, ... $g^{SN}_R(\gamma)$ is a function of $\gamma$ with $\frac{\partial^5 g^{SN}_R(\gamma)}{\partial \gamma^5} < 0$'
+    claim: At theta = 1 the difference is a positive multiple of a polynomial whose fifth derivative is negative, hence negative for large gamma.
+    status: verified
+    method: symbolic
+    note: >-
+      The printed denominator equals p_{B,1}^2 (P^S_A P^S_B P^N_A)^2 (SymPy). The numerator times that denominator
+      over sigma is an explicit polynomial divisible by gamma; g_R^SN has degree 5 with leading coefficient
+      -alpha_{B,1}(p_{A,2}-c_A)^2(p_{B,2}-c_B)^2 Q2^2 < 0, so d^5 g/dgamma^5 = 120 LC < 0. The largest positive
+      root (the gamma beyond which theta' < 1) ranged over 150 exact points from 0 (no positive root, so
+      d(1) < 0 for every gamma > 0) to 88.9; at gamma = 1/20, 61/150 points have E[R^S] >= E[R^N] at theta = 1
+      (theta' = 1), so the large-gamma qualifier on the interior cutoff is needed.
+  - id: 6
+    locator: 'Hence, $\mathbb{E}[R_{A,1}^S]-\mathbb{E}[R_{A,1}^N]$ is concave in $\theta$. For each $\gamma>0$, ... its nonnegative superlevel set is a closed interval $[0,\underline{\theta}'']$.'
+    claim: Cutoff structure for every gamma > 0.
+    status: verified
+    method: re-derivation
+    note: >-
+      E[R^S_{A,1}] is affine in theta (SymPy) and E[R^N_{A,1}] convex, so the difference is concave and continuous;
+      its superlevel set {d >= 0} is a closed interval containing 0, and d < 0 on its complement in [0,1]. The
+      cases theta' = 1 (d(1) >= 0) and theta' in (0,1) (d(1) < 0, large gamma) are covered. Exact probe: 600
+      curves (150 points x gammas 1/20, 1, 50, 1e4, 41 nodes), each positive at 0 with at most one change, to
+      negative.
+  - id: 7
+    locator: '(b). Since $R_{B,1}^k=\min\{\alpha_{B,1} X_1, y_{B,1}^k\}$, part (b) follows Proposition 2.'
+    claim: B's sales are min{alpha_B X, y_B}, so (b) follows from P2.
+    status: verified
+    method: re-derivation
+    note: >-
+      My derivation: for X <= z_B, alpha_A X <= y_A because y_A/alpha_A >= z_B (L4), so B receives no spillover and
+      D_B = alpha_B X <= y_B; for X > z_B, D_B >= alpha_B X > y_B. Hence R_B = alpha_B min(X, z_B) and
+      E[R_B] = alpha_B(mu - sigma t_B^2) (SymPy identity). dE[R^N_B]/dtheta = -2 sigma alpha_{B,1} r r' <= 0;
+      E[R^S_B] - E[R^N_B] = sigma alpha_{B,1}(r^2 - (c_B/P^S_B)^2) > 0 because r > c_B/P^S_B by (A.20) (P2 record,
+      steps 4-5).
+findings: []
+numerical:
+  command: python numerics/run.py -k P3   (read from verification/2026-11-22_claude-opus-5-5-b/logs/report_P3.md)
+  direct: "2/2 passed"
+  supporting: "5/5 passed"
+  assessment: >-
+    test_proposition_3a asserts at gamma = 1e50 and 1e60 that E[R^N_A] is strictly increasing, E[R^S_A] strictly
+    increasing or exactly constant where A11 binds in both periods (the exact equality case, step 1), and an
+    interior crossing of d = E[R^S_A] - E[R^N_A]; at every rung it asserts d(0) > 0 and sign pattern "+" or "+-".
+    This tests the monotonicity for large gamma and the cutoff for every gamma, with the right retailer, scenario
+    and period. The predicate skips exact zeros, so the strict "<" on (theta', 1] is checked only at theta = 1
+    and between sign changes; step 6 shows the difference has at most one zero, so this has no effect.
+    test_proposition_3b: strict decrease, exact constancy and strict ordering at all rungs, matching (b).
+  own_checks:
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/P3_symbolic_steps.py
+not_checked:
+  - Nothing within the scope of P3.

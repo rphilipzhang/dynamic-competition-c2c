@@ -1,0 +1,154 @@
+id: P1
+run_id: 2026-11-22_claude-opus-5-5-b
+auditor:
+  model: claude-opus-5-5
+  harness: Claude Code
+  date: "2026-11-22"
+  prior_exposure: >-
+    My context contained the user's auto-memory index for this project (one-line notes: the final LaTeX lives
+    outside the repository, no MATLAB/Octave on the machine, repository and skill are written in English, the
+    INFORMS site blocks automated fetches, and a layout note saying a first fresh-agent verification run of
+    dynamic-competition-c2c had been done) and the parent project's AGENTS.md (working-style instructions).
+    No earlier audit records, findings or verdicts were in context. I read and listed nothing outside the
+    repository root and opened no other folder in verification/. The orchestrator's brief stated the Part 1
+    results (fresh build, label map, theory.md-vs-TeX comparison) and listed points worth care for P1-P6.
+verdict: sound
+paper_statement: holds_as_printed
+confidence: high
+restatement: >-
+  Assume A1-A11 (uniform seed demand on [mu-sigma, mu+sigma], rho = 1, p_{B,t} >= p_{A,t} >= (c_A/c_B) p_{B,t}),
+  I1 and I2. (i) For every admissible market and every gamma > 0, each of the benchmark order y^0_{A,t}
+  (written y^0_A in the statement; the same holds for t = 1 and t = 2), y^S_{A,1} and y^N_{A,1} is a
+  nondecreasing function of theta on [0,1]. (ii) For every admissible market there is a gamma-bar, which may
+  depend on all market primitives, such that for every gamma >= gamma-bar there exists theta^SN in [0,1],
+  which may depend on gamma and the market, with y^S_{A,1} >= y^N_{A,1} for all theta in [0, theta^SN] and
+  y^S_{A,1} <= y^N_{A,1} for all theta in [theta^SN, 1].
+differences_checked: []
+hypotheses_used: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, I1, I2, I3]
+unstated_hypotheses: []
+relies_on: []
+steps:
+  - id: 1
+    locator: 'for $k = 0, S$, $y^k_{A,1} = \alpha_{A,1} \zeta^k_{A,1} + \theta \alpha_{B,1} (\zeta^k_{A,1} - \zeta^k_{B,1})$ ... is increasing in $\theta \in [0,1]$'
+    claim: The benchmark and Scenario S orders of A are affine in theta with slope alpha_{B,1}(zeta_A - zeta_B) >= 0.
+    status: verified
+    method: symbolic
+    note: >-
+      Identity checked in SymPy for k = 0, S, N from my transcription of Lemmas 1-3. The slope of y^0_{A,1} is
+      alpha_{B,1} 2 sigma (c_B p_{A,1} - c_A p_{B,1})/(p_{A,1} p_{B,1}) and that of y^S_{A,1} is
+      alpha_{B,1} 2 sigma [Q1 + gamma (c_B p_{A,2} - c_A p_{B,2})]/(P^S_A P^S_B), both >= 0 by A11 (orderings of
+      L1 and L2). The same argument applies to y^0_{A,2}. The step uses zeta_A >= zeta_B from L1/L2, which need
+      A11 in both periods for k = S. Hypotheses line: I3 (used through L3) is implied by A11, I1 and I2, since
+      the tails c_A/P^N_A and r(theta) lie in (0,1) (r(theta) <= c_B/p_{B,1} < 1 by (A.20), r > 0 by step 4 of
+      the P2 record), so its omission from the Hypotheses line of P1 is correct; no result here needs a
+      condition the line omits.
+  - id: 11
+    locator: 'Interpretation (editorial note in theory.md): "The benchmark slope in $\theta$ is $\alpha_{B,1}(\zeta^0_{A,1}-\zeta^0_{B,1})$ ..."'
+    claim: >-
+      The benchmark slope vanishes exactly when c_B p_{A,1} = c_A p_{B,1}; the Scenario S slope has the sign of
+      (c_B p_{A,1} - c_A p_{B,1}) + gamma (c_B p_{A,2} - c_A p_{B,2}) and vanishes exactly when A11 binds in both
+      periods; these equality cases satisfy the weak monotonicity claim.
+    status: verified
+    method: symbolic
+    note: Both slope formulas checked in SymPy (step 1). With gamma > 0 and both differences >= 0 by A11 the S slope is zero iff both differences are zero. The note is correct.
+  - id: 2
+    locator: '\frac{\partial y^{N}_{A,1}}{\partial \theta} = \alpha_{B,1} (\zeta^N_{A,1} - \zeta^N_{B,1}) - \theta \alpha_{B,1} \frac{\partial \zeta^N_{B,1}}{\partial \theta}'
+    claim: Derivative of y^N_{A,1} in theta (zeta^N_{A,1} does not depend on theta).
+    status: verified
+    method: symbolic
+    note: SymPy identity from the closed form of Lemma 3.
+  - id: 3
+    locator: (A.18)
+    claim: Chain rule for d zeta^N_{B,1}/d theta.
+    status: verified
+    method: symbolic
+    note: Under A10 d zeta^N_B/d theta = -2 sigma dr/d theta with r = 1 - critical ratio; checked in SymPy. The general-F form -(1/f) dr/dtheta is the inverse-function rule.
+  - id: 4
+    locator: '(A.19) "One can check"'
+    claim: The ratio r(theta) inside zeta^N_{B,1} is nondecreasing in theta.
+    status: verified
+    method: symbolic
+    note: >-
+      My derivation, checked in SymPy: dr/dtheta = J (Q1 + gamma Q2)/(P^N_A den^2) with J = alpha_{B,2} gamma
+      (p_{B,2}-c_B), Q1 = c_B p_{A,1} - c_A p_{B,1} >= 0 (A11, t = 1) and
+      Q2 = alpha_{A,2} c_B (p_{A,2}-c_A) - alpha_{B,2} c_A (p_{B,2}-c_B)
+         = alpha_{A,2}(c_B p_{A,2} - c_A p_{B,2}) + (alpha_{A,2} - alpha_{B,2}) c_A (p_{B,2} - c_B) > 0.
+      Both terms are >= 0 under A11 and beta > 0; both vanish only if p_{A,2} = p_{B,2} and c_A = c_B, which A1
+      excludes, so Q2 > 0 strictly. The numerator c_B P^N_A - c_A(p_{B,1} + J) equals Q1 + gamma Q2 (the
+      critical-ratio ordering of the proof of L3). Exact probe at 400 admissible points, 3 theta values each: no
+      negative value.
+  - id: 5
+    locator: 'Thus, $\frac{\partial y^N_{A,1}}{\partial \theta} \geq 0$'
+    claim: y^N_{A,1} is nondecreasing in theta.
+    status: verified
+    method: re-derivation
+    note: From steps 2-4 and zeta^N_A >= zeta^N_B (L3). In fact the derivative is strictly positive because zeta^N_A - zeta^N_B = 2 sigma (r - c_A/P^N_A) and r(theta) >= r(0) > c_A/P^N_A (see P3 record).
+  - id: 6
+    locator: 'if $\theta = 0$, we have $y^N_{A,1} - y^S_{A,1} = -\frac{2 \alpha_{A,1} \alpha_{B,2} \gamma c_A \sigma (p_{A,2}-c_A)}{...} < 0$'
+    claim: Closed form and sign of the difference at theta = 0.
+    status: verified
+    method: symbolic
+    note: SymPy equality with the printed expression; negative for every gamma > 0 (exact probe at 400 points).
+  - id: 7
+    locator: 'If $\theta = 1$, ... $g_A^{SN}(\gamma)$ is quadratic function of $\gamma$ and has the same sign as $y^N_{A,1} - y^S_{A,1}$'
+    claim: Factorization at theta = 1 with a positive prefactor and a quadratic g_A^SN.
+    status: verified
+    method: symbolic
+    note: (y^N - y^S)(theta=1) divided by the printed prefactor 2 gamma sigma/[p_{B,1} P^S_A P^S_B P^N_A] (positive) is a polynomial of degree 2 in gamma (SymPy cancel).
+  - id: 8
+    locator: '\frac{\partial^2 g_A^{SN}(\gamma)}{\partial \gamma^2} = -2 \alpha_{B,1}(p_{A,2}-c_A) (p_{B,2}-c_B) (\ldots) >0'
+    claim: The leading coefficient of g_A^SN is positive, so g_A^SN > 0 and y^N > y^S at theta = 1 for large gamma.
+    status: verified
+    method: symbolic
+    note: >-
+      SymPy: the second derivative equals the printed expression, which equals 2 alpha_{B,1}(p_{A,2}-c_A)(p_{B,2}-c_B)
+      Q2 > 0 (inner bracket = -Q2). The threshold is the largest positive root of g_A^SN; over 400 exact
+      admissible points it ranges from 0 to 275, and at 227/400 points g_A^SN(1/100) < 0, so the large-gamma
+      qualifier is needed. The threshold depends on all market primitives, which the statement allows.
+  - id: 9
+    locator: 'direct differentiation of the closed form in Lemma 3 gives $\frac{\partial^2 y_{A,1}^N}{\partial \theta^2}\geq 0$'
+    claim: y^N_{A,1} is convex in theta; y^S_{A,1} is affine.
+    status: verified
+    method: symbolic
+    note: >-
+      My derivation, checked in SymPy: d^2 y^N_{A,1}/dtheta^2 = 2 sigma alpha_{B,1} (2 r' + theta r'') with
+      r'' = 2 J r'/den >= 0 and r' >= 0 (step 4). Uses the uniform law (A10); the claim is not made for other F.
+  - id: 10
+    locator: 'there exists $\theta^{SN}\in(0,1)$ such that $y_{A,1}^S\geq y_{A,1}^N$ for $\theta\in[0,\theta^{SN}]$ ...'
+    claim: A convex difference that is negative at 0 and positive at 1 changes sign once.
+    status: verified
+    method: re-derivation
+    note: >-
+      If f = y^N - y^S is convex, f(0) < 0 < f(1) and f(t1) = 0, then f(t) >= (t/t1) f(t1) - ((t - t1)/t1) f(0) > 0
+      for t > t1, so the zero is unique and f < 0 before it. Exact check at 60 points at twice the threshold, 201
+      theta nodes: positive-to-negative pattern of y^S - y^N with one change at every point. The proof gives
+      theta^SN in (0,1), inside the printed [0,1].
+findings:
+  - id: F1
+    severity: editorial
+    scope: statement
+    locator: 'Statement: "namely $y^{0}_{A}$"; proof: "$\theta^{SN}$"'
+    description: >-
+      Notation: the statement writes the benchmark order as y^0_A without the period index used for the other two
+      quantities (y^S_{A,1}, y^N_{A,1}), and it names the threshold \underline{\theta}^{SN} while the proof
+      constructs \theta^{SN}.
+    suggested_fix: Write y^0_{A,1} (or y^0_{A,t}) in the statement and use one symbol for the threshold in statement and proof.
+    evidence: paper/Manuscript.tex, Proposition prop:yacompare; paper/OnlineAppendix.tex, last paragraph of the proof of Proposition 1. The monotonicity holds for both periods of the benchmark (step 1), so no claim changes.
+numerical:
+  command: python numerics/run.py -k P1   (read from verification/2026-11-22_claude-opus-5-5-b/logs/report_P1.md)
+  direct: "2/2 passed"
+  supporting: "4/4 passed"
+  assessment: >-
+    test_proposition_1_i checks at 210 exact rational points (90 on edges of the region, A11 binding included), at
+    all 12 rungs of gamma from 1/20 to 1e60: y^N_{A,1} strictly increasing, y^0_{A,1} and y^S_{A,1} strictly
+    increasing or exactly constant where A11 binds in period 1 (resp. both periods). My slope formulas (step 1,
+    Interpretation) show that these are the exact equality cases, so the strict predicate is a correct, stronger
+    test of the weak claim. Only y^0_{A,1} is tested, not y^0_{A,2}. test_proposition_1_ii asserts, at gamma = 1e50
+    and 1e60 only, d(0) > 0, d(1) < 0 and a single sign change (zeros skipped) of y^S - y^N on the theta grid, and at
+    every rung d(0) > 0 with pattern "+" or "+-"; this tests the part with the statement's weak inequalities (an
+    interior threshold is a special case of the printed [0,1]). Both test the parts they name.
+  own_checks:
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/shared_sec4_closed_forms.py (my transcription of L1-L3 under A10 equals numerics/c2c/closed_form.py exactly at 12 random points)
+    - verification/2026-11-22_claude-opus-5-5-b/scripts/P1_symbolic_steps.py (every step above; 400 exact admissible points incl. A11 binding, equal shares, equal prices; 60 crossing checks)
+not_checked:
+  - The paper's discussion text around Proposition 1 (out of scope).

@@ -1,0 +1,6 @@
+.........                                                                [100%]
+9 passed, 84 deselected in 1.83s
+
+Numerical statements
+  FB1 direct    5/5   supporting    4/4
+wrote verification/2026-11-22_claude-opus-5-5-b/logs/report_FB1.md

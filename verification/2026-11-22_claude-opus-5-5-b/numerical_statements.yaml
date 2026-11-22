@@ -1,0 +1,177 @@
+# Part 3: the numerical statements F1, FB1 and N1 to N6 (N7 is excluded; see verification/2026-11-22_claude-opus-5-5-b/consistency.yaml, item
+# "numerics excluded entries").
+# run_id: 2026-11-22_claude-opus-5-5-b
+# auditor: {model: claude-opus-5-5, harness: Claude Code (subagent D2 of the run), date: "2026-11-22"}
+# prior_exposure: >-
+#   No earlier audit content, findings or other verification/ folders were seen. The session context
+#   contained (a) the user's general working-style instructions (an AGENTS.md of the folder above the
+#   repository, not read from disk by this agent) and (b) a four-line auto-memory index naming where the
+#   paper's final LaTeX lives outside the repository, an English-only convention, that the INFORMS site
+#   blocks fetch tools, and that the lean repository has had "a first fresh-agent run". The memory files
+#   themselves were not opened. The orchestrator's brief stated that the per-ID reports passed and
+#   summarised its own Part 1 build, label-map and theory.md comparisons. Within this run folder only
+#   verification/2026-11-22_claude-opus-5-5-b/logs/, verification/2026-11-22_claude-opus-5-5-b/build/ and the file names of verification/2026-11-22_claude-opus-5-5-b/proofs/ and tmp/ were seen; other agents' records were not opened.
+# Checks: counts from verification/2026-11-22_claude-opus-5-5-b/logs/report_<ID>.md (written by the orchestrator with numerics/run.py -k <ID>).
+# Own scripts: verification/2026-11-22_claude-opus-5-5-b/scripts/F1_fine_theta_grid.py, N1_gamma_cost_sweep.py, FB1_fine_theta_grid.py,
+#   N6_prop2c_other_distributions.py, part1_eps_independent_extraction.py; each runs from the
+#   repository root without arguments in under 15 s and prints every number quoted below.
+
+- id: F1
+  holds: "yes"
+  checks: {direct: "9/9 passed", supporting: "8/8 passed"}
+  relies_on: >-
+    c2c/pricing.py (pricing_equilibrium: certification of one constant second-period price pair over the
+    sales triangle, first-period pure equilibria), c2c/closed_form.py (period2_profit, first_period_s/n,
+    spfta_t1, spftb_t1, npfta_t1, npftb_t1), c2c/figures.py (FIG1_PARAMS, FIG1_PANELS, FIG1_THETA,
+    figure1_point, figure1_crossings), and for the cross-checks c2c/section4.py (Game,
+    claimed_first_period) and c2c/primitives.py; numerics/figures/published_data.csv and its calibration.
+  assessment: >-
+    The direct checks compare the recomputed profits of both scenarios with the four published panels
+    (largest difference to the four-decimal values 2.2e-6, 1.6e-5, 1.8e-6, 1.0e-5 for panels a-d, each
+    within the panel's extraction bound; to the unrounded values at most 5.6e-5, consistent with panels
+    drawn from four-decimal data), require one equilibrium and no solver warning at all 44 points, and
+    rebuild the game from the primitives: all 352 first-period payoff cells (44 with retailer B holding
+    the higher fractile) agree within 1e-9, 96 first-period inventory games at theta = 0.01, 0.5, 0.99
+    are equilibria, the solver's second-period price pair is the only equilibrium pair at 10 sales states
+    including the three corners of the sales triangle (with payoffs affine in the sales state this covers
+    every state; the affine form is the supporting link (c) check), and 48 second-period inventory games
+    are equilibria. These test what they name. Own checks: on 201 values of theta in [0, 1], including the
+    end points the figure omits, the solver certifies a unique equilibrium without warning in every panel,
+    the equilibrium price paths do not change with theta (S: (4,4,4,4) in panels a, c and (2,2,4,4) in
+    b, d; N: (4,4,4,4) everywhere), and the curves keep the published shapes. An independent parse of the
+    EPS files reproduces published_data.csv within 5.9e-7. The panels match the captions' parameters as
+    implemented in figures.py; the line-by-line audit of pricing.py, closed_form.py and figures.py against
+    the MATLAB code is another agent's item and this entry relies on it.
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/F1_fine_theta_grid.py, verification/2026-11-22_claude-opus-5-5-b/scripts/part1_eps_independent_extraction.py]
+  findings: []
+
+- id: FB1
+  holds: "yes"
+  checks: {direct: "5/5 passed", supporting: "4/4 passed"}
+  relies_on: >-
+    c2c/closed_form.py (find_general_exo), c2c/figures.py (FIGB1_PARAMS, FIGB1_SCENARIOS, FIGB1_PANELS,
+    FIGB1_THETA), numerics/matlab/Figure2_MATLAB/Figure2_reference.csv, published_data.csv; that the
+    plotted orders are equilibria rests on the LB1 checks (verification/2026-11-22_claude-opus-5-5-b/logs/report_LB1.md, 8/8 passed).
+  assessment: >-
+    The recomputed 99 values (9 series, 11 values of theta) equal the authors' MATLAB output within 1e-10,
+    and each published panel within its extraction bound (largest differences 1.0e-6, 1.0e-6, 3.5e-6,
+    9.2e-7 against bounds 1.3e-6, 1.4e-6, 3.7e-6, 1.0e-6). The supporting checks tie find_general_exo's
+    orders and profits to the model at 300 regular and edge points; all satisfy A11, as do the figure's
+    points (all prices 2, c_A < c_B), so the code's restriction to the ordering of Lemma B.1 does not
+    matter here. The checks test what they name. Own checks: the independent EPS parse reproduces the
+    stored points within 2.3e-7 and the recomputed values within 3.6e-6, including the black
+    benchmark series of panel (b), and the rendered legends confirm the colour-to-scenario map.
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/part1_eps_independent_extraction.py, verification/2026-11-22_claude-opus-5-5-b/scripts/FB1_fine_theta_grid.py]
+  findings: []
+
+- id: N1
+  holds: "yes"
+  checks: {direct: "1/1 passed", supporting: "1/1 passed"}
+  relies_on: c2c/figures.py figure1_data, hence c2c/pricing.py and c2c/closed_form.py (as F1).
+  assessment: >-
+    The direct check computes alpha_{A,t} = 1/2 + beta (p_{B,t} - p_{A,t}) at the equilibrium prices of
+    all 44 Figure 1 points in both scenarios, requires exact equality across periods, and finds the price
+    path changing at 22 (point, scenario) pairs (Scenario S in panels b and d, (2,2) then (4,4)), so both
+    halves of the sentence are tested. "Our numerical experiments" may be wider than the plotted points.
+    Own sweep of the stated setting (prices {2,4}, c_B = 1, beta = 0.1, U[5,15]) over gamma = 0.1..3.0,
+    c_A in {0.1, 0.3, 0.5, 0.7, 0.95} and 21 values of theta: 6300 price games, no refusal or warning,
+    6678 first-period equilibria (378 games in Scenario S have two, (2,2) and (4,4), both followed by
+    (4,4)), and the split ratio is the same in both periods at every one of them; for gamma = 5 to 1000
+    the paths are again (2,2,4,4) in S and (4,4,4,4) in N. In every equilibrium found both retailers
+    charge the same price within a period, so alpha = 1/2 in both periods.
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/F1_fine_theta_grid.py, verification/2026-11-22_claude-opus-5-5-b/scripts/N1_gamma_cost_sweep.py]
+  findings: []
+
+- id: N2
+  holds: "yes"
+  checks: {direct: "1/1 passed", supporting: "1/1 passed"}
+  relies_on: c2c/figures.py figure1_data and figure1_crossings (as F1).
+  assessment: >-
+    The check takes Pi^N - Pi^S of the plotted retailer in panels (a) and (c) and requires it negative at
+    theta = 0.01, positive at 0.99, with one sign change on the plotted grid and one root (0.7697 in (a),
+    0.5800 in (c)). This tests both quoted sentences; for retailer B it also requires the reversal near
+    theta = 1, which Proposition 6(c2) implies. The quote omits the lead sentence "Figure 1(a)&(c)
+    replicate the results in Propositions 5&6 under a moderate gamma" (see verification/2026-11-22_claude-opus-5-5-b/consistency.yaml C3). Own checks
+    of that sentence on 201 values of theta in [0, 1]: one sign change in each panel (between 0.765 and
+    0.770 in (a), 0.575 and 0.580 in (c)); Pi^S_A strictly increasing (Proposition 5(a)); Pi^S_B exactly
+    constant and Pi^N_B strictly increasing (Proposition 6(a)); the equilibrium prices are (4,4,4,4) in both
+    scenarios, which satisfies A11, so these panels are the exogenous-price model at those prices. Parts
+    (b) of Propositions 5 and 6 (comparison with the benchmark) are not plotted, and (c1) does not apply
+    (equal shares). In the stated setting the crossing appears for gamma <= 0.7 (A) and 0.4 <= gamma <= 0.7
+    (B) on a 0.1 grid of gamma; Scenario S has two first-period equilibria at theta = 0 or 1 for
+    gamma = 0.8 (A) and 0.8 to 1.4 (B), and Scenario N dominates from gamma = 0.9 (A) and 1.5 (B) on. The
+    figure's gamma = 0.7 is the largest grid value with the pattern.
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/F1_fine_theta_grid.py, verification/2026-11-22_claude-opus-5-5-b/scripts/N1_gamma_cost_sweep.py]
+  findings:
+    - see: verification/2026-11-22_claude-opus-5-5-b/consistency.yaml C3
+
+- id: N3
+  holds: "yes"
+  checks: {direct: "1/1 passed", supporting: "1/1 passed"}
+  relies_on: c2c/figures.py figure1_data and figure1_crossings (as F1).
+  assessment: >-
+    The check (shared with N4) requires Pi^N_A - Pi^S_A > 0 at all 11 plotted values of panel (b)
+    (minimum 9.78) and no crossing; alpha_{A,1} = alpha_{A,2} is established by the N1 check (prices
+    (2,2) then (4,4) in S, (4,4) throughout in N). Own check on 201 values of theta including 0 and 1:
+    the gap stays between 9.78 and 10.14 with no sign change. For the explanation that follows the
+    quoted sentence (price competition in S "suppresses retailer A's first-period profit"), retailer A's
+    first-period profit at theta = 0.01 is 9.25 in S against 19.26 in N (information only; the
+    explanation is outside the scope of the statement).
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/F1_fine_theta_grid.py]
+  findings: []
+
+- id: N4
+  holds: "yes"
+  checks: {direct: "1/1 passed", supporting: "1/1 passed"}
+  relies_on: c2c/figures.py figure1_data and figure1_crossings (as F1).
+  assessment: >-
+    The shared check requires Pi^N_B - Pi^S_B > 0 at all 11 plotted values of panel (d) (minimum 9.91)
+    and no crossing; alpha_{B,1} = alpha_{B,2} follows from the N1 check. Own check on 201 values of theta
+    in [0, 1]: the gap lies between 9.908 and 9.938, no sign change; Pi^S_B = 45.9375 at every theta.
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/F1_fine_theta_grid.py]
+  findings: []
+
+- id: N5
+  holds: "yes"
+  checks: {direct: "1/1 passed", supporting: "3/3 passed"}
+  relies_on: c2c/figures.py figureB1_data, hence c2c/closed_form.py find_general_exo (as FB1).
+  assessment: >-
+    The check requires y^GN_{B,1} to fall at every plotted step and, for panels (c) and (d) (and (a)),
+    Pi^GS - Pi^GN positive at theta = 0, negative at theta = 1 with one sign change, which is the crossing
+    pattern of Propositions 5(c2) and 6(c2) (crossings between 0.8 and 0.9 in (c) and 0.1 and 0.2 in
+    (d)). It also asserts that y^GS_B varies by less than 0.05 and y^0_B is constant, which the quote does
+    not state; both hold. The quote omits the paragraph's lead sentence ("Figure B.1 shows that our main
+    results for the Exogenous Price Model still hold ...", see verification/2026-11-22_claude-opus-5-5-b/consistency.yaml C3). Own checks on 201
+    values of theta: y^GN_B strictly decreasing (5.9375 to 5.6360); one sign change in (a) (0.530-0.535),
+    (c) (0.885-0.890) and (d) (0.155-0.160); analogues of the other parts at the panels' parameters hold:
+    Pi^GS_A strictly increasing (5a), Pi^GN_B strictly increasing (6a; Pi^GS_B rises by 7.8e-3, as expected
+    with a 0.2 cross-brand weight), both profits at least 18.57 (A) and 9.37 (B) above the gamma = 0
+    benchmark (5b, 6b), and y^0_B < y^GN_B < y^GS_B (2b).
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/FB1_fine_theta_grid.py]
+  findings:
+    - see: verification/2026-11-22_claude-opus-5-5-b/consistency.yaml C3
+
+- id: N6
+  holds: "partly"
+  checks: {direct: "2/2 passed", supporting: "1/1 passed"}
+  relies_on: >-
+    c2c/section4.py (claimed_first_period through the quantile function, Game payoffs, distributions,
+    draw_exogenous), c2c/primitives.py (Quadrature), c2c/predicates.py.
+  assessment: >-
+    "All our results" covers Sections 4 and 5 and Appendix B; the authors' experiments are not in the
+    repository. What is tested holds: under the triangular, beta(2,5) and truncated normal distributions
+    on the uniform's support, at 48 markets x 41 theta, the two direct checks find no failure of the
+    patterns of Propositions 1 to 3, of weak forms of Proposition 4 (the full fall-then-rise is visible
+    at 48/48 points for gamma = 1e3 and 1e4) and of Propositions 5 and 6 (a), (b), (c1), and of the
+    at-most-one-crossing form of (c2) where shares are equal; Lemmas 1 to 3 and B.1 are confirmed as
+    equilibria under the same distributions by their own checks. The first-period inequalities of
+    Lemma 4 follow, through the order formulas, from the fractile ordering that the check asserts at
+    every evaluation. Own probe: Proposition 2(c) (y^S_B - y^N_B rises then falls in
+    gamma) holds on 64 curves per distribution (16 markets x theta in {0, 0.3, 0.7, 0.95}, 241 values of
+    gamma in [1e-3, 1e4]). Untested or only weakly tested: the existence of the crossings and the cost
+    thresholds of Propositions 5(c2) and 6(c2), Section 5 (Lemmas A.1, A.2, Propositions 7 to 9, the
+    two-price game of Figure 1) and Figure B.1 under another distribution. The note in
+    numerics/numerical_statements.yaml states these limits correctly, except that Proposition 2(c) is now
+    probed here.
+  own_checks: [verification/2026-11-22_claude-opus-5-5-b/scripts/N6_prop2c_other_distributions.py]
+  findings: []
